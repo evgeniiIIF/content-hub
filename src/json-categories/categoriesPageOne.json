@@ -1,0 +1,367 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "parent_id": 0,
+      "name": "Запчасти для ТО",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 5,
+      "children": [
+        {
+          "id": 2,
+          "parent_id": 1,
+          "name": "Фильтр маслянный",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 3,
+          "parent_id": 1,
+          "name": "Фильтр топливный",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 4,
+          "parent_id": 1,
+          "name": "Фильтр воздушный",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 5,
+          "parent_id": 1,
+          "name": "Фильтр салона",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 6,
+          "parent_id": 1,
+          "name": "Колодки тормозные",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "parent_id": 0,
+      "name": "Антифризы",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 0
+    },
+    {
+      "id": 8,
+      "parent_id": 0,
+      "name": "Электрооборудование автомобиля. Электропроводка",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 1,
+      "children": [
+        {
+          "id": 9,
+          "parent_id": 8,
+          "name": "Узлы и детали генератора",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 1,
+          "children": [
+            {
+              "id": 10,
+              "parent_id": 9,
+              "name": "Обгонные муфты генератора",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "parent_id": 0,
+      "name": "Двигатель. Моторная группа",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 6,
+      "children": [
+        {
+          "id": 12,
+          "parent_id": 11,
+          "name": "Ремни и цепи ГРМ",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 3,
+          "children": [
+            {
+              "id": 18,
+              "parent_id": 12,
+              "name": "Ролики натяжные ремня ГРМ",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            },
+            {
+              "id": 19,
+              "parent_id": 12,
+              "name": "Комплекты ремня ГРМ",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            },
+            {
+              "id": 20,
+              "parent_id": 12,
+              "name": "Ролики направляющие ремня ГРМ",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "parent_id": 11,
+          "name": "Приводные ремни. Элементы ременных передач",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 14,
+          "parent_id": 11,
+          "name": "Система смазки двигателя",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 15,
+          "parent_id": 11,
+          "name": "Детали ГРМ",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 16,
+          "parent_id": 11,
+          "name": "Детали поршневой группы. КШМ",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 17,
+          "parent_id": 11,
+          "name": "Крепления и элементы подвески двигателя",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 1,
+          "children": [
+            {
+              "id": 21,
+              "parent_id": 17,
+              "name": "Опоры двигателя",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "parent_id": 0,
+      "name": "Дополнительные узлы и системы автомобиля",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 1,
+      "children": [
+        {
+          "id": 23,
+          "parent_id": 22,
+          "name": "Шестерни распредвала",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 1,
+          "children": [
+            {
+              "id": 24,
+              "parent_id": 23,
+              "name": "Фильтры салонные",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "parent_id": 0,
+      "name": "Рулевое управление",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 0
+    },
+    {
+      "id": 26,
+      "parent_id": 0,
+      "name": "Рулевые рычаги и тяги",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 4,
+      "children": [
+        {
+          "id": 27,
+          "parent_id": 26,
+          "name": "Маятниковые рычаги",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 28,
+          "parent_id": 26,
+          "name": "Рулевые тяги",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 29,
+          "parent_id": 26,
+          "name": "Рулевые наконечники",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        },
+        {
+          "id": 30,
+          "parent_id": 26,
+          "name": "Детали рулевых механизмов",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 0
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "parent_id": 0,
+      "name": "Сцепление. Трансмиссия",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 1,
+      "children": [
+        {
+          "id": 32,
+          "parent_id": 31,
+          "name": "Крепления и опоры узлов трансмиссии",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 1,
+          "children": [
+            {
+              "id": 33,
+              "parent_id": 32,
+              "name": "Опоры КПП",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "parent_id": 0,
+      "name": "Топливная система",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 1,
+      "children": [
+        {
+          "id": 35,
+          "parent_id": 34,
+          "name": "Фильтрующие элементы топливной системы",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 2,
+          "children": [
+            {
+              "id": 36,
+              "parent_id": 35,
+              "name": "Фильтры топлива",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            },
+            {
+              "id": 37,
+              "parent_id": 35,
+              "name": "Фильтры воздуха",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "parent_id": 0,
+      "name": "Тормозная система",
+      "updated_at": "17.04.2023 11:19:42",
+      "children_count": 2,
+      "children": [
+        {
+          "id": 39,
+          "parent_id": 38,
+          "name": "Детали дисковых тормозов",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 1,
+          "children": [
+            {
+              "id": 41,
+              "parent_id": 39,
+              "name": "Тормозные диски",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "parent_id": 38,
+          "name": "Тормозные колодки",
+          "updated_at": "17.04.2023 11:19:42",
+          "children_count": 1,
+          "children": [
+            {
+              "id": 42,
+              "parent_id": 40,
+              "name": "Колодки тормозные дисковые",
+              "updated_at": "17.04.2023 11:19:42",
+              "children_count": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "links": {
+    "first": "http://contenthub.localhost/administrator/categories?page=1",
+    "last": "http://contenthub.localhost/administrator/categories?page=2",
+    "prev": null,
+    "next": "http://contenthub.localhost/administrator/categories?page=2"
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 2,
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+      },
+      {
+        "url": "http://contenthub.localhost/administrator/categories?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": "http://contenthub.localhost/administrator/categories?page=2",
+        "label": "2",
+        "active": false
+      },
+      {
+        "url": "http://contenthub.localhost/administrator/categories?page=2",
+        "label": "Next &raquo;",
+        "active": false
+      }
+    ],
+    "path": "http://contenthub.localhost/administrator/categories",
+    "per_page": 10,
+    "to": 10,
+    "total": 12
+  }
+}
