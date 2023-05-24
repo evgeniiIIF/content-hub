@@ -46,7 +46,9 @@
         <div class="categories__content">
           <VCategoriesTable />
         </div>
-        <div class="categories__bottom"></div>
+        <div class="categories__bottom">
+          <VPagination />
+        </div>
       </div>
     </div>
   </section>
@@ -55,11 +57,12 @@
 <script>
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
+  import VPagination from '../UI/VPagination.vue';
   import VCategoriesTable from './VCategoriesTable.vue';
 
   export default {
     name: 'VCategoriesSection',
-    components: { VInput, VButton, VCategoriesTable },
+    components: { VInput, VButton, VCategoriesTable, VPagination },
     data() {
       return {
         inputOpts: {
@@ -91,6 +94,7 @@
     }
 
     &__bottom {
+      padding: 41px 0 80px 0;
     }
   }
 

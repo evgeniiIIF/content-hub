@@ -263,6 +263,8 @@
     &__children {
       .item-category__children {
         .child-item-category {
+          &.row-categories-table {
+          }
           background: yellow;
         }
       }
@@ -273,10 +275,6 @@
       &.child-item-category {
         background: green;
       }
-    }
-  }
-  .child-item-category {
-    &__name {
     }
   }
 
@@ -366,11 +364,29 @@
     background: #fff;
     border-bottom: 1px solid #ebedf1;
     padding: 8px 8px 8px 16px;
+    &:hover {
+      background: #f4f6f7;
+      .child-item-category__button {
+        .button {
+          opacity: 1;
+        }
+      }
+    }
 
     &__icon {
     }
 
     &__name {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 167%;
+      color: #335cff;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
 
     &__ozon {
@@ -410,6 +426,7 @@
         border-radius: 50%;
         background: transparent;
         border-color: transparent;
+        opacity: 0;
         &:hover {
           background: rgba(0, 0, 0, 0.03);
         }
