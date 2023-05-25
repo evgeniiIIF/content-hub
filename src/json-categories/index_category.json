@@ -1,0 +1,950 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Запчасти для ТО",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 6,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 2,
+          "name": "Фильтр маслянный",
+          "parent_id": 1,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "25.04.23 11:04",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 3,
+          "name": "Фильтр топливный",
+          "parent_id": 1,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 4,
+          "name": "Фильтр воздушный",
+          "parent_id": 1,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 5,
+          "name": "Фильтр салона",
+          "parent_id": 1,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 6,
+          "name": "Колодки тормозные",
+          "parent_id": 1,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 57,
+          "name": "Масло моторное автомобильное.",
+          "parent_id": 1,
+          "helper_text": "Моторное масло для автомобилей.",
+          "updated_at": "24.04.23 16:13",
+          "children_count": 2,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 64,
+              "name": "Test oil category",
+              "parent_id": 57,
+              "helper_text": "оисание ...",
+              "updated_at": "27.04.23 17:06",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": {
+                "id": 114,
+                "parent_id": 100,
+                "source_id": 1000003125,
+                "name": "Поясничный упор на спинку сидения авто",
+                "created_at": "2023-04-29T16:57:16.000000Z",
+                "updated_at": "2023-04-29T16:57:16.000000Z",
+                "pivot": {
+                  "category_id": 64,
+                  "categoryable_id": 114,
+                  "categoryable_type": "App\\Models\\OzonCategory"
+                }
+              },
+              "alCategories": null
+            },
+            {
+              "id": 75,
+              "name": "масло test category",
+              "parent_id": 57,
+              "helper_text": "test description",
+              "updated_at": "04.05.23 09:02",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": {
+                "id": 70,
+                "parent_id": 68,
+                "source_id": 33717370,
+                "name": "Автохимия - Масло моторное",
+                "created_at": "2023-04-29T16:56:54.000000Z",
+                "updated_at": "2023-04-29T16:56:54.000000Z",
+                "pivot": {
+                  "category_id": 75,
+                  "categoryable_id": 70,
+                  "categoryable_type": "App\\Models\\OzonCategory"
+                }
+              },
+              "alCategories": {
+                "id": 458,
+                "name": "Моторное масло",
+                "parent_id": 417,
+                "source_id": 200004097,
+                "is_visible": true,
+                "created_at": "2023-04-23T09:31:29.000000Z",
+                "updated_at": "2023-04-23T09:31:29.000000Z",
+                "pivot": {
+                  "category_id": 75,
+                  "categoryable_id": 458,
+                  "categoryable_type": "App\\Models\\AliCategory"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Антифризы",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 0,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null
+    },
+    {
+      "id": 8,
+      "name": "Электрооборудование автомобиля. Электропроводка",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 1,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 9,
+          "name": "Узлы и детали генератора",
+          "parent_id": 8,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 10,
+              "name": "Обгонные муфты генератора",
+              "parent_id": 9,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Двигатель. Моторная группа",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 6,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 12,
+          "name": "Ремни и цепи ГРМ",
+          "parent_id": 11,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 3,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 18,
+              "name": "Ролики натяжные ремня ГРМ",
+              "parent_id": 12,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 19,
+              "name": "Комплекты ремня ГРМ",
+              "parent_id": 12,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 20,
+              "name": "Ролики направляющие ремня ГРМ",
+              "parent_id": 12,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "name": "Приводные ремни. Элементы ременных передач",
+          "parent_id": 11,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 14,
+          "name": "Система смазки двигателя",
+          "parent_id": 11,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 15,
+          "name": "Детали ГРМ",
+          "parent_id": 11,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 16,
+          "name": "Детали поршневой группы. КШМ",
+          "parent_id": 11,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 17,
+          "name": "Крепления и элементы подвески двигателя",
+          "parent_id": 11,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 21,
+              "name": "Опоры двигателя",
+              "parent_id": 17,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Дополнительные узлы и системы автомобиля",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 1,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 23,
+          "name": "Шестерни распредвала",
+          "parent_id": 22,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 24,
+              "name": "Фильтры салонные",
+              "parent_id": 23,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Рулевое управление",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 0,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null
+    },
+    {
+      "id": 26,
+      "name": "Рулевые рычаги и тяги",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 4,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 27,
+          "name": "Маятниковые рычаги",
+          "parent_id": 26,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 28,
+          "name": "Рулевые тяги",
+          "parent_id": 26,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 29,
+          "name": "Рулевые наконечники",
+          "parent_id": 26,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        },
+        {
+          "id": 30,
+          "name": "Детали рулевых механизмов",
+          "parent_id": 26,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 0,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "name": "Сцепление. Трансмиссия",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 1,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 32,
+          "name": "Крепления и опоры узлов трансмиссии",
+          "parent_id": 31,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 33,
+              "name": "Опоры КПП",
+              "parent_id": 32,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "name": "Топливная система",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 1,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 35,
+          "name": "Фильтрующие элементы топливной системы",
+          "parent_id": 34,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 2,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 36,
+              "name": "Фильтры топлива",
+              "parent_id": 35,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 37,
+              "name": "Фильтры воздуха",
+              "parent_id": 35,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "name": "Тормозная система",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 2,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 39,
+          "name": "Детали дисковых тормозов",
+          "parent_id": 38,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 41,
+              "name": "Тормозные диски",
+              "parent_id": 39,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "name": "Тормозные колодки",
+          "parent_id": 38,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 42,
+              "name": "Колодки тормозные дисковые",
+              "parent_id": 40,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "name": "Узлы и детали шасси",
+      "parent_id": 0,
+      "helper_text": null,
+      "updated_at": "23.04.23 20:27",
+      "children_count": 4,
+      "creator": {
+        "name": "Zakhar",
+        "email": "echo.zahar@gmail.com"
+      },
+      "ozonCategories": null,
+      "alCategories": null,
+      "children": [
+        {
+          "id": 44,
+          "name": "Детали подвески",
+          "parent_id": 43,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 4,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 45,
+              "name": "Втулки стабилизатора",
+              "parent_id": 44,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 46,
+              "name": "Стойки стабилизатора",
+              "parent_id": 44,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 47,
+              "name": "Рычаги подвески",
+              "parent_id": 44,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 48,
+              "name": "Шаровые опоры",
+              "parent_id": 44,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        },
+        {
+          "id": 49,
+          "name": "Сайлентблоки",
+          "parent_id": 43,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 4,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 50,
+              "name": "Сайлентблоки рессор",
+              "parent_id": 49,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 51,
+              "name": "Сайлентблоки рычагов подвески",
+              "parent_id": 49,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 52,
+              "name": "Сайлентблоки балки моста",
+              "parent_id": 49,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            },
+            {
+              "id": 76,
+              "name": "anower test category",
+              "parent_id": 49,
+              "helper_text": "Подвеска втулки и сальники. (upadate)",
+              "updated_at": "02.05.23 08:39",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": {
+                "id": 673,
+                "parent_id": 340,
+                "source_id": 85824274,
+                "name": "Сайлентблок, втулка подвески",
+                "created_at": "2023-04-29T17:04:05.000000Z",
+                "updated_at": "2023-04-29T17:04:05.000000Z",
+                "pivot": {
+                  "category_id": 76,
+                  "categoryable_id": 673,
+                  "categoryable_type": "App\\Models\\OzonCategory"
+                }
+              },
+              "alCategories": {
+                "id": 708,
+                "name": "Рулевые и Подвеска втулки",
+                "parent_id": 690,
+                "source_id": 201964906,
+                "is_visible": true,
+                "created_at": "2023-04-23T09:31:48.000000Z",
+                "updated_at": "2023-04-23T09:31:48.000000Z",
+                "pivot": {
+                  "category_id": 76,
+                  "categoryable_id": 708,
+                  "categoryable_type": "App\\Models\\AliCategory"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": 53,
+          "name": "Крепления и опоры элементов подвески",
+          "parent_id": 43,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 54,
+              "name": "Опоры амортизаторов",
+              "parent_id": 53,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        },
+        {
+          "id": 55,
+          "name": "Амортизаторные стойки. Комплектующие стоек",
+          "parent_id": 43,
+          "helper_text": "Структура дерева ABSELPARTS",
+          "updated_at": "23.04.23 20:27",
+          "children_count": 1,
+          "creator": {
+            "name": "Zakhar",
+            "email": "echo.zahar@gmail.com"
+          },
+          "ozonCategories": null,
+          "alCategories": null,
+          "children": [
+            {
+              "id": 56,
+              "name": "Чашки опоры амортизатора",
+              "parent_id": 55,
+              "helper_text": "Структура дерева ABSELPARTS",
+              "updated_at": "23.04.23 20:27",
+              "children_count": 0,
+              "creator": {
+                "name": "Zakhar",
+                "email": "echo.zahar@gmail.com"
+              },
+              "ozonCategories": null,
+              "alCategories": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

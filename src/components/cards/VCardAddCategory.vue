@@ -6,12 +6,13 @@
       <h3 class="card-add-category__title">Добавить категорию</h3>
       <div class="card-add-category__body-content">
         <div class="card-add-category__inputs">
-          <div
+          <!-- <div
             class="card-add-category__input"
             v-for="inputOpts in inputs"
           >
             <VInput :opts="inputOpts" />
-          </div>
+          </div> -->
+          <VSelect2 :options="data" />
         </div>
         <div class="card-add-category__buttons">
           <div class="card-add-category__button--bd">
@@ -37,12 +38,14 @@
 <script>
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
+  import VSelect2 from '../UI/VSelect2.vue';
 
   export default {
     name: 'VCardAddCategory',
-    components: { VInput, VButton },
+    components: { VInput, VButton, VSelect2 },
     data() {
       return {
+        data: [],
         inputs: [
           {
             type: 'text',
@@ -71,6 +74,26 @@
           },
         ],
       };
+    },
+    methods: {
+      async fetchData() {
+        try {
+          const url = 'http://localhost:3001/data';
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error('Ошибка сети при чтении файла JSON');
+          }
+          const jsonData = await response.json();
+          // console.log(jsonData);
+          this.data = jsonData;
+        } catch (error) {
+          console.error('Не удалось прочитать JSON файл:', error);
+        }
+      },
+    },
+    async created() {
+      await this.fetchData();
+      // console.log(this.data);
     },
   };
 </script>

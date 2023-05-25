@@ -1,4 +1,3 @@
-`
 <template>
   <div class="categories-table">
     <div class="table-categories__head head-categories">
@@ -23,12 +22,15 @@
         </li>
       </ul>
     </div>
-    <div class="categories-table__content">
+    <div class="categories-table__content js-dropdown-menu">
       <div
         class="categories-table__item item-category"
         v-for="item in data"
       >
-        <div class="item-category__parent parent-category row-categories-table">
+        <div
+          class="item-category__parent parent-category row-categories-table"
+          :class="{ 'js-dropdown-menu__button': item.children_count > 0 }"
+        >
           <div class="parent-category__icon">
             <img
               src="@/assets/img/static/decorative-icon/Icon.svg"
@@ -80,10 +82,18 @@
           >
             <div
               class="child-item-category row-categories-table"
-              :class="childItem.children_count > 0 ? 'item-category__child--has-children' : ''"
+              :class="{ 'js-dropdown-menu__button': childItem.children_count > 0, 'item-category__child--has-children': childItem.children_count > 0 }"
             >
               <div class="child-item-category__icon">
                 <img
+                  v-if="childItem.children_count > 0"
+                  src="@/assets/img/static/decorative-icon/Icon.svg"
+                  alt="show"
+                  style="opacity: 0.33"
+                />
+
+                <img
+                  v-else
                   src="@/assets/img/static/buttons-icon/Show_20px.svg"
                   alt="show"
                 />
@@ -95,7 +105,7 @@
               <div class="child-item-category__aliexpress">-</div>
               <div class="child-item-category__wildberries">-</div>
               <div class="child-item-category__yandex">-</div>
-              <div class="child-item-category__products">9999</div>
+              <div class="child-item-category__products">{{ childItem.children_count }}</div>
               <div class="child-item-category__button">
                 <VButton>
                   <span class="button__image">
@@ -129,7 +139,7 @@
                   <div class="child-item-category__aliexpress">-</div>
                   <div class="child-item-category__wildberries">-</div>
                   <div class="child-item-category__yandex">-</div>
-                  <div class="child-item-category__products">9999</div>
+                  <div class="child-item-category__products">{{ childChildItem.children_count }}</div>
                   <div class="child-item-category__button">
                     <VButton>
                       <span class="button__image">
@@ -153,9 +163,11 @@
 <script>
   import axios from 'axios';
   import VButton from '../UI/VButton.vue';
+  import mixDropdownMenuFn from '@/mixins/mixDropdownMenuFn';
 
   export default {
     name: 'VCategoriesTable',
+    mixins: [mixDropdownMenuFn],
     data() {
       return {
         headCategories: ['ID', 'Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
@@ -164,6 +176,11 @@
     },
     created() {
       this.fetchData();
+    },
+    mounted() {
+      setTimeout(() => {
+        this.mixDropdownMenuFn();
+      }, 100);
     },
     methods: {
       async fetchData() {
@@ -261,11 +278,21 @@
     }
 
     &__children {
+      display: none;
+
+      .js-dropdown-menu__item--active > & {
+        display: block;
+      }
+
       .item-category__children {
         .child-item-category {
-          &.row-categories-table {
+          &.row-categories-table > * {
+            &:nth-child(2) {
+              width: 290px;
+            }
           }
-          background: yellow;
+          // background: yellow;
+          padding-left: 46px;
         }
       }
     }
@@ -273,7 +300,7 @@
     }
     &__child--has-children {
       &.child-item-category {
-        background: green;
+        // background: green;
       }
     }
   }
