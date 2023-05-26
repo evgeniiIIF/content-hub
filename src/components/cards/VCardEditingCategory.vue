@@ -3,12 +3,14 @@
     <div class="card-editing-category__content">
       <div class="card-editing-category__top">
         <div class="card-editing-category__button-back">
-          <VButton>
-            <img
-              src="@/assets/img/static/buttons-icon/Arrow_goBack.svg"
-              alt="back"
-            />
-          </VButton>
+          <RouterLink to="/">
+            <VButton>
+              <img
+                src="@/assets/img/static/buttons-icon/Arrow_goBack.svg"
+                alt="back"
+              />
+            </VButton>
+          </RouterLink>
         </div>
         <h4 class="card-editing-category__title">Редактирование</h4>
       </div>

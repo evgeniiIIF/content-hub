@@ -22,7 +22,7 @@
         </li>
       </ul>
     </div>
-    <div class="categories-table__content js-dropdown-menu">
+    <div class="categories-table__content js-dropdown-menu--root">
       <div
         class="categories-table__item item-category"
         v-for="item in data"
@@ -38,7 +38,10 @@
             />
           </div>
           <div class="parent-category__name">{{ item.name }}</div>
-          <div class="parent-category__buttons">
+          <div
+            class="parent-category__buttons"
+            @click.stop
+          >
             <div class="parent-category__button--add">
               <VButton>
                 <span class="button__image">
@@ -61,14 +64,45 @@
               </VButton>
             </div>
             <div class="parent-category__button--more">
-              <VButton>
-                <span class="button__image">
-                  <img
-                    src="@/assets/img/static/buttons-icon/More_Vertical_20px.svg"
-                    alt="plus"
-                  />
-                </span>
-              </VButton>
+              <VDropdovnSlots>
+                <template #button>
+                  <button
+                    class="button"
+                    type="button"
+                  >
+                    <img
+                      src="@/assets/img/static/buttons-icon/More_Vertical_20px.svg"
+                      alt="icon"
+                    />
+                  </button>
+                </template>
+                <template #menu>
+                  <ul class="list">
+                    <li class="list__item">
+                      <RouterLink to="/editing">
+                        <div class="list__link">
+                          <img
+                            class="list__image"
+                            src="@/assets/img/static/buttons-icon/Edit_Pencil_02_20px.svg"
+                            alt="edit"
+                          />
+                          <span class="list__text">Редактировать</span>
+                        </div>
+                      </RouterLink>
+                    </li>
+                    <li class="list__item">
+                      <div class="list__link">
+                        <img
+                          class="list__image"
+                          src="@/assets/img/static/buttons-icon/Trash_Empty_20px.svg"
+                          alt="trash"
+                        />
+                        <span class="list__text">Удалить</span>
+                      </div>
+                    </li>
+                  </ul>
+                </template>
+              </VDropdovnSlots>
             </div>
           </div>
         </div>
@@ -107,14 +141,26 @@
               <div class="child-item-category__yandex">-</div>
               <div class="child-item-category__products">{{ childItem.children_count }}</div>
               <div class="child-item-category__button">
-                <VButton>
-                  <span class="button__image">
-                    <img
-                      src="@/assets/img/static/buttons-icon/More_Vertical_20px.svg"
-                      alt="plus"
-                    />
-                  </span>
-                </VButton>
+                <VDropdovnSlots>
+                  <template #button>
+                    <button
+                      class="button"
+                      type="button"
+                    >
+                      <img
+                        src="@/assets/img/static/buttons-icon/More_Vertical_20px.svg"
+                        alt="icon"
+                      />
+                    </button>
+                  </template>
+                  <template #menu>
+                    <ul>
+                      <li>Option 1</li>
+                      <li>Option 2</li>
+                      <li>Option 3</li>
+                    </ul>
+                  </template>
+                </VDropdovnSlots>
               </div>
             </div>
             <ul
@@ -141,14 +187,26 @@
                   <div class="child-item-category__yandex">-</div>
                   <div class="child-item-category__products">{{ childChildItem.children_count }}</div>
                   <div class="child-item-category__button">
-                    <VButton>
-                      <span class="button__image">
-                        <img
-                          src="@/assets/img/static/buttons-icon/More_Vertical_20px.svg"
-                          alt="plus"
-                        />
-                      </span>
-                    </VButton>
+                    <VDropdovnSlots>
+                      <template #button>
+                        <button
+                          class="button"
+                          type="button"
+                        >
+                          <img
+                            src="@/assets/img/static/buttons-icon/More_Vertical_20px.svg"
+                            alt="icon"
+                          />
+                        </button>
+                      </template>
+                      <template #menu>
+                        <ul>
+                          <li>Option 1</li>
+                          <li>Option 2</li>
+                          <li>Option 3</li>
+                        </ul>
+                      </template>
+                    </VDropdovnSlots>
                   </div>
                 </div>
               </li>
@@ -164,6 +222,7 @@
   import axios from 'axios';
   import VButton from '../UI/VButton.vue';
   import mixDropdownMenuFn from '@/mixins/mixDropdownMenuFn';
+  import VDropdovnSlots from '@/components/UI/VDropdownSlots.vue';
 
   export default {
     name: 'VCategoriesTable',
@@ -198,7 +257,7 @@
         }
       },
     },
-    components: { VButton },
+    components: { VButton, VDropdovnSlots },
   };
 </script>
 
@@ -327,9 +386,7 @@
         }
       }
       .parent-category__button--more {
-        .button {
-          opacity: 1;
-        }
+        opacity: 1;
       }
       .parent-category__name {
         text-decoration-line: underline;
@@ -365,6 +422,48 @@
     }
 
     &__button--more {
+      opacity: 0;
+
+      .dropdown__button {
+        padding: 0;
+      }
+
+      .dropdown__menu {
+        width: 180px;
+        height: auto;
+        top: 50%;
+        left: -170px;
+      }
+      .list {
+        &__item {
+          &:first-child {
+            border-bottom: 1px solid #ebedf1;
+          }
+        }
+        &__link {
+          display: flex;
+          align-items: center;
+          padding: 16px;
+          &:hover {
+            cursor: pointer;
+            background: #ebedf1;
+          }
+        }
+
+        &__image {
+          margin-right: 8px;
+        }
+
+        &__text {
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 154%;
+          color: #292929;
+        }
+      }
+
       .button {
         &__image {
           margin-right: 0;
@@ -379,7 +478,6 @@
         border-radius: 50%;
         background: transparent;
         border-color: transparent;
-        opacity: 0;
         &:hover {
           background: rgba(0, 0, 0, 0.03);
         }
@@ -439,6 +537,20 @@
     }
 
     &__button {
+      .dropdown__button {
+        padding: 0;
+      }
+      .list {
+        &__item {
+        }
+
+        &__image {
+        }
+
+        &__text {
+        }
+      }
+
       .button {
         &__image {
           margin-right: 0;
@@ -453,7 +565,7 @@
         border-radius: 50%;
         background: transparent;
         border-color: transparent;
-        opacity: 0;
+
         &:hover {
           background: rgba(0, 0, 0, 0.03);
         }

@@ -37,11 +37,13 @@
 
   import VHeader from './components/layout/VHeader/VHeader.vue';
   import VMain from './components/layout/VMain.vue';
+  import VFooter from './components/layout/VFooter.vue';
 
   export default {
     components: {
       VHeader,
       VMain,
+      VFooter,
     },
     data() {
       return {};

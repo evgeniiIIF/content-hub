@@ -1,7 +1,7 @@
 const mixDropdownMenuFn = {
   methods: {
     mixDropdownMenuFn() {
-      const dropdownMenuAll = document.querySelectorAll('.js-dropdown-menu');
+      const dropdownMenuAll = document.querySelectorAll('.js-dropdown-menu--root');
 
       dropdownMenuAll.forEach((dropdownMenu) => {
         const dropdownMenuButtonAll = dropdownMenu.querySelectorAll('.js-dropdown-menu__button');
@@ -13,6 +13,7 @@ const mixDropdownMenuFn = {
             const currentMenuItem = e.currentTarget.parentNode;
             removeClassActive(currentMenuItem);
             currentMenuItem.classList.toggle('js-dropdown-menu__item--active');
+            console.log(currentMenuItem.classList);
           }
 
           function removeClassActive(currentMenuItem = null) {
@@ -23,6 +24,10 @@ const mixDropdownMenuFn = {
               let currentParent = currentMenuItem.parentNode.closest('.js-dropdown-menu__item--active');
 
               while (currentParent) {
+                // if (currentParent.classList.contains('js-dropdown-menu--root')) {
+                //   console.log(currentParent);
+                //   break;
+                // }
                 parents.push(currentParent);
                 currentParent = currentParent.parentNode.closest('.js-dropdown-menu__item--active');
               }

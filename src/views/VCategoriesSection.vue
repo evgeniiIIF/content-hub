@@ -55,10 +55,10 @@
 </template>
 
 <script>
-  import VButton from '../UI/VButton.vue';
-  import VInput from '../UI/VInput.vue';
-  import VPagination from '../UI/VPagination.vue';
-  import VCategoriesTable from './VCategoriesTable.vue';
+  import VButton from '@/components/UI/VButton.vue';
+  import VInput from '@/components/UI/VInput.vue';
+  import VPagination from '@/components/UI/VPagination.vue';
+  import VCategoriesTable from '@/components/modules/VCategoriesTable.vue';
 
   export default {
     name: 'VCategoriesSection',
