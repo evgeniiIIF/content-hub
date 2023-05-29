@@ -20,55 +20,57 @@
     >
       {{ opts.label }}
     </span>
-    <input
-      v-if="opts.type === 'tel'"
-      class="input__input"
-      :type="opts.type"
-      :name="opts.name"
-      :value="opts.value"
-      :index="index"
-      :placeholder="opts.placeholder"
-      autocomplete="off"
-      @input="onInputTel"
-      @keydown="handleKeyDown"
-      @focus="onFocus"
-      @blur="onBlur"
-      @unfocus="onUnfocus"
-    />
-    <textarea
-      v-if="opts.type === 'textarea'"
-      :type="opts.type"
-      :value="opts.value"
-      :name="opts.name"
-      :cols="opts.cols"
-      :rows="opts.rows"
-      :placeholder="opts.placeholder"
-      :maxlength="opts.maxlength"
-      @input="onInput"
-      class="input__input"
-    >
-    </textarea>
-    <input
-      v-if="opts.type === 'text'"
-      class="input__input"
-      :pattern="opts.pattern"
-      :type="opts.type"
-      :name="opts.name"
-      :value="opts.value"
-      :index="index"
-      :placeholder="opts.placeholder"
-      :maxlength="opts.maxlength"
-      autocomplete="off"
-      @input="onInput"
-    />
-    <span
-      v-if="opts.icon"
-      class="input__search-icon"
-    >
-      <img
-        src="@/assets/img/static/search/Search_Magnifying_Glass_20px.svg"
-        alt="search"
+    <span class="input__field">
+      <input
+        v-if="opts.type === 'tel'"
+        class="input__input"
+        :type="opts.type"
+        :name="opts.name"
+        :value="opts.value"
+        :index="index"
+        :placeholder="opts.placeholder"
+        autocomplete="off"
+        @input="onInputTel"
+        @keydown="handleKeyDown"
+        @focus="onFocus"
+        @blur="onBlur"
+        @unfocus="onUnfocus"
       />
+      <textarea
+        v-if="opts.type === 'textarea'"
+        :type="opts.type"
+        :value="opts.value"
+        :name="opts.name"
+        :cols="opts.cols"
+        :rows="opts.rows"
+        :placeholder="opts.placeholder"
+        :maxlength="opts.maxlength"
+        @input="onInput"
+        class="input__input"
+      >
+      </textarea>
+      <input
+        v-if="opts.type === 'text'"
+        class="input__input"
+        :pattern="opts.pattern"
+        :type="opts.type"
+        :name="opts.name"
+        :value="opts.value"
+        :index="index"
+        :placeholder="opts.placeholder"
+        :maxlength="opts.maxlength"
+        autocomplete="off"
+        @input="onInput"
+      />
+      <span
+        v-if="opts.icon"
+        class="input__search-icon"
+      >
+        <img
+          :src="opts.icon"
+          alt="search"
+        />
+      </span>
     </span>
   </label>
 </template>
@@ -177,10 +179,6 @@
 
 <style lang="scss">
   .input {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
     width: 100%;
 
     &__label {
@@ -193,8 +191,14 @@
       color: #999999;
     }
 
+    &__field {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
     &__input {
-      padding: 9px 16px 9px 45px;
+      padding: 8px 12px;
       outline: none;
       border: 1px solid #ffffff;
 

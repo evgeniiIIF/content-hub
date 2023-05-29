@@ -1,5 +1,5 @@
 <template>
-  <section class="card-editing-category">
+  <div class="card-editing-category">
     <div class="card-editing-category__content">
       <div class="card-editing-category__top">
         <div class="card-editing-category__button-back">
@@ -63,7 +63,7 @@
         </li>
       </ul>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -100,6 +100,9 @@
   .card-editing-category {
     background: #ffffff;
     border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     &__content {
       margin-bottom: auto;
@@ -140,6 +143,8 @@
     }
     &__hints-body {
       padding: 16px;
+      background: #f4f6f7;
+
       & > *:first-child {
         padding-bottom: 20px;
         border-bottom: 1px solid #ebedf1;

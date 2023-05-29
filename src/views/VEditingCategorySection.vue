@@ -1,17 +1,19 @@
 <template>
-  <div class="editing-category">
+  <section class="editing-category">
     <div class="container editing-category__container">
-      <div class="editing-category__top">
-        <div class="editing-category__edit">
-          <VCardEditingCategory />
+      <div class="editing-category__body">
+        <div class="editing-category__top">
+          <div class="editing-category__edit">
+            <VCardEditingCategory />
+          </div>
+          <div class="editing-category__general-data">
+            <VCardGeneralData />
+          </div>
         </div>
-        <div class="editing-category__general-data">
-          <VCardGeneralData />
-        </div>
+        <div class="editing-category__bottom">buttons</div>
       </div>
-      <div class="editing-category__bottom">buttons</div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -27,24 +29,36 @@
 <style lang="scss">
   @import '@/assets/scss/smart-grid.scss';
   .editing-category {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
 
     &__container {
-      flex: 1 1 auto;
+      height: 100%;
       display: flex;
       flex-direction: column;
+      background: #ebedf1;
+    }
+    &__body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding-top: 20px;
     }
 
     &__top {
       flex: 1 1 auto;
       display: flex;
+      margin-bottom: 20px;
     }
     &__edit {
+      margin-right: 20px;
     }
 
     &__general-data {
+      flex: 1 1 auto;
     }
   }
 </style>

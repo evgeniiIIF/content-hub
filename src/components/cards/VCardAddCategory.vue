@@ -12,7 +12,8 @@
           >
             <VInput :opts="inputOpts" />
           </div> -->
-          <VSelect2 :options="data" />
+          <!-- <VSelect2 :options="data" /> -->
+          <VSelect />
         </div>
         <div class="card-add-category__buttons">
           <div class="card-add-category__button--bd">
@@ -38,11 +39,12 @@
 <script>
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
+  import VSelect from '../UI/VSelect.vue';
   import VSelect2 from '../UI/VSelect2.vue';
 
   export default {
     name: 'VCardAddCategory',
-    components: { VInput, VButton, VSelect2 },
+    components: { VInput, VButton, VSelect2, VSelect },
     data() {
       return {
         data: [],
@@ -84,7 +86,7 @@
             throw new Error('Ошибка сети при чтении файла JSON');
           }
           const jsonData = await response.json();
-          // console.log(jsonData);
+          console.log(jsonData);
           this.data = jsonData;
         } catch (error) {
           console.error('Не удалось прочитать JSON файл:', error);

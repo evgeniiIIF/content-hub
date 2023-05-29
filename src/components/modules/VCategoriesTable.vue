@@ -42,7 +42,10 @@
             class="parent-category__buttons"
             @click.stop
           >
-            <div class="parent-category__button--add">
+            <div
+              class="parent-category__button--add"
+              @click="showSlidingBlock"
+            >
               <VButton>
                 <span class="button__image">
                   <svg
@@ -215,6 +218,12 @@
         </ul>
       </div>
     </div>
+    <div
+      class="sliding-block"
+      :class="{ 'sliding-block--open': isOpenSlidingBlock }"
+    >
+      <VCardAddCategory />
+    </div>
   </div>
 </template>
 
@@ -223,6 +232,7 @@
   import VButton from '../UI/VButton.vue';
   import mixDropdownMenuFn from '@/mixins/mixDropdownMenuFn';
   import VDropdovnSlots from '@/components/UI/VDropdownSlots.vue';
+  import VCardAddCategory from '../cards/VCardAddCategory.vue';
 
   export default {
     name: 'VCategoriesTable',
@@ -231,6 +241,7 @@
       return {
         headCategories: ['ID', 'Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
         data: [],
+        isOpenSlidingBlock: false,
       };
     },
     created() {
@@ -242,6 +253,10 @@
       }, 100);
     },
     methods: {
+      showSlidingBlock() {
+        console.log(this.isOpenSlidingBlock);
+        this.isOpenSlidingBlock = true;
+      },
       async fetchData() {
         try {
           const url = 'http://localhost:3000/data';
@@ -250,20 +265,32 @@
             throw new Error('Ошибка сети при чтении файла JSON');
           }
           const jsonData = await response.json();
-          console.log(jsonData);
           this.data = jsonData;
         } catch (error) {
           console.error('Не удалось прочитать JSON файл:', error);
         }
       },
     },
-    components: { VButton, VDropdovnSlots },
+    components: { VButton, VDropdovnSlots, VCardAddCategory },
   };
 </script>
 
 <style lang="scss">
   @import '@/assets/scss/smart-grid.scss';
   @import '@/assets/scss/mixins.scss';
+
+  .sliding-block {
+    position: fixed;
+    left: 100%;
+    top: 0;
+    z-index: 10000;
+    background: yellow;
+    width: 100%;
+    height: 100%;
+    &--open {
+      left: 0;
+    }
+  }
 
   .row-categories-table {
     display: flex;

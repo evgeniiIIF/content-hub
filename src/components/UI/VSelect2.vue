@@ -27,6 +27,7 @@
         myOptions: [
           // { id: 1, text: 'apple' },
         ],
+        prefix: '',
       };
     },
     methods: {
@@ -37,21 +38,25 @@
         console.log({ id, text });
       },
 
-      runTree(items) {
+      runTree(items, prefix) {
         items.forEach((item) => {
           const optionItem = {};
           optionItem.id = item.id;
-          optionItem.text = item.name;
+          optionItem.text = this.prefix + ' ' + item.name;
           this.myOptions.push(optionItem);
+
           if (item.children) {
-            this.runTree(item.children);
+            // this.prefix = '';
+            //
+            // this.prefix += '-';
+            this.runTree(item.children, (this.prefix += '-'));
           }
+          this.prefix = '';
         });
       },
     },
     mounted() {
       setTimeout(() => {
-        console.log('kjkj');
         this.runTree(this.options);
       }, 100);
     },

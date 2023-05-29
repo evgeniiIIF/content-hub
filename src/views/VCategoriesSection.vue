@@ -67,7 +67,7 @@
       return {
         inputOpts: {
           type: 'text',
-          icon: true,
+          icon: require('@/assets/img/static/search/Search_Magnifying_Glass_20px.svg'),
           name: 'search',
           placeholder: 'Поиск',
         },
@@ -118,6 +118,10 @@
     &__input {
       width: 320px;
       margin-right: 24px;
+
+      .input__input {
+        padding: 9px 16px 9px 45px;
+      }
     }
 
     &__button {
