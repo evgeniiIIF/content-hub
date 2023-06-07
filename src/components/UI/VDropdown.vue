@@ -1,0 +1,163 @@
+<template>
+  <div
+    class="dropdown"
+    :class="menuIsOpen ? 'dropdown--open' : ''"
+    ref="currentDropdown"
+  >
+    <button
+      class="dropdown__button"
+      type="button"
+      @click="openMenu"
+    >
+      <span class="dropdown__title">{{ name }}</span>
+      <span class="dropdown__arrow">
+        <img
+          src="@/assets/img/static/arrows/arrow_down_20px.svg"
+          alt="arrow"
+        />
+      </span>
+    </button>
+    <div
+      v-show="menuIsOpen"
+      class="dropdown__menu"
+    >
+      <ul class="dropdown__list">
+        <li
+          class="dropdown__item"
+          v-for="(item, index) in dropdownItems"
+          :key="item.name"
+        >
+          <a
+            :href="item.href"
+            class="dropdown__link"
+            @click.prevent
+            >{{ item.name }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: {
+      name: {
+        type: String,
+      },
+      dropdownItems: {
+        type: Array,
+        default() {
+          return [];
+        },
+      },
+    },
+    data() {
+      return {
+        menuIsOpen: false,
+        selected: null,
+      };
+    },
+    methods: {
+      openMenu() {
+        this.menuIsOpen = !this.menuIsOpen;
+        document.addEventListener('click', this.closeMenu, true);
+        console.log(this.menuIsOpen + ' op');
+      },
+      closeMenu(e) {
+        const currentDropdown = this.$refs.currentDropdown;
+
+        if (currentDropdown && !currentDropdown.contains(e.target)) {
+          this.menuIsOpen = false;
+          document.removeEventListener('click', this.closeMenu, true);
+        }
+        console.log(this.menuIsOpen + ' clos');
+      },
+      // selectItem(e, item) {
+      //   this.selected = item;
+      //   const input = e.target.closest('.dropdown').querySelector('.dropdown__input');
+      //   this.menuIsOpen = false;
+      //   input.focus();
+      //   this.$emit('on-selected-item', {
+      //     hasSelected: this.hasSelected,
+      //     selected: this.selected,
+      //   });
+      // },
+    },
+    // computed: {
+    //   hasSelected() {
+    //     return this.selected !== this.items[0];
+    //   },
+    // },
+  };
+</script>
+
+<style lang="scss">
+  @import '@/assets/scss/settings.scss';
+
+  .dropdown {
+    position: relative;
+    height: 100%;
+
+    &__button {
+      height: 100%;
+      background: transparent;
+      border: none;
+      display: flex;
+      padding: 20px 24px;
+      padding-right: 16px;
+    }
+
+    &__title {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-right: 8px;
+      @extend %font-nav-link;
+    }
+
+    &__arrow {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    &__menu {
+      position: absolute;
+      width: 180px;
+      min-height: 158px;
+      left: 0;
+      top: 120%;
+      border-radius: 4px;
+      box-shadow: 0px 8px 24px -4px rgba(54, 54, 54, 0.1);
+      background: #ffffff;
+    }
+    &__item {
+      @extend %font-dropdown-item;
+      &:not(:last-child) {
+        border-bottom: 1px solid #ebedf1;
+      }
+    }
+    &__link {
+      display: block;
+      padding: 16px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 154%;
+      color: #292929;
+      &:hover {
+        background: #0077ff;
+        color: #fff;
+        font-weight: 700;
+      }
+    }
+
+    &--open {
+      & .dropdown__arrow img {
+        transform: rotate(180deg);
+      }
+    }
+  }
+</style>

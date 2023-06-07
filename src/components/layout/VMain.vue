@@ -1,0 +1,29 @@
+<template>
+  <main
+    ref="main"
+    class="main"
+  >
+    <RouterView />
+  </main>
+</template>
+
+<script>
+  import mixSetMarginTopOfHeaderHeight from '@/mixins/mixSetMarginTopOfHeaderHeight';
+  import VCardAddCategory from '../cards/VCardAddCategory.vue';
+
+  export default {
+    name: 'VMain',
+    mixins: [mixSetMarginTopOfHeaderHeight],
+    components: { VCardAddCategory },
+  };
+</script>
+
+<style lang="scss">
+  @import '@/assets/scss/smart-grid.scss';
+
+  .main {
+  }
+  .add-cat {
+    background: #eee;
+  }
+</style>
