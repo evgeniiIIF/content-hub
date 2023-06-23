@@ -56,7 +56,7 @@
     },
     data() {
       return {
-        menuIsOpen: false,
+        menuIsOpen: true,
         selected: null,
       };
     },
@@ -124,8 +124,8 @@
 
     &__menu {
       position: absolute;
-      width: 220px;
-      min-height: 158px;
+      width: auto;
+      min-height: auto;
       left: 0;
       top: 120%;
       border-radius: 4px;
@@ -133,6 +133,7 @@
       background: #ffffff;
     }
     &__item {
+      white-space: nowrap;
       @extend %font-dropdown-item;
     }
 

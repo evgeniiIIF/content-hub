@@ -70,21 +70,18 @@
     data() {
       return {
         menuItems: [
-          {
-            name: 'Маркетплейсы',
-            dropdownItems: [
-              { name: 'Ozon', href: 'changeme' },
-              { name: 'Wildberries', href: 'changeme' },
-              { name: 'Aliexpress', href: 'changeme' },
-            ],
-          },
+          // {
+          //   name: 'Маркетплейсы',
+          //   dropdownItems: [
+          //     { name: 'Ozon', href: 'changeme' },
+          //     { name: 'Wildberries', href: 'changeme' },
+          //     { name: 'Aliexpress', href: 'changeme' },
+          //   ],
+          // },
           {
             name: 'Базовые поля',
             dropdownItems: [
               { name: 'Локальный список', href: 'changeme' },
-              { name: 'МП Wildberries', href: 'changeme' },
-              { name: 'МП Aliexpress', href: 'changeme' },
-              { name: 'МП Ozon', href: 'changeme' },
               { name: 'Сопоставить поля с полями МП', href: 'changeme' },
             ],
           },

@@ -202,7 +202,6 @@
     methods: {
       onInput(e, bodyIndex, inputIndex) {
         this.bodyItems[bodyIndex][inputIndex].value = e.target.value;
-        console.log(this.bodyItems);
       },
       addMore(bodyItem) {
         let inputs = JSON.parse(JSON.stringify(this.inputs));
@@ -210,7 +209,6 @@
       },
       removeBodyItem(bodyIndex) {
         this.bodyItems = this.bodyItems.filter((item, index) => index !== bodyIndex);
-        console.log(bodyIndex);
       },
       async fetchData() {
         try {
@@ -234,7 +232,6 @@
     },
     mounted() {
       this.addMore();
-      console.log(this.bodyItems);
     },
   };
 </script>

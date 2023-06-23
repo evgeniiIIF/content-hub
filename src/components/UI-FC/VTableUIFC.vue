@@ -1,17 +1,17 @@
 <template>
-  <div class="categories-table">
-    <div class="categories-table__head head-categories">
-      <ul class="head-categories__list row-categories-table">
+  <div class="table">
+    <div class="table__head head-table">
+      <ul class="head-table__list row-table">
         <li
-          class="head-categories__item"
+          class="head-table__item"
           v-for="name in headCategories"
           :key="name"
         >
           {{ name }}
         </li>
-        <li class="head-categories__buttons">
+        <li class="head-table__buttons">
           <button
-            class="head-categories__button"
+            class="head-table__button"
             type="button"
           >
             <img
@@ -22,16 +22,16 @@
         </li>
       </ul>
     </div>
-    <div class="categories-table__list js-dropdown-menu--root">
+    <div class="table__body js-dropdown-menu--root">
       <VRecursiveList
         :items="data"
         :level="1"
       >
-        <template v-slot:slot1="{ item, level, index }">
+        <template #slot1="{ item, level, indexL1 }">
           <div
-            class="item-category row-categories-table"
+            class="item-category row-table"
             :class="{ 'js-dropdown-menu__button': item.children_count > 0 }"
-            @mouseleave="closeOwnDropdown($event, index)"
+            @mouseleave="closeOwnDropdown($event, level, indexL1)"
           >
             <div class="item-category__icon">
               <svg
@@ -70,7 +70,7 @@
               class="item-category__buttons"
               @click.stop
             >
-              <div
+              <!-- <div
                 class="item-category__button--add"
                 @click="showSlidingBlock"
               >
@@ -93,9 +93,9 @@
                   </span>
                   <span class="button__text">Добавить субкатегорию</span>
                 </VButton>
-              </div>
+              </div> -->
               <div class="item-category__button--more">
-                <VDropdovnSlots :ref="`VDropdovnSlots${index}`">
+                <VDropdovnSlots :ref="`VDropdovnSlots(index-${indexL1})`">
                   <template #button>
                     <button
                       class="button"
@@ -169,13 +169,13 @@
                 </VDropdovnSlots>
               </div>
             </div>
-          </div></template
-        >
-        <template v-slot:slot2="{ item, level, index }">
+          </div>
+        </template>
+        <template #slot2="{ item, level, indexL1, indexL2 }">
           <div
-            class="item-category row-categories-table"
+            class="item-category row-table"
             :class="{ 'js-dropdown-menu__button': item.children_count > 0 }"
-            @mouseleave="closeOwnDropdown($event, index)"
+            @mouseleave="closeOwnDropdown($event, level, indexL1, indexL2)"
           >
             <div
               class="item-category__icon"
@@ -258,7 +258,7 @@
                 </VButton>
               </div>
               <div class="item-category__button--more">
-                <VDropdovnSlots :ref="`VDropdovnSlots${index}`">
+                <VDropdovnSlots :ref="`VDropdovnSlots(index-${indexL1}${indexL2})`">
                   <template #button>
                     <button
                       class="button"
@@ -301,11 +301,11 @@
             </div>
           </div>
         </template>
-        <template v-slot:slot3="{ item, level, index }">
+        <template #slot3="{ item, level, indexL1, indexL2, indexL3 }">
           <div
-            class="item-category row-categories-table"
+            class="item-category row-table"
             :class="{ 'js-dropdown-menu__button': item.children_count > 0 }"
-            @mouseleave="closeOwnDropdown($event, index)"
+            @mouseleave="closeOwnDropdown($event, level, indexL1, indexL2, indexL3)"
           >
             <div class="item-category__icon">
               <img
@@ -324,7 +324,7 @@
               @click.stop
             >
               <div class="item-category__button--more">
-                <VDropdovnSlots :ref="`VDropdovnSlots${index}`">
+                <VDropdovnSlots :ref="`VDropdovnSlots(index-${indexL1}${indexL2}${indexL3})`">
                   <template #button>
                     <button
                       class="button"
@@ -392,7 +392,7 @@
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
 
   export default {
-    name: 'VCategoriesTable',
+    name: 'VTable',
     mixins: [mixDropdownMenuFn],
     components: { VButton, VDropdovnSlots, VCardAddCategory, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory },
 
@@ -413,14 +413,16 @@
     methods: {
       ...mapActions('localCategoriesItems', ['GET_ITEMS']),
 
-      closeOwnDropdown(e, index) {
-        // this.$refs.VDropdovnSlots[index].menuIsOpen = false;
-        this.$refs[`VDropdovnSlots${index}`].menuIsOpen = false;
-        console.log();
+      closeOwnDropdown(e, level, indexL1, indexL2 = null, indexL3 = null) {
+        // console.log(`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? indexL2 : ''}${indexL3 !== null ? indexL3 : ''})`);
+        const currentLevelListItem = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? indexL2 : ''}${indexL3 !== null ? indexL3 : ''})`];
+
+        if (currentLevelListItem.menuIsOpen) {
+          currentLevelListItem.menuIsOpen = false;
+        }
       },
 
       showSlidingBlock(e) {
-        console.log(e.currentTarget);
         this.isOpenSlidingBlock = true;
       },
       async fetchData() {
@@ -431,7 +433,6 @@
             throw new Error('Ошибка сети при чтении файла JSON');
           }
           const jsonData = await response.json();
-          console.log(jsonData);
           this.data = jsonData;
         } catch (error) {
           console.error('Не удалось прочитать JSON файл:', error);
@@ -457,7 +458,7 @@
 
   $offsetSubmenu: 12px;
 
-  .row-categories-table {
+  .row-table {
     display: flex;
     align-items: center;
 
@@ -504,19 +505,19 @@
       margin-left: auto;
     }
   }
-  .categories-table {
+  .table {
     min-width: 1600px;
     &__head {
     }
 
-    &__list {
+    &__body {
     }
 
     &__item {
     }
   }
 
-  .head-categories {
+  .head-table {
     background: #f4f6f7;
     border-radius: 4px;
     padding: 12px 16px;
@@ -615,20 +616,20 @@
       display: flex;
     }
 
-    &__button--add {
-      margin-right: 8px;
-      .button {
-        padding: 8px 13px;
-        background: transparent;
-        border-color: transparent;
-        color: #3d3d3d;
-        &__image {
-          path {
-            fill: #adadad;
-          }
-        }
-      }
-    }
+    // &__button--add {
+    //   margin-right: 8px;
+    //   .button {
+    //     padding: 8px 13px;
+    //     background: transparent;
+    //     border-color: transparent;
+    //     color: #3d3d3d;
+    //     &__image {
+    //       path {
+    //         fill: #adadad;
+    //       }
+    //     }
+    //   }
+    // }
 
     &__button--more {
       opacity: 0;
@@ -638,10 +639,13 @@
       }
 
       .dropdown__menu {
-        width: 221px;
+        padding: 0 48px 48px;
+        width: auto;
         min-height: auto;
-        top: 50%;
+        top: 80%;
         left: -229px;
+        background: transparent;
+        box-shadow: none;
 
         .button {
           display: flex;
@@ -672,7 +676,10 @@
       }
 
       .list {
+        background: #fff;
+        box-shadow: 0px 8px 24px -4px rgba(54, 54, 54, 0.1);
         &__item {
+          white-space: nowrap;
           &:not(:last-child) {
             border-bottom: 1px solid #ebedf1;
           }
@@ -727,7 +734,7 @@
     .list {
       display: none;
 
-      & .row-categories-table {
+      & .row-table {
         & > *:nth-child(2) {
           flex: 0 1 calc(320px - $offsetSubmenu);
         }
@@ -738,7 +745,7 @@
       }
 
       .list {
-        & .row-categories-table {
+        & .row-table {
           & > *:nth-child(2) {
             flex: 0 1 calc(320px - $offsetSubmenu - $offsetSubmenu);
           }
@@ -764,6 +771,8 @@
 
   .dropdown-slots--open {
     & .dropdown__menu {
+      z-index: 999;
+
       .list {
         display: block;
       }

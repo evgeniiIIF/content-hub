@@ -1,34 +1,39 @@
 const bodyLockMixin = {
-    methods: {
-        lockBody() {
-            const body = document.querySelector('body');
-            const header = document.querySelector('header');
+  methods: {
+    lockBody(paddingRight = true) {
+      const body = document.querySelector('body');
+      const header = document.querySelector('header');
+      body.classList.add('_lock');
 
-            body.classList.add('_lock');
-            body.style.paddingRight = this.getScrollWidth();
-            header.style.paddingRight = this.getScrollWidth();
-        },
-        unlockBody() {
-            const body = document.querySelector('body');
-            const header = document.querySelector('header');
-            body.classList.remove('_lock');
-            body.style.paddingRight = '0px';
-            header.style.paddingRight = '0px';
-        },
-        getScrollWidth() {
-            let div = document.createElement('div');
-
-            div.style.overflowY = 'scroll';
-            div.style.width = '50px';
-            div.style.height = '50px';
-
-            document.body.append(div);
-            let scrollWidth = div.offsetWidth - div.clientWidth;
-
-            div.remove();
-            return scrollWidth + 'px';
-        },
+      if (paddingRight !== false) {
+        body.style.paddingRight = this.getScrollWidth();
+        header.style.paddingRight = this.getScrollWidth();
+      }
     },
+    unlockBody(paddingRight = true) {
+      const body = document.querySelector('body');
+      const header = document.querySelector('header');
+      body.classList.remove('_lock');
+
+      if (paddingRight !== false) {
+        body.style.paddingRight = '0px';
+        header.style.paddingRight = '0px';
+      }
+    },
+    getScrollWidth() {
+      let div = document.createElement('div');
+
+      div.style.overflowY = 'scroll';
+      div.style.width = '50px';
+      div.style.height = '50px';
+
+      document.body.append(div);
+      let scrollWidth = div.offsetWidth - div.clientWidth;
+
+      div.remove();
+      return scrollWidth + 'px';
+    },
+  },
 };
 
 export default bodyLockMixin;

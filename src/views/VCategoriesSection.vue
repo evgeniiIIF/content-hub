@@ -51,8 +51,8 @@
             </button>
           </div>
         </div>
-        <div class="categories__content">
-          <VCategoriesTable />
+        <div class="categories__table">
+          <VTableUIFC />
         </div>
         <div class="categories__bottom">
           <VPagination />
@@ -74,11 +74,11 @@
   import VInput from '@/components/UI/VInput.vue';
   import VPagination from '@/components/UI/VPagination.vue';
   import VCardAddCategory from '@/components/cards/VCardAddCategory.vue';
-  import VCategoriesTable from '@/components/modules/VCategoriesTable.vue';
+  import VTableUIFC from '@/components/UI-FC/VTableUIFC.vue';
 
   export default {
     name: 'VCategoriesSection',
-    components: { VInput, VButton, VCategoriesTable, VPagination, VSlidingBlockSlotUIFC, VCardAddCategory },
+    components: { VInput, VButton, VTableUIFC, VPagination, VSlidingBlockSlotUIFC, VCardAddCategory },
     data() {
       return {
         isOpenSlidingBlock: false,
@@ -101,7 +101,7 @@
     position: absolute;
     width: 100%;
     min-height: 100%;
-    overflow-y: auto;
+    // overflow-y: auto;
     left: 0;
     top: 0;
     background: #ebedf1;
@@ -119,10 +119,10 @@
     &__top {
     }
 
-    &__content {
+    &__table {
       flex: 1 1 auto;
-      overflow-x: auto;
-      overflow-y: hidden;
+      // overflow-x: auto;
+      // overflow-y: hidden;
       min-height: 700px;
     }
 

@@ -52,9 +52,9 @@
     watch: {
       isOpenSlidingBlock(newValue, oldValue) {
         if (newValue) {
-          this.lockBody();
+          this.lockBody(false);
         } else {
-          this.unlockBody();
+          this.unlockBody(false);
         }
       },
     },
@@ -86,9 +86,9 @@
 
     display: flex;
     justify-content: flex-end;
-    transition: all 0s ease 0.25s;
-
+    opacity: 0;
     background: rgba(54, 54, 54, 0.7);
+    transition: opacity 0.3s ease 0s;
 
     &__wrapper {
       position: absolute;
@@ -100,11 +100,11 @@
 
     &--open {
       right: 0;
-      transition: all 0s ease 0s;
+      opacity: 1;
+      transition: opacity 0.3s ease 0s;
 
       .sliding-block__wrapper {
-        transition: all 0.3s ease 0s;
-
+        transition: all 0.2s ease 0s;
         right: 0;
       }
     }

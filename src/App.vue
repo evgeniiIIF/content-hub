@@ -35,15 +35,15 @@
 <script>
   import { mapGetters, mapActions } from 'vuex';
 
-  import VHeader from './components/layout/VHeader/VHeader.vue';
+  import VHeader from './components/layout/VHeader.vue';
   import VMain from './components/layout/VMain.vue';
-  import VFooter from './components/layout/VFooter.vue';
+  // import VFooter from './components/layout/VFooter.vue';
 
   export default {
     components: {
       VHeader,
       VMain,
-      VFooter,
+      // VFooter,
     },
     data() {
       return {};

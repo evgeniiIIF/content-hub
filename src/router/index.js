@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import VEditingCategorySection from '../views/VEditingCategorySection.vue';
 import VCategoriesSection from '../views/VCategoriesSection.vue';
+import VLocalAttributesViews from '@/views/VLocalAttributesViews.vue';
 
 const routes = [
   {
@@ -12,6 +14,11 @@ const routes = [
     path: '/editing',
     name: 'editing',
     component: VEditingCategorySection,
+  },
+  {
+    path: '/local-attributes',
+    name: 'local-attributes',
+    component: VLocalAttributesViews,
   },
   // {
   //   path: '/about',

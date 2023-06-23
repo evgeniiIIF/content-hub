@@ -23,11 +23,20 @@
     >
       <ul class="dropdown__list">
         <li
+          @click="selectItem($event)"
           class="dropdown__item"
           v-for="(item, index) in dropdownItems"
           :key="item.name"
         >
+          <RouterLink
+            v-if="item.name == 'Локальный список'"
+            to="/local-attributes"
+            class="dropdown__link"
+          >
+            {{ item.name }}
+          </RouterLink>
           <a
+            v-else
             :href="item.href"
             class="dropdown__link"
             @click.prevent
@@ -56,6 +65,7 @@
       return {
         menuIsOpen: false,
         selected: null,
+        prevSelectedItem: null,
       };
     },
     methods: {
@@ -67,11 +77,19 @@
       closeMenu(e) {
         const currentDropdown = this.$refs.currentDropdown;
 
-        if (currentDropdown && !currentDropdown.contains(e.target)) {
-          this.menuIsOpen = false;
-          document.removeEventListener('click', this.closeMenu, true);
+        // if (currentDropdown && !currentDropdown.contains(e.target)) {
+        this.menuIsOpen = false;
+        document.removeEventListener('click', this.closeMenu, true);
+        // }
+      },
+
+      selectItem(e) {
+        if (this.prevSelectedItem) {
+          this.prevSelectedItem.classList.remove('dropdown__item--active');
         }
-        console.log(this.menuIsOpen + ' clos');
+        e.currentTarget.classList.add('dropdown__item--active');
+        this.prevSelectedItem = e.currentTarget;
+        this.closeMenu(e);
       },
       // selectItem(e, item) {
       //   this.selected = item;
@@ -136,6 +154,14 @@
       @extend %font-dropdown-item;
       &:not(:last-child) {
         border-bottom: 1px solid #ebedf1;
+      }
+
+      &--active {
+        .dropdown__link {
+          background: #0077ff;
+          color: #fff;
+          font-weight: 700;
+        }
       }
     }
     &__link {

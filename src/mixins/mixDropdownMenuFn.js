@@ -13,7 +13,6 @@ const mixDropdownMenuFn = {
             const currentMenuItem = e.currentTarget.parentNode;
             removeClassActive(currentMenuItem);
             currentMenuItem.classList.toggle('js-dropdown-menu__item--active');
-            console.log(currentMenuItem.classList);
           }
 
           function removeClassActive(currentMenuItem = null) {
