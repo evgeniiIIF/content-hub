@@ -22,8 +22,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/mixins.scss';
-  @import '@/assets/scss/smart-grid.scss';
   .button-dropdown-window {
     &__button {
       display: flex;

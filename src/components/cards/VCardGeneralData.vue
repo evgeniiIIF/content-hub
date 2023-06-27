@@ -17,7 +17,4 @@
   };
 </script>
 
-<style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/mixins.scss';
-</style>
+<style lang="scss"></style>

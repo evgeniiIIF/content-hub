@@ -302,9 +302,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/mixins.scss';
-
   .row-categories-table {
     display: flex;
     align-items: center;

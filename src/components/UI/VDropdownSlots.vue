@@ -56,7 +56,7 @@
     },
     data() {
       return {
-        menuIsOpen: true,
+        menuIsOpen: false,
         selected: null,
       };
     },
@@ -98,8 +98,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/settings.scss';
-
   .dropdown {
     position: relative;
     height: 100%;

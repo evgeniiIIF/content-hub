@@ -111,8 +111,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/settings.scss';
-
   .dropdown {
     position: relative;
     height: 100%;

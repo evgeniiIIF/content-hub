@@ -101,9 +101,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/mixins.scss';
-  @import '@/assets/scss/smart-grid.scss';
-
   $bg: #292929;
   $bd: #2a2a2a;
   $hov: #00a19c;
@@ -140,6 +137,11 @@
     }
 
     &__signin {
+    }
+
+    .container {
+      padding-left: 35px;
+      padding-right: 35px;
     }
   }
 

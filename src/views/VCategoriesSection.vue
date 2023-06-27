@@ -94,9 +94,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/settings.scss';
-
   .categories {
     position: absolute;
     width: 100%;

@@ -47,8 +47,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/settings.scss';
-
   .nav {
     height: 100%;
 

@@ -199,9 +199,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/mixins.scss';
-
   .slider {
     position: relative;
     width: 100%;

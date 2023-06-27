@@ -51,9 +51,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/mixins.scss';
-  @import '@/assets/scss/smart-grid.scss';
-
   // .v-dialog {
   // 	position: fixed;
   // 	top: 0;

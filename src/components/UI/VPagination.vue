@@ -43,9 +43,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/mixins.scss';
-
   .pagination {
     display: flex;
     @include mr(16px);

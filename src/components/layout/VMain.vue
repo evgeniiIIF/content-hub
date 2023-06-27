@@ -19,8 +19,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-
   .main {
   }
   .add-cat {

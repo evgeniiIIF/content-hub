@@ -1,20 +1,20 @@
 @use 'sass:math';
 
 @import './vars.scss';
-@import './smart-grid.scss';
+// @import './smart-grid.scss';
 
 // px to rem
 //font-size: rem(20);
 //in html{font-size: $mainFontSize; media(---){font-size: 15px}; media(---){font-size: 14px}...
 @function rem($pixels, $context: $maxFontSize) {
-    @if (unitless($pixels)) {
-        $pixels: $pixels * 1px;
-    }
-    @if (unitless($context)) {
-        $context: $context * 1px;
-    }
-    @return math.div($pixels, $context) * 1rem;
-    // @return ($pixels * $context) * 1rem;
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+  @return math.div($pixels, $context) * 1rem;
+  // @return ($pixels * $context) * 1rem;
 }
 
 // @mixin af($pcSize, $mobSize) {
@@ -37,79 +37,79 @@
 // @include adaptiv-font(40, 20)
 
 @mixin af($pcFontSize, $mobileFontSize) {
-    font-size: #{$pcFontSize + 'px'};
+  font-size: #{$pcFontSize + 'px'};
 
-    @include xl-block() {
-        font-size: #{$pcFontSize * 0.9 + 'px'};
-    }
-    @include lg-block() {
-        font-size: #{$mobileFontSize + 'px'};
-    }
-    @include md-block() {
-    }
-    @include sm-block() {
-    }
+  @include xl-block() {
+    font-size: #{$pcFontSize * 0.9 + 'px'};
+  }
+  @include lg-block() {
+    font-size: #{$mobileFontSize + 'px'};
+  }
+  @include md-block() {
+  }
+  @include sm-block() {
+  }
 }
 // @include af(46, 36);
 
 @mixin size-obj($width, $height: $width) {
-    width: $width;
-    height: $height;
+  width: $width;
+  height: $height;
 }
 
 @mixin placeholder {
-    ::-webkit-input-placeholder {
-        @content;
-    }
-    :-moz-placeholder {
-        @content;
-    }
-    ::-moz-placeholder {
-        @content;
-    }
-    :-ms-input-placeholder {
-        @content;
-    }
+  ::-webkit-input-placeholder {
+    @content;
+  }
+  :-moz-placeholder {
+    @content;
+  }
+  ::-moz-placeholder {
+    @content;
+  }
+  :-ms-input-placeholder {
+    @content;
+  }
 }
 // layout helper
 @mixin mr($margin) {
-    & > * {
-        margin-right: $margin;
-        &:last-child {
-            margin-right: 0;
-        }
+  & > * {
+    margin-right: $margin;
+    &:last-child {
+      margin-right: 0;
     }
+  }
 }
 @mixin mb($margin) {
-    & > * {
-        margin-bottom: $margin;
-        &:last-child {
-            margin-bottom: 0;
-        }
+  & > * {
+    margin-bottom: $margin;
+    &:last-child {
+      margin-bottom: 0;
     }
+  }
 }
 
 @mixin pbody($padding-top, $padding-bottom) {
-    & {
-        padding-top: calc($padding-top / $container * 100%);
-        padding-bottom: calc($padding-bottom / $container * 100%);
-    }
+  & {
+    padding-top: calc($padding-top / $container * 100%);
+    padding-bottom: calc($padding-bottom / $container * 100%);
+  }
 }
 
 // media query
 @mixin breakpoint($br) {
-    @media (max-width: $br) {
-        @content;
-    }
+  @media (max-width: $br) {
+    @content;
+  }
 }
 
 @mixin hideScroll() {
-    &::-webkit-scrollbar {
-        display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-    & {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
+  & {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 }

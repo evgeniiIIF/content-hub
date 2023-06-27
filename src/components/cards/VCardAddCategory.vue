@@ -171,9 +171,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/mixins.scss';
-
   .card-add-category {
     position: relative;
     &__close {

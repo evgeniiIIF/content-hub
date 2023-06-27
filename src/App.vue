@@ -53,8 +53,6 @@
   };
 </script>
 <style lang="scss">
-  @import '@/assets/scss/settings.scss';
-
   #app {
     height: 100%;
   }

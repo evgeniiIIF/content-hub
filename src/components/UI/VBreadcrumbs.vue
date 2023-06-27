@@ -16,9 +16,6 @@
   };
 </script>
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/mixins.scss';
-
   .breadcrumbs {
     display: flex;
     align-items: center;

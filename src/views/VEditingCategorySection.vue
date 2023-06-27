@@ -27,7 +27,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
   .editing-category {
     position: absolute;
     left: 0;

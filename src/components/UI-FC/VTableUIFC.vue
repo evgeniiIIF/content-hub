@@ -70,30 +70,6 @@
               class="item-category__buttons"
               @click.stop
             >
-              <!-- <div
-                class="item-category__button--add"
-                @click="showSlidingBlock"
-              >
-                <VButton>
-                  <span class="button__image">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M15.8333 4.16667L4.16667 4.16667L4.16667 15.8333L15.8333 15.8333L15.8333 4.16667ZM4.16667 2.5L15.8333 2.5C16.7538 2.5 17.5 3.24619 17.5 4.16667L17.5 15.8333C17.5 16.7538 16.7538 17.5 15.8333 17.5L4.16667 17.5C3.24619 17.5 2.5 16.7538 2.5 15.8333L2.5 4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5ZM10 5.83333C10.4602 5.83333 10.8333 6.20643 10.8333 6.66667V9.16667H13.3333C13.7936 9.16667 14.1667 9.53976 14.1667 10C14.1667 10.4602 13.7936 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.7936 10.4602 14.1667 10 14.1667C9.53976 14.1667 9.16667 13.7936 9.16667 13.3333V10.8333H6.66667C6.20643 10.8333 5.83334 10.4602 5.83334 10C5.83334 9.53976 6.20643 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.20643 9.53976 5.83333 10 5.83333Z"
-                        fill="white"
-                      />
-                    </svg>
-                  </span>
-                  <span class="button__text">Добавить субкатегорию</span>
-                </VButton>
-              </div> -->
               <div class="item-category__button--more">
                 <VDropdovnSlots :ref="`VDropdovnSlots(index-${indexL1})`">
                   <template #button>
@@ -233,30 +209,6 @@
               class="item-category__buttons"
               @click.stop
             >
-              <div
-                class="item-category__button--add"
-                @click="showSlidingBlock"
-              >
-                <VButton>
-                  <span class="button__image">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M15.8333 4.16667L4.16667 4.16667L4.16667 15.8333L15.8333 15.8333L15.8333 4.16667ZM4.16667 2.5L15.8333 2.5C16.7538 2.5 17.5 3.24619 17.5 4.16667L17.5 15.8333C17.5 16.7538 16.7538 17.5 15.8333 17.5L4.16667 17.5C3.24619 17.5 2.5 16.7538 2.5 15.8333L2.5 4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5ZM10 5.83333C10.4602 5.83333 10.8333 6.20643 10.8333 6.66667V9.16667H13.3333C13.7936 9.16667 14.1667 9.53976 14.1667 10C14.1667 10.4602 13.7936 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.7936 10.4602 14.1667 10 14.1667C9.53976 14.1667 9.16667 13.7936 9.16667 13.3333V10.8333H6.66667C6.20643 10.8333 5.83334 10.4602 5.83334 10C5.83334 9.53976 6.20643 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.20643 9.53976 5.83333 10 5.83333Z"
-                        fill="white"
-                      />
-                    </svg>
-                  </span>
-                  <span class="button__text">Кнопка</span>
-                </VButton>
-              </div>
               <div class="item-category__button--more">
                 <VDropdovnSlots :ref="`VDropdovnSlots(index-${indexL1}${indexL2})`">
                   <template #button>
@@ -453,9 +405,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/smart-grid.scss';
-  @import '@/assets/scss/mixins.scss';
-
   $offsetSubmenu: 12px;
 
   .row-table {
@@ -642,8 +591,9 @@
         padding: 0 48px 48px;
         width: auto;
         min-height: auto;
-        top: 80%;
-        left: -229px;
+        left: auto;
+        top: 100%;
+        right: 0;
         background: transparent;
         box-shadow: none;
 

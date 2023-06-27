@@ -71,8 +71,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/mixins.scss';
-  @import '@/assets/scss/smart-grid.scss';
   $delay: 0.05s;
   $during: 0.3s;
 

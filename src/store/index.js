@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+// import { createStore } from 'vuex';
 
 import localCategoriesItems from './modules/localCategoriesItems.js';
 

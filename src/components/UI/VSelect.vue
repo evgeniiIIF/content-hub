@@ -105,8 +105,6 @@
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/settings.scss';
-
   .select {
     position: relative;
     height: 100%;
