@@ -86,7 +86,7 @@
                   <template #menu>
                     <ul class="list">
                       <li class="list__item">
-                        <VButton>
+                        <VButton @click="showSlidingBlock">
                           <span class="button__image">
                             <svg
                               width="20"
@@ -108,18 +108,19 @@
                       </li>
                       <li class="list__item">
                         <RouterLink to="/editing">
-                          <div class="list__link">
-                            <img
-                              class="list__image"
-                              src="@/assets/img/static/buttons-icon/Edit_Pencil_02_20px.svg"
-                              alt="edit"
-                            />
+                          <VButton>
+                            <span class="button__image">
+                              <img
+                                src="@/assets/img/static/buttons-icon/Edit_Pencil_02_20px.svg"
+                                alt="edit"
+                              />
+                            </span>
                             <span class="list__text">Редактировать</span>
-                          </div>
+                          </VButton>
                         </RouterLink>
                       </li>
                       <li class="list__item">
-                        <VButton>
+                        <VButton @click="showSlidingBlock">
                           <span class="button__image">
                             <img
                               src="@/assets/img/static/decorative-icon/Info_20px.svg"
@@ -326,7 +327,14 @@
       :element="$refs.cardAddCategory"
       @onCloseMenu="isOpenSlidingBlock = false"
     >
-      <VCardAddNestedCategory @onCloseMenu="isOpenSlidingBlock = false" />
+      <VCardAddNestedCategory
+        v-if="showVCardAddNestedCategory"
+        @onCloseMenu="isOpenSlidingBlock = false"
+      />
+      <VCardInfoCategory
+        v-if="showVCardInfoCategory"
+        @onCloseMenu="isOpenSlidingBlock = false"
+      />
     </VSlidingBlockSlotUIFC>
   </div>
 </template>
@@ -342,17 +350,20 @@
   import VSlidingBlockSlotUIFC from '../UI-FC/VSlidingBlockSlotUIFC.vue';
   import VRecursiveList from '@/components/UI-FC/VRecursiveList.vue';
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
+  import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
 
   export default {
     name: 'VTable',
     mixins: [mixDropdownMenuFn],
-    components: { VButton, VDropdovnSlots, VCardAddCategory, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory },
+    components: { VButton, VDropdovnSlots, VCardAddCategory, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory },
 
     data() {
       return {
         headCategories: ['ID', 'Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
         data: [],
         isOpenSlidingBlock: false,
+        showVCardAddNestedCategory: false,
+        showVCardInfoCategory: false,
       };
     },
 
@@ -375,6 +386,12 @@
       },
 
       showSlidingBlock(e) {
+        const textButton = e.currentTarget.querySelector('.button__text').textContent;
+
+        this.showVCardAddNestedCategory = textButton === 'Добавить субкатегорию';
+        this.showVCardInfoCategory = textButton === 'Информация';
+
+        console.log(textButton);
         this.isOpenSlidingBlock = true;
       },
       async fetchData() {

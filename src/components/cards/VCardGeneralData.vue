@@ -1,16 +1,13 @@
 <template>
-  <div class="card-general-data">
-    <VCardAddCategory />
-  </div>
+  <div class="card-general-data"></div>
 </template>
 
 <script>
   import VButton from '../UI/VButton.vue';
-  import VCardAddCategory from './VCardAddCategory.vue';
 
   export default {
     name: 'VCardGeneralData',
-    components: { VButton, VCardAddCategory },
+    components: { VButton },
     data() {
       return {};
     },

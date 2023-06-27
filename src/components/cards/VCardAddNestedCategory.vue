@@ -1,5 +1,5 @@
 <template>
-  <div class="card-add-category-nested card-add-category-nested">
+  <div class="card-add-category-nested">
     <button
       class="card-add-category-nested__close"
       @click="$emit('onCloseMenu')"
