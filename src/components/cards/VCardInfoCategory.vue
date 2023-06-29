@@ -47,33 +47,17 @@
             </svg>
           </VInput>
         </div>
-        <!-- <span>
-          <label class="input">
-            <span class="input__label"> Сгенерированный URI </span>
-            <span class="input__field">
-              <input
-                v-if="opts.type === 'text'"
-                class="input__input"
-                :pattern="opts.pattern"
-                :type="opts.type"
-                :name="opts.name"
-                :value="opts.value"
-                :index="index"
-                :placeholder="opts.placeholder"
-                :maxlength="opts.maxlength"
-                autocomplete="off"
-                @input="onInput"
-              />
-
-              <span
-                class="input__icon"
-                v-if="opts.icon"
-              >
-                <slot> </slot>
-              </span>
-            </span>
-          </label>
-        </span> -->
+        <div class="card-info-category__rectagle rectagle-card-info-category">
+          <ul class="rectagle-card-info-category__list">
+            <li
+              class="rectagle-card-info-category__item"
+              v-for="rectItem in rectagleItems"
+            >
+              <div class="rectagle-card-info-category__key">{{ rectItem.key }}</div>
+              <div class="rectagle-card-info-category__value">{{ rectItem.value }}</div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="card-add-category-nested__bottom">
@@ -102,42 +86,8 @@
     data() {
       return {
         inputs: [
-          // {
-          //   select: true,
-          //   icon: true,
-          //   type: 'text',
-          //   label: 'Вложенность',
-          //   name: 'nesting',
-          //   placeholder: 'Выберите категорию из списка',
-          //   items: {},
-          // },
-          // {
-          //   type: 'text',
-          //   label: 'Название категории',
-          //   name: 'name',
-          //   // value: 'Аккумуляторы и аксессуары',
-          //   value: '',
-          //   placeholder: 'Название',
-          // },
-          // {
-          //   select: true,
-          //   icon: true,
-          //   type: 'text',
-          //   label: 'Сопоставить Ozon категорию',
-          //   name: 'ozon',
-          //   placeholder: 'Выберите категорию из списка',
-          // },
-          // {
-          //   select: true,
-          //   icon: true,
-          //   type: 'text',
-          //   label: 'Сопоставить Aliexpress категорию',
-          //   name: 'ali',
-          //   placeholder: 'Выберите категорию из списка',
-          // },
           {
             type: 'textarea',
-            // value: 'Розничный магазин автомобильных запчастей. Специализация – масла и технические жидкости и многое другое',
             value: '',
             label: 'Описание /заметки',
             name: 'description',
@@ -151,6 +101,12 @@
             icon: true,
             // placeholder: 'Название',
           },
+        ],
+        rectagleItems: [
+          { key: 'Автор', value: 'Захар' },
+          { key: 'Дата создания', value: '12.12.2023 / 13:45:12' },
+          { key: 'Редактор', value: 'Александр Дмитриев' },
+          { key: 'Дата обновления', value: '12.12.2023 / 10:56:18' },
         ],
       };
     },
@@ -168,7 +124,44 @@
     .input--url {
       .input__input {
         background: #f4f6f7;
+        color: #7e8d94;
       }
+    }
+  }
+
+  .card-info-category {
+    &__rectagle {
+    }
+  }
+  .rectagle-card-info-category {
+    border-radius: 4px;
+    background: #f4f6f7;
+    padding: 12px;
+
+    &__list {
+      @include mb(8px);
+    }
+
+    &__item {
+      display: flex;
+    }
+
+    &__key {
+      flex: 0 0 120px;
+      min-width: none;
+      margin-right: 16px;
+      font-size: 12px;
+      font-family: Inter;
+      line-height: 20px;
+      color: #7e8d94;
+    }
+
+    &__value {
+      flex: 1 1 auto;
+      font-size: 12px;
+      font-family: Inter;
+      line-height: 20px;
+      color: #292929;
     }
   }
 </style>

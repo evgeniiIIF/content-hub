@@ -9,12 +9,12 @@
 
 <script>
   import mixSetMarginTopOfHeaderHeight from '@/mixins/mixSetMarginTopOfHeaderHeight';
-  import VCardAddCategory from '../cards/VCardAddCategory.vue';
+  // import VCardAddCategory from '../cards/VCardAddCategory.vue';
 
   export default {
     name: 'VMain',
     mixins: [mixSetMarginTopOfHeaderHeight],
-    components: { VCardAddCategory },
+    // components: { VCardAddCategory },
   };
 </script>
 

@@ -143,52 +143,48 @@
     <!-- level 1 -->
     <li
       class="list__item"
-      v-for="(item, indexL1) in items"
-      :key="item.id"
+      v-for="(itemL1, indexL1) in items"
+      :key="itemL1.id"
     >
       <slot
         :name="'slot1'"
-        :item="item"
-        :level="1"
+        :itemL1="itemL1"
         :indexL1="indexL1"
       >
         not send 1
       </slot>
 
       <ul
-        v-if="item.children && item.children.length"
+        v-if="itemL1.children && itemL1.children.length"
         class="list"
-        :level="level + 1"
       >
         <!-- level 2 -->
         <li
           class="list__item"
-          v-for="(item, indexL2) in item.children"
-          :key="item.id"
+          v-for="(itemL2, indexL2) in itemL1.children"
+          :key="itemL2.id"
         >
           <slot
             :name="'slot2'"
-            :item="item"
-            :level="2"
+            :itemL1="itemL1"
+            :itemL2="itemL2"
             :indexL1="indexL1"
             :indexL2="indexL2"
             >not send 2
           </slot>
           <ul
-            v-if="item.children && item.children.length"
+            v-if="itemL2.children && itemL2.children.length"
             class="list"
-            :level="level + 1"
           >
             <!-- level 3 -->
             <li
               class="list__item"
-              v-for="(item, indexL3) in item.children"
-              :key="item.id"
+              v-for="(itemL3, indexL3) in itemL2.children"
+              :key="itemL3.id"
             >
               <slot
                 :name="'slot3'"
-                :item="item"
-                :level="3"
+                :itemL3="itemL3"
                 :indexL1="indexL1"
                 :indexL2="indexL2"
                 :indexL3="indexL3"

@@ -1,0 +1,191 @@
+{
+  "attributes": [
+    {
+      "id": 119,
+      "name": "old_price",
+      "attribute_type": "float",
+      "separation": 1,
+      "description": "Цена товара, без скидок, цена перечеркнутая в КТ.",
+      "is_required": 1
+    },
+    {
+      "id": 130,
+      "name": "shipping_lead_time",
+      "attribute_type": "integer",
+      "separation": 1,
+      "description": "(aliexpress) Время на отправку заказа (время, за которое вы обязуетесь ввести трек-номер, если у вас своя логистика).,Значение от 1 до 30. Рекомендуем указывать не больше 5.,* Для FBS AliExpress и Почты России трек-номер генерируется автоматически. * Для FBA AliExpress укажите любое значение, оно автоматически заменится на 30.",
+      "is_required": 1
+    },
+    {
+      "id": 129,
+      "name": "language",
+      "attribute_type": "string",
+      "separation": 1,
+      "description": "(aliexpress) Язык карточки товара по умолчанию. Передайте значение ru.",
+      "is_required": 1
+    },
+    {
+      "id": 128,
+      "name": "currency_code",
+      "attribute_type": "select",
+      "separation": 1,
+      "description": "(ozon) Выбор валюты. По умолчанию передаётся RUB — российский рубль",
+      "is_required": 0
+    },
+    {
+      "id": 127,
+      "name": "(ozon) premium price",
+      "attribute_type": "float",
+      "separation": 1,
+      "description": "Спец цена для пользователей ozon",
+      "is_required": 0
+    },
+    {
+      "id": 124,
+      "name": "stock_quantity",
+      "attribute_type": "integer",
+      "separation": 1,
+      "description": "Остаток продукта, товара на складе.",
+      "is_required": 1
+    },
+    {
+      "id": 121,
+      "name": "vat",
+      "attribute_type": "select",
+      "separation": 1,
+      "description": "НДС на товар",
+      "is_required": 1
+    },
+    {
+      "id": 108,
+      "name": "brand_name",
+      "attribute_type": "string",
+      "separation": 1,
+      "description": "Наименование бренда.",
+      "is_required": 1
+    },
+    {
+      "id": 118,
+      "name": "price",
+      "attribute_type": "float",
+      "separation": 1,
+      "description": "Текущая цена товара.",
+      "is_required": 1
+    },
+    {
+      "id": 117,
+      "name": "expiration_date",
+      "attribute_type": "string",
+      "separation": 1,
+      "description": "Укажите срок годности, сроки службы, гарантийные сроки.",
+      "is_required": 0
+    },
+    {
+      "id": 116,
+      "name": "description",
+      "attribute_type": "text",
+      "separation": 1,
+      "description": "Описание товара с номенклатуры.",
+      "is_required": 1
+    },
+    {
+      "id": 110,
+      "name": "name",
+      "attribute_type": "string",
+      "separation": 1,
+      "description": "Наименование номенклатуры, кт товара.",
+      "is_required": 1
+    },
+    {
+      "id": 114,
+      "name": "net_weight",
+      "attribute_type": "float",
+      "separation": 2,
+      "description": "Вес нетто товара (кг). default(0.000)\r\nЗначение указываем, из списка выбираем в какое значение нужно конвертировать.",
+      "is_required": 0
+    },
+    {
+      "id": 122,
+      "name": "dimension_unit",
+      "attribute_type": "select",
+      "separation": 2,
+      "description": "измерения габаритов (ozon).",
+      "is_required": 0
+    },
+    {
+      "id": 123,
+      "name": "weight_unit",
+      "attribute_type": "select",
+      "separation": 2,
+      "description": "Единица измерения веса. (ozon).\r\nВыбор конвертаций на МП.",
+      "is_required": 1
+    },
+    {
+      "id": 113,
+      "name": "size_width",
+      "attribute_type": "float",
+      "separation": 2,
+      "description": "Ширина товара (м). default(0.000)",
+      "is_required": 1
+    },
+    {
+      "id": 125,
+      "name": "product_unit",
+      "attribute_type": "select",
+      "separation": 2,
+      "description": "(aliexpress) Единица измерения товара: пара, упаĸовĸа/упаĸовĸи, штуĸа/штуĸи, ĸомплеĸт/ĸомплеĸты, ĸвадратный метр.",
+      "is_required": 1
+    },
+    {
+      "id": 112,
+      "name": "size_height",
+      "attribute_type": "float",
+      "separation": 2,
+      "description": "Высота товара (м). default(0.000)",
+      "is_required": 1
+    },
+    {
+      "id": 111,
+      "name": "size_length",
+      "attribute_type": "float",
+      "separation": 2,
+      "description": "Длина товара (м). default(0.000)",
+      "is_required": 1
+    },
+    {
+      "id": 115,
+      "name": "image",
+      "attribute_type": "string",
+      "separation": 3,
+      "description": "Изображение товара с номенклатуры",
+      "is_required": 0
+    },
+    {
+      "id": 120,
+      "name": "images",
+      "attribute_type": "file",
+      "separation": 3,
+      "description": "Изображения",
+      "is_required": 1
+    },
+    {
+      "id": 109,
+      "name": "article",
+      "attribute_type": "string",
+      "separation": 5,
+      "description": "Артикул товара.",
+      "is_required": 0
+    }
+  ],
+  "attributeType": {
+    "string": "Строка",
+    "text": "Текст",
+    "integer": "Целое число",
+    "float": "Число с плавающей точкой",
+    "boolean": "Булево значение.",
+    "file": "Файл(ы)",
+    "select": "Выпадающий список",
+    "auto": "Автоматическая генерация"
+  },
+  "attributeBelongs": ["не определено", "информация о товаре", "габариты и вес в упаковке", "медиа", "продажа слотами", "автоопределение"]
+}

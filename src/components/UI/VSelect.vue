@@ -54,12 +54,12 @@
       name: {
         type: String,
       },
-      selectItems: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
+      // selectItems: {
+      //   type: Array,
+      //   default() {
+      //     return [];
+      //   },
+      // },
     },
     data() {
       return {

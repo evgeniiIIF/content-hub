@@ -65,6 +65,7 @@
         document.addEventListener('click', this.closeMenu, true);
         this.menuIsOpen = !this.menuIsOpen;
       },
+
       closeMenu(e) {
         // console.log(e.target, this.$refs.currentDropdownMenu);
         if (this.menuIsOpen && !e.target.closest('.dropdown')) {

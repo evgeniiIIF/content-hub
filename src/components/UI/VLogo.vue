@@ -1,8 +1,10 @@
 <template>
-  <a
+  <!-- <a
     class="logo"
     @click.prevent="goToAnchorFromHeaderLogo"
-  >
+  > -->
+
+  <RouterLink to="/">
     <div class="logo__body">
       <div class="logo__image">
         <img
@@ -11,7 +13,8 @@
         />
       </div>
     </div>
-  </a>
+  </RouterLink>
+  <!-- </a> -->
 </template>
 
 <script>

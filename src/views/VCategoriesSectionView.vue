@@ -1,12 +1,12 @@
 <template>
   <section class="categories">
-    <div class="container categories__container">
-      <div class="categories__body">
-        <div class="categories__top top-categories">
-          <div class="top-categories__row">
-            <h1 class="top-categories__title">Категории</h1>
-            <div class="top-categories__actions">
-              <div class="top-categories__input">
+    <div class="container">
+      <div class="categories__wrapper">
+        <div class="categories__top top">
+          <div class="top__row">
+            <h2 class="top__title">Категории</h2>
+            <div class="top__actions">
+              <div class="top__input">
                 <VInput :opts="inputOpts">
                   <img
                     src="@/assets/img/static/search/Search_Magnifying_Glass_20px.svg"
@@ -15,7 +15,7 @@
                 </VInput>
               </div>
               <div
-                class="top-categories__button"
+                class="top__button"
                 @click="isOpenSlidingBlock = true"
               >
                 <VButton>
@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-          <div class="top-categories__show-hide show-hide-categories">
+          <div class="top__show-hide show-hide-categories">
             <button
               type="button"
               class="show-hide-categories__button show-hide-categories__button--all"
@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class="categories__table">
-          <VTableUIFC />
+          <VCategoriesTable />
         </div>
         <div class="categories__bottom">
           <VPagination />
@@ -61,9 +61,9 @@
     </div>
     <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
-      @onCloseMenu="isOpenSlidingBlock = false"
+      @onCloseSlidingBlock="isOpenSlidingBlock = false"
     >
-      <VCardAddCategory @onCloseMenu="isOpenSlidingBlock = false" />
+      <VCardAddCategory @onCloseSlidingBlock="isOpenSlidingBlock = false" />
     </VSlidingBlockSlotUIFC>
   </section>
 </template>
@@ -74,11 +74,11 @@
   import VInput from '@/components/UI/VInput.vue';
   import VPagination from '@/components/UI/VPagination.vue';
   import VCardAddCategory from '@/components/cards/VCardAddCategory.vue';
-  import VTableUIFC from '@/components/UI-FC/VTableUIFC.vue';
+  import VCategoriesTable from '@/components/modules/VCategoriesTable.vue';
 
   export default {
-    name: 'VCategoriesSection',
-    components: { VInput, VButton, VTableUIFC, VPagination, VSlidingBlockSlotUIFC, VCardAddCategory },
+    name: 'VCategoriesSectionView',
+    components: { VInput, VButton, VPagination, VSlidingBlockSlotUIFC, VCardAddCategory, VCategoriesTable },
     data() {
       return {
         isOpenSlidingBlock: false,
@@ -98,16 +98,11 @@
     position: absolute;
     width: 100%;
     min-height: 100%;
-    // overflow-y: auto;
     left: 0;
     top: 0;
     background: #ebedf1;
 
-    &__container {
-      height: 100%;
-    }
-
-    &__body {
+    &__wrapper {
       display: flex;
       flex-direction: column;
       height: 100%;
@@ -118,9 +113,6 @@
 
     &__table {
       flex: 1 1 auto;
-      // overflow-x: auto;
-      // overflow-y: hidden;
-      min-height: 700px;
     }
 
     &__bottom {
@@ -128,7 +120,7 @@
     }
   }
 
-  .top-categories {
+  .top {
     padding: 34px 0 24px 0;
 
     &__row {

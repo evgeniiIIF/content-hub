@@ -2,7 +2,7 @@
   <div class="card-add-category">
     <button
       class="card-add-category__close"
-      @click="$emit('onCloseMenu')"
+      @click="$emit('onCloseSlidingBlock')"
     >
       <img
         src="@/assets/img/static/buttons-icon/Close_SM_20px.svg"
@@ -26,30 +26,45 @@
                 <ul class="card-add-category__list">
                   <li
                     class="card-add-category__item"
-                    v-for="itemSelectMenu in input.items"
+                    v-for="(itemSelectMenu, index) in input.items"
                     :key="itemSelectMenu.name"
+                    @click.stop="selectionItem(itemSelectMenu.name)"
                   >
-                    <span class="card-add-category__name">{{ itemSelectMenu.name }}</span>
+                    <span
+                      class="card-add-category__name"
+                      :class="{ 'card-add-category__item--active': itemSelectMenu.name === currentSelected }"
+                      >{{ itemSelectMenu.name }}</span
+                    >
                     <ul
                       v-if="itemSelectMenu.children_count"
                       class="card-add-category__list"
                     >
                       <li
                         class="card-add-category__item"
-                        v-for="itemSelectMenu2 in itemSelectMenu.children"
+                        v-for="(itemSelectMenu2, index2) in itemSelectMenu.children"
                         :key="itemSelectMenu2.name"
+                        @click.stop="selectionItem(itemSelectMenu2.name)"
                       >
-                        <span class="card-add-category__name">{{ itemSelectMenu2.name }}</span>
+                        <span
+                          class="card-add-category__name"
+                          :class="{ 'card-add-category__item--active': itemSelectMenu2.name === currentSelected }"
+                          >{{ itemSelectMenu2.name }}</span
+                        >
                         <ul
                           v-if="itemSelectMenu2.children_count"
                           class="card-add-category__list"
                         >
                           <li
                             class="card-add-category__item"
-                            v-for="itemSelectMenu3 in itemSelectMenu2.children"
+                            v-for="(itemSelectMenu3, index3) in itemSelectMenu2.children"
                             :key="itemSelectMenu3.name"
+                            @click.stop="selectionItem(itemSelectMenu3.name)"
                           >
-                            <span class="card-add-category__name">{{ itemSelectMenu3.name }}</span>
+                            <span
+                              class="card-add-category__name"
+                              :class="{ 'card-add-category__item--active': itemSelectMenu3.name === currentSelected }"
+                              >{{ itemSelectMenu3.name }}</span
+                            >
                           </li>
                         </ul>
                       </li>
@@ -93,14 +108,20 @@
 
   export default {
     name: 'VCardAddCategory',
+
+    emits: ['onCloseSlidingBlock'],
+
     components: { VInput, VButton, VSelect2, VSelect },
     data() {
       return {
-        selectMenuItems: [],
+        // selectMenuItems: [],
+        currentSelected: null,
+
         inputs: [
           {
             select: true,
             icon: true,
+            value: '',
             type: 'text',
             label: 'Вложенность',
             name: 'nesting',
@@ -155,12 +176,16 @@
             throw new Error('Ошибка сети при чтении файла JSON');
           }
           const jsonData = await response.json();
-          this.selectMenuItems = jsonData;
+          // this.selectMenuItems = jsonData;
           this.inputs[0].items = jsonData;
           // console.log(this.inputs[0].items);
         } catch (error) {
           console.error('Не удалось прочитать JSON файл:', error);
         }
+      },
+      selectionItem(payload) {
+        this.inputs[0].value = payload;
+        this.currentSelected = payload;
       },
     },
     async created() {
@@ -199,6 +224,10 @@
           color: #292929;
         }
 
+        .card-add-category__item--active {
+          background: green;
+        }
+
         .card-add-category__name {
           padding-left: 10px;
           color: #292929;
@@ -211,6 +240,9 @@
           .card-add-category__name {
             padding-left: 20px;
           }
+          .card-add-category__item--active {
+            background: green;
+          }
         }
       }
     }
@@ -219,6 +251,10 @@
       font-weight: 700;
       background: #0077ff;
       color: #fff;
+    }
+
+    &__item--active {
+      background: green;
     }
 
     &__name {

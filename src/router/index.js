@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import VEditingCategorySection from '../views/VEditingCategorySection.vue';
-import VCategoriesSection from '../views/VCategoriesSection.vue';
+import VCategoriesSectionView from '../views/VCategoriesSectionView.vue';
 import VLocalAttributesViews from '@/views/VLocalAttributesViews.vue';
 
 const routes = [
   {
     path: '/',
     name: 'categoties',
-    component: VCategoriesSection,
+    component: VCategoriesSectionView,
   },
   {
     path: '/editing',

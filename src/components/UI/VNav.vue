@@ -70,7 +70,6 @@
 
     &__dropdown {
       height: 100%;
-
       @extend %font-nav-link;
     }
     &__link {

@@ -32,6 +32,7 @@
             v-if="item.name == 'Локальный список'"
             to="/local-attributes"
             class="dropdown__link"
+            active-class="dropdown__item--active"
           >
             {{ item.name }}
           </RouterLink>
@@ -65,7 +66,7 @@
       return {
         menuIsOpen: false,
         selected: null,
-        prevSelectedItem: null,
+        // prevSelectedItem: null,
       };
     },
     methods: {
@@ -84,11 +85,11 @@
       },
 
       selectItem(e) {
-        if (this.prevSelectedItem) {
-          this.prevSelectedItem.classList.remove('dropdown__item--active');
-        }
-        e.currentTarget.classList.add('dropdown__item--active');
-        this.prevSelectedItem = e.currentTarget;
+        // if (this.prevSelectedItem) {
+        //   this.prevSelectedItem.classList.remove('dropdown__item--active');
+        // }
+        // e.currentTarget.classList.add('dropdown__item--active');
+        // this.prevSelectedItem = e.currentTarget;
         this.closeMenu(e);
       },
       // selectItem(e, item) {
@@ -155,7 +156,7 @@
       }
 
       &--active {
-        .dropdown__link {
+        &.dropdown__link {
           background: #0077ff;
           color: #fff;
           font-weight: 700;

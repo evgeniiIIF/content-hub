@@ -1,11 +1,11 @@
 <!-- <VSlidingBlockSlotUIFC
 :isOpenSlidingBlock="isOpenSlidingBlock"
 :element="$refs.elem"
-@onCloseMenu="isOpenSlidingBlock = false"
+@onCloseSlidingBlock="isOpenSlidingBlock = false"
 >
 <VCardAddCategory
 	ref="elem"
-	@onCloseMenu="isOpenSlidingBlock = false"
+	@onCloseSlidingBlock="isOpenSlidingBlock = false"
 />
 </VSlidingBlockSlotUIFC> -->
 <template>
@@ -15,7 +15,7 @@
   >
     <div
       class="sliding-block__wrapper"
-      ref="wrapper"
+      ref="slidingBlockWrapper"
     >
       <!-- <slot></slot> -->
       <slot @click.stop></slot>
@@ -28,23 +28,25 @@
 
   export default {
     name: 'VSlidingBlockSlotUIFC',
-    mixins: [bodyLockMixin],
-
     props: {
       isOpenSlidingBlock: {
         type: Boolean,
       },
     },
+    emits: ['onCloseSlidingBlock'],
+
+    mixins: [bodyLockMixin],
+
     data() {
       return {
-        wrapper: null,
+        slidingBlockWrapper: null,
       };
     },
     methods: {
-      closeMenu(e) {
+      closeSlidingBlock(e) {
         this.$nextTick(() => {
-          if (!this.wrapper.contains(e.target)) {
-            this.$emit('onCloseMenu');
+          if (!this.slidingBlockWrapper.contains(e.target)) {
+            this.$emit('onCloseSlidingBlock');
           }
         });
       },
@@ -53,19 +55,13 @@
       isOpenSlidingBlock(newValue, oldValue) {
         if (newValue) {
           this.lockBody(false);
+          this.slidingBlockWrapper = this.$refs.slidingBlockWrapper;
+          document.addEventListener('click', this.closeSlidingBlock, true);
         } else {
           this.unlockBody(false);
+          document.removeEventListener('click', this.closeSlidingBlock, true);
         }
       },
-    },
-
-    mounted() {
-      this.wrapper = this.$refs.wrapper;
-      document.addEventListener('click', this.closeMenu, true);
-    },
-
-    beforeUnmount() {
-      document.removeEventListener('click', this.closeMenu, true);
     },
   };
 </script>
