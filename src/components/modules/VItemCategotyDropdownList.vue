@@ -62,6 +62,7 @@
   import VButton from '@/components/UI/VButton.vue';
   export default {
     name: 'VItemCategotyDropdownList',
+    emits: ['showSlidingBlock'],
     components: {
       VButton,
     },

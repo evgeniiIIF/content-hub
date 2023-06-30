@@ -10,23 +10,27 @@
           {{ name }}
         </li>
         <li class="head-table__buttons">
-          <button
-            class="head-table__button"
-            type="button"
-          >
-            <img
-              src="@/assets/img/static/decorative-icon/Settings_Future_20px.svg"
-              alt=""
-            />
-          </button>
+          <VDropdovnSlots>
+            <template #button>
+              <button
+                class="head-table__button"
+                type="button"
+              >
+                <img
+                  src="@/assets/img/static/decorative-icon/Settings_Future_20px.svg"
+                  alt=""
+                />
+              </button>
+            </template>
+            <template #menu>
+              <p>menu</p>
+            </template>
+          </VDropdovnSlots>
         </li>
       </ul>
     </div>
     <div class="table__body js-dropdown-menu--root">
-      <VRecursiveList
-        :items="data"
-        :level="1"
-      >
+      <VRecursiveList :items="data">
         <template #slot1="{ itemL1, indexL1 }">
           <div
             class="item-category row-table"
@@ -282,6 +286,7 @@
       <VCardInfoCategory
         v-if="showVCardInfoCategory"
         @onCloseSlidingBlock="isOpenSlidingBlock = false"
+        :parentItemData="parentItemData"
       />
     </VSlidingBlockSlotUIFC>
   </div>
@@ -294,11 +299,9 @@
   import mixDropdownMenuFn from '@/mixins/mixDropdownMenuFn';
 
   import VDropdovnSlots from '@/components/UI/VDropdownSlots.vue';
-  import VButton from '../UI/VButton.vue';
   import VSlidingBlockSlotUIFC from '../UI-FC/VSlidingBlockSlotUIFC.vue';
   import VRecursiveList from '@/components/UI-FC/VRecursiveList.vue';
 
-  import VCardAddCategory from '../cards/VCardAddCategory.vue';
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
   import VItemCategotyDropdownList from './VItemCategotyDropdownList.vue';
@@ -306,7 +309,7 @@
   export default {
     name: 'VCategoriesTable',
     mixins: [mixDropdownMenuFn],
-    components: { VButton, VDropdovnSlots, VCardAddCategory, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList },
+    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList },
 
     data() {
       return {
@@ -315,6 +318,7 @@
         isOpenSlidingBlock: false,
         showVCardAddNestedCategory: false,
         showVCardInfoCategory: false,
+
         parentItemData: {
           names: [],
           id: null,
@@ -332,7 +336,7 @@
       ...mapActions('localCategoriesItems', ['GET_ITEMS']),
 
       closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
-        // console.log(`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? indexL2 : ''}${indexL3 !== null ? indexL3 : ''})`);
+        console.log(`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`);
         const currentLevelListItem = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
 
         if (currentLevelListItem.menuIsOpen) {
@@ -453,9 +457,10 @@
   }
 
   .head-table {
-    background: #f4f6f7;
+    background: #c2c9d2;
     border-radius: 4px;
     padding: 12px 16px;
+
     &__list {
     }
     &__item {
@@ -466,9 +471,12 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 167%;
-      color: #7e8d94;
+      color: #000;
     }
     &__buttons {
+      .dropdown__button {
+        padding: 0;
+      }
     }
     &__button {
       border: none;

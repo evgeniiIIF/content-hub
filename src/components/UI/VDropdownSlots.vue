@@ -67,7 +67,7 @@
       },
 
       closeMenu(e) {
-        // console.log(e.target, this.$refs.currentDropdownMenu);
+        console.log(!this.$refs.currentDropdownMenu.contains(e.target));
         if (this.menuIsOpen && !e.target.closest('.dropdown')) {
           document.removeEventListener('click', this.closeMenu, true);
           this.menuIsOpen = false;

@@ -2,7 +2,7 @@
   <div class="card-add-category-nested card-info-category">
     <button
       class="card-add-category-nested__close"
-      @click="$emit('onCloseMenu')"
+      @click="$emit('onCloseSlidingBlock')"
     >
       <img
         src="@/assets/img/static/buttons-icon/Close_SM_20px.svg"
@@ -11,7 +11,7 @@
     </button>
     <div class="card-add-category-nested__top">
       <h3 class="card-add-category-nested__title">Информация</h3>
-      <VBreadcrumbs />
+      <VBreadcrumbs :parentItemData="parentItemData" />
     </div>
 
     <div class="card-add-category-nested__body">
@@ -82,6 +82,11 @@
 
   export default {
     name: 'VCardAddNestedCategory',
+    props: {
+      parentItemData: {
+        type: Object,
+      },
+    },
     components: { VInput, VButton, VSelect2, VSelect, VBreadcrumbs },
     data() {
       return {
