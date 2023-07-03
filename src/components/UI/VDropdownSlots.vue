@@ -23,6 +23,7 @@
   <div
     class="dropdown"
     :class="menuIsOpen ? 'dropdown-slots--open' : ''"
+    ref="currentDropdown"
   >
     <div
       class="dropdown__button"
@@ -33,7 +34,6 @@
     <div
       v-show="menuIsOpen"
       class="dropdown__menu"
-      ref="currentDropdownMenu"
     >
       <slot name="menu"></slot>
     </div>
@@ -67,8 +67,8 @@
       },
 
       closeMenu(e) {
-        console.log(!this.$refs.currentDropdownMenu.contains(e.target));
-        if (this.menuIsOpen && !e.target.closest('.dropdown')) {
+        // console.log(this.$refs.currentDropdownMenu.contains(e.target), !!e.target.closest('.dropdown'));
+        if (this.menuIsOpen && this.$refs.currentDropdown && !this.$refs.currentDropdown.contains(e.target)) {
           document.removeEventListener('click', this.closeMenu, true);
           this.menuIsOpen = false;
         }

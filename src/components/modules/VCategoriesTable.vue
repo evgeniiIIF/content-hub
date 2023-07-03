@@ -2,6 +2,7 @@
   <div class="table">
     <div class="table__head head-table">
       <ul class="head-table__list row-table">
+        <li class="head-table__item"></li>
         <li
           class="head-table__item"
           v-for="name in headCategories"
@@ -23,7 +24,10 @@
               </button>
             </template>
             <template #menu>
-              <p>menu</p>
+              <VCheckboxList
+                :items="headCategories"
+                @onChange="onChange"
+              />
             </template>
           </VDropdovnSlots>
         </li>
@@ -305,19 +309,23 @@
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
   import VItemCategotyDropdownList from './VItemCategotyDropdownList.vue';
+  import VCheckboxList from '../UI/VCheckboxList.vue';
 
   export default {
     name: 'VCategoriesTable',
     mixins: [mixDropdownMenuFn],
-    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList },
+    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList },
 
     data() {
       return {
-        headCategories: ['ID', 'Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
+        headCategories: ['Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
         data: [],
+
         isOpenSlidingBlock: false,
         showVCardAddNestedCategory: false,
         showVCardInfoCategory: false,
+
+        prevNthChildren: [],
 
         parentItemData: {
           names: [],
@@ -335,13 +343,46 @@
     methods: {
       ...mapActions('localCategoriesItems', ['GET_ITEMS']),
 
-      closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
-        console.log(`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`);
-        const currentLevelListItem = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
+      onChange(isChecked) {
+        let hidenNthChieldIndexs = [];
 
-        if (currentLevelListItem.menuIsOpen) {
-          currentLevelListItem.menuIsOpen = false;
-          document.removeEventListener('click', currentLevelListItem.closeMenu, true);
+        if (this.prevNthChildren.length > 0) {
+          this.prevNthChildren.forEach((nthChild) => {
+            nthChild.style.display = 'block';
+          });
+        }
+
+        const arr = this.headCategories.filter((item, index) => {
+          if (index !== 0) {
+            if (isChecked.includes(item)) {
+              return true;
+            } else {
+              hidenNthChieldIndexs.push(index + 2);
+              return false;
+            }
+          }
+        });
+
+        hidenNthChieldIndexs.forEach((indexItem) => {
+          const rowsTableAll = document.querySelectorAll(`.row-table`);
+          rowsTableAll.forEach((rowTable) => {
+            if (rowTable.children.length > 3) {
+              const nthChild = rowTable.querySelector(`.row-table > *:nth-child(${indexItem})`);
+              this.prevNthChildren.push(nthChild);
+              nthChild.style.display = 'none';
+            }
+          });
+          // const nthChildrenAll = document.querySelectorAll(`.row-table > *:nth-child(${indexItem})`);
+        });
+      },
+
+      closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
+        // console.log(`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`);
+        const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
+
+        if (currentItemCategoryDropdownSlots.menuIsOpen) {
+          currentItemCategoryDropdownSlots.menuIsOpen = false;
+          document.removeEventListener('click', currentItemCategoryDropdownSlots.closeMenu, true);
         }
       },
 
@@ -477,10 +518,18 @@
       .dropdown__button {
         padding: 0;
       }
+      .dropdown__menu {
+        left: auto;
+        right: 200%;
+      }
     }
     &__button {
       border: none;
       background: transparent;
+      :hover {
+        transform: rotate(360deg);
+        transition: all 5s ease 0s;
+      }
     }
   }
 

@@ -78,10 +78,12 @@
       closeMenu(e) {
         const currentDropdown = this.$refs.currentDropdown;
 
-        // if (currentDropdown && !currentDropdown.contains(e.target)) {
-        this.menuIsOpen = false;
-        document.removeEventListener('click', this.closeMenu, true);
-        // }
+        if (currentDropdown && !currentDropdown.contains(e.target)) {
+          console.log(this.menuIsOpen + ' close');
+
+          this.menuIsOpen = false;
+          document.removeEventListener('click', this.closeMenu, true);
+        }
       },
 
       selectItem(e) {
@@ -90,7 +92,8 @@
         // }
         // e.currentTarget.classList.add('dropdown__item--active');
         // this.prevSelectedItem = e.currentTarget;
-        this.closeMenu(e);
+        // this.closeMenu(e);
+        this.menuIsOpen = false;
       },
       // selectItem(e, item) {
       //   this.selected = item;
