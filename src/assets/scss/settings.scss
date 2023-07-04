@@ -1,6 +1,6 @@
-@import './smart-grid.scss';
+// @import './smart-grid.scss';
+// @import './mixins.scss';
 @import './reset.scss';
-@import './mixins.scss';
 @import './fonts.scss';
 
 // ================colors=================
@@ -31,56 +31,6 @@ $z-iconMenu: 10;
 // @import "../../uikit/elements/elements-page/elements-page.scss";
 // @import "../../uikit/colors-and-type/colors-and-type.scss";
 // @import "../../uikit/cards/cards-page/cards-page.scss";
-
-// ================Fonts=================
-%type-h1 {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 125%;
-  color: #292929;
-}
-%type-1 {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 154%;
-  color: #f8f8f6;
-}
-
-%type-2 {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 154%;
-  color: #292929;
-}
-
-%type-3 {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 167%;
-  color: #ffffff;
-}
-
-// ================FontsGroups=================
-%font-nav-link {
-  @extend %type-1;
-}
-%font-dropdown-item {
-  @extend %type-2;
-}
-%font-h1 {
-  @extend %type-h1;
-}
-%font-buttons {
-  @extend %type-3;
-}
 
 // ================Total=================
 

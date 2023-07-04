@@ -1,11 +1,13 @@
 const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
-  // transpileDependencies: true,
+  transpileDependencies: true,
   css: {
     loaderOptions: {
-      sass: {
+      scss: {
         additionalData: `
-          @import "@/assets/scss/settings.scss";
+          @import "@/assets/scss/mixins.scss";
+          @import "@/assets/scss/smart-grid.scss";
+          @import "@/assets/scss/vars.scss";
         `,
       },
     },

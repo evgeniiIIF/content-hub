@@ -34,7 +34,7 @@
       </ul>
     </div>
     <div class="table__body js-dropdown-menu--root">
-      <VRecursiveList :items="data">
+      <VRecursiveList :items="categoriesItems">
         <template #slot1="{ itemL1, indexL1 }">
           <div
             class="item-category row-table"
@@ -297,7 +297,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import { mapGetters, mapActions } from 'vuex';
 
   import mixDropdownMenuFn from '@/mixins/mixDropdownMenuFn';
@@ -305,11 +304,11 @@
   import VDropdovnSlots from '@/components/UI/VDropdownSlots.vue';
   import VSlidingBlockSlotUIFC from '../UI-FC/VSlidingBlockSlotUIFC.vue';
   import VRecursiveList from '@/components/UI-FC/VRecursiveList.vue';
+  import VCheckboxList from '../UI/VCheckboxList.vue';
 
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
   import VItemCategotyDropdownList from './VItemCategotyDropdownList.vue';
-  import VCheckboxList from '../UI/VCheckboxList.vue';
 
   export default {
     name: 'VCategoriesTable',
@@ -319,7 +318,6 @@
     data() {
       return {
         headCategories: ['Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
-        data: [],
 
         isOpenSlidingBlock: false,
         showVCardAddNestedCategory: false,
@@ -396,9 +394,6 @@
         if (itemL2 !== null) {
           this.parentItemData.names.push(itemL2.name);
         }
-        // this.parentItemData.names.push(item.name);
-
-        // this.parentItemData.id = item.id;
 
         this.showVCardAddNestedCategory = textButton === 'Добавить субкатегорию';
         this.showVCardInfoCategory = textButton === 'Информация';
@@ -407,30 +402,11 @@
         // console.log(this.parentItemData);
         this.isOpenSlidingBlock = true;
       },
-
-      async fetchData() {
-        try {
-          const url = 'http://localhost:3000/data';
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error('Ошибка сети при чтении файла JSON');
-          }
-          const jsonData = await response.json();
-          this.data = jsonData;
-        } catch (error) {
-          console.error('Не удалось прочитать JSON файл:', error);
-        }
-      },
     },
+
     async mounted() {
-      // await this.GET_ITEMS();
-      await this.fetchData();
-
-      // console.log(this.categoriesItems);
-
-      setTimeout(() => {
-        this.mixDropdownMenuFn();
-      }, 100);
+      await this.GET_ITEMS();
+      this.mixDropdownMenuFn();
     },
   };
 </script>

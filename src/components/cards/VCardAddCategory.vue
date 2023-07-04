@@ -188,8 +188,9 @@
         this.currentSelected = payload;
       },
     },
+
     async created() {
-      await this.fetchData();
+      // await this.fetchData();
       // console.log(this.data);
     },
   };

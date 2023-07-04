@@ -109,7 +109,7 @@
           </div>
         </div>
         <button
-          :style="{ opacity: bodyIndex === 0 ? 0 : 1, 'pointer-events': bodyIndex === 0 ? 'none' : 'auto' }"
+          :style="{ opacity: bodyItems.length === 1 ? 0 : 1, 'pointer-events': bodyItems.length === 1 ? 'none' : 'auto' }"
           class="card-add-category-nested__body-remove-button"
           @click="removeBodyItem(bodyIndex)"
         >
