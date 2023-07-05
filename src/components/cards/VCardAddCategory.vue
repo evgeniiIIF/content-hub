@@ -190,7 +190,7 @@
     },
 
     async created() {
-      await this.fetchData();
+      // await this.fetchData();
     },
   };
 </script>

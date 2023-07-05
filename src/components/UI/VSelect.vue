@@ -98,7 +98,9 @@
     //     return this.selected !== this.items[0];
     //   },
     // },
-    mounted() {},
+    mounted() {
+      this.opts.icon = true;
+    },
     beforeUnmount() {},
     components: { VInput, VArrowDownSVG },
   };

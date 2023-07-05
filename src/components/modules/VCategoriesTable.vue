@@ -155,17 +155,67 @@
             </div>
             <div class="item-category__name">{{ itemL2.name }}</div>
             <template v-if="itemL2.children_count == 0">
-              <div class="item-category__ozon">
-                <input
-                  type="text"
-                  value="Constantionpol"
-                />
+              <div class="item-category__ozon ozon-list">
+                <VSelect :opts="itemSelectOpts.ozon">
+                  <template #menu>
+                    <VRecursiveList :items="ozonSelectItems">
+                      <template #slot1="{ itemL1, indexL1 }">
+                        <div
+                          class="ozon-list__name"
+                          :class="itemL1.name === itemSelectOpts.ozon.value ? 'ozon-list__name--active' : ''"
+                          @click.stop="itemSelectOpts.ozon.value = itemL1.name"
+                        >
+                          {{ itemL1.name }}
+                        </div>
+                      </template>
+                      <template #slot2="{ itemL1, itemL2, indexL1, indexL2 }">
+                        <div
+                          class="ozon-list__name"
+                          :class="itemL2.name === itemSelectOpts.ozon.value ? 'ozon-list__name--active' : ''"
+                          @click.stop="itemSelectOpts.ozon.value = itemL2.name"
+                        >
+                          {{ itemL2.name }}
+                        </div>
+                      </template>
+                      <!-- <template #slot3="{ itemL3, indexL1, indexL2, indexL3 }">
+                        <div class="ozon-list__name">
+                          {{ itemL3.name }}
+                        </div>
+                      </template> -->
+                    </VRecursiveList>
+                  </template>
+                </VSelect>
               </div>
               <div class="item-category__aliexpress">
-                <input
-                  type="text"
-                  value="Constantionpol"
-                />
+                <VSelect :opts="itemSelectOpts.ozon">
+                  <template #menu>
+                    <VRecursiveList :items="ozonSelectItems">
+                      <template #slot1="{ itemL1, indexL1 }">
+                        <div
+                          class="ozon-list__name"
+                          :class="itemL1.name === itemSelectOpts.ozon.value ? 'ozon-list__name--active' : ''"
+                          @click.stop="itemSelectOpts.ozon.value = itemL1.name"
+                        >
+                          {{ itemL1.name }}
+                        </div>
+                      </template>
+                      <template #slot2="{ itemL1, itemL2, indexL1, indexL2 }">
+                        <div
+                          class="ozon-list__name"
+                          :class="itemL2.name === itemSelectOpts.ozon.value ? 'ozon-list__name--active' : ''"
+                          @click.stop="itemSelectOpts.ozon.value = itemL2.name"
+                        >
+                          {{ itemL2.name }}
+                        </div>
+                      </template>
+                      <!-- <template #slot3="{ itemL3, indexL1, indexL2, indexL3 }">
+                        <div class="ozon-list__name">
+                          {{ itemL3.name }}
+                        </div>
+                      </template> -->
+                    </VRecursiveList>
+                  </template>
+                </VSelect>
               </div>
               <div class="item-category__wildberries">
                 <input
@@ -305,6 +355,7 @@
   import VSlidingBlockSlotUIFC from '../UI-FC/VSlidingBlockSlotUIFC.vue';
   import VRecursiveList from '@/components/UI-FC/VRecursiveList.vue';
   import VCheckboxList from '../UI/VCheckboxList.vue';
+  import VSelect from '../UI/VSelect.vue';
 
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
@@ -313,7 +364,7 @@
   export default {
     name: 'VCategoriesTable',
     mixins: [mixDropdownMenuFn],
-    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList },
+    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect },
 
     data() {
       return {
@@ -329,6 +380,15 @@
           names: [],
           id: null,
         },
+
+        itemSelectOpts: {
+          ozon: {
+            type: 'text',
+            value: 'opts.value',
+            name: 'opts.name',
+            placeholder: 'opts.placeholder',
+          },
+        },
       };
     },
 
@@ -336,10 +396,14 @@
       ...mapGetters('localCategoriesItems', {
         categoriesItems: 'items',
       }),
+      ...mapGetters('categoriesOzon', {
+        ozonSelectItems: 'items',
+      }),
     },
 
     methods: {
-      ...mapActions('localCategoriesItems', ['GET_ITEMS']),
+      ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
+      ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
 
       onChange(isChecked) {
         let hidenNthChieldIndexs = [];
@@ -405,7 +469,9 @@
     },
 
     async mounted() {
-      await this.GET_ITEMS();
+      await this.GET_ITEMS_CATEGORIES();
+      await this.GET_ITEMS_SELECT_OZON();
+
       this.mixDropdownMenuFn();
     },
   };
@@ -722,6 +788,43 @@
         & .item-category {
           padding-left: calc(16px + $offsetSubmenu + $offsetSubmenu);
         }
+      }
+    }
+  }
+
+  .select {
+    &__menu {
+      padding: 8px 0;
+    }
+
+    .list {
+      display: block;
+
+      .list {
+        .ozon-list__name {
+          padding-left: 20px;
+        }
+      }
+    }
+  }
+
+  .ozon-list {
+    &__name {
+      @extend %font-inter--400_167;
+      padding: 8px;
+
+      &:hover {
+        background: #eee;
+      }
+    }
+    &__name--active {
+      color: #fff;
+      font-weight: 700;
+      background: $blue-color;
+      &:hover {
+        color: #fff;
+        font-weight: 700;
+        background: $blue-color;
       }
     }
   }

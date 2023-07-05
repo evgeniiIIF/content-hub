@@ -11,7 +11,7 @@
         :itemL1="itemL1"
         :indexL1="indexL1"
       >
-        not send 1
+        please set slot1
       </slot>
 
       <ul
@@ -30,7 +30,8 @@
             :itemL2="itemL2"
             :indexL1="indexL1"
             :indexL2="indexL2"
-            >not send 2
+          >
+            please set slot2
           </slot>
           <ul
             v-if="itemL2.children && itemL2.children.length"
@@ -48,7 +49,8 @@
                 :indexL1="indexL1"
                 :indexL2="indexL2"
                 :indexL3="indexL3"
-                >not send 2
+              >
+                please set slot3
               </slot>
             </li>
             <!-- /level 3 -->

@@ -17,10 +17,10 @@ export default {
     },
   },
   actions: {
-    async GET_ITEMS(store) {
-      await axios.get('http://192.168.0.228/api/categories').then((response) => {
+    async GET_ITEMS_SELECT_OZON(store) {
+      await axios.get('http://dev1.content-hub.ru/api/categories/ozon').then((response) => {
         const data = response.data;
-        const items = data.menu;
+        const items = data.children;
         console.log(items);
         store.commit('setItems', items);
       });

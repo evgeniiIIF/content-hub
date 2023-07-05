@@ -17,15 +17,15 @@ export default {
     },
   },
   actions: {
-    async GET_ITEMS(store) {
+    async GET_ITEMS_CATEGORIES(store) {
       await axios
-        .get('http://192.168.0.228/api/categories', {
+        .get('http://dev1.content-hub.ru/api/categories', {
           headers: {
             // 'Content-Type': 'application/json',
             // Authorization: 'Bearer your_token_here',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST',
-            'Access-Control-Allow-Headers': '*',
+            // 'Access-Control-Allow-Origin': '*',
+            // 'Access-Control-Allow-Methods': 'GET, POST',
+            // 'Access-Control-Allow-Headers': '*',
           },
         })
         .then((response) => {
