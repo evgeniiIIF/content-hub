@@ -112,7 +112,7 @@
 
     & .input__input {
       cursor: pointer;
-      border-color: #c2c9d2;
+      border-color: $border-light2;
     }
     &.select--open {
       & .input__input {
@@ -142,7 +142,7 @@
       align-items: center;
       height: 100%;
       margin-right: 8px;
-      @extend %font-nav-link;
+      @extend %font-inter--600;
     }
 
     &__arrow {
@@ -160,10 +160,10 @@
       z-index: 999;
       overflow-y: auto;
       border-radius: 0 0 4px 4px;
-      border: 1px solid #c2c9d2;
+      border: 1px solid $border-light2;
       border-top: none;
       box-shadow: 0px 8px 24px -4px rgba(54, 54, 54, 0.1);
-      background: #ffffff;
+      background: $white-color;
     }
     &__item {
     }

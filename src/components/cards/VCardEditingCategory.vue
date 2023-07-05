@@ -95,7 +95,7 @@
 
 <style lang="scss">
   .card-editing-category {
-    background: #ffffff;
+    background: $white-color;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -108,7 +108,7 @@
       padding: 20px;
       display: flex;
       align-items: center;
-      border-bottom: 1px solid #ebedf1;
+      border-bottom: 1px solid $neutral-white1;
     }
 
     &__button-back {
@@ -116,23 +116,13 @@
       .button {
         padding: 8px 14px;
         background: transparent;
-        border: 1px solid #ebedf1;
+        border: 1px solid $neutral-white1;
       }
     }
 
     &__title {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 32px;
-      line-height: 125%;
-      color: #292929;
-    }
-
-    &__category-info {
-    }
-
-    &__tabs {
+      @extend %font-inter--h1;
+      color: $dark-color;
     }
 
     &__hints {
@@ -144,22 +134,14 @@
 
       & > *:first-child {
         padding-bottom: 20px;
-        border-bottom: 1px solid #ebedf1;
+        border-bottom: 1px solid $neutral-white1;
       }
       & > *:last-child {
         padding-top: 20px;
       }
     }
-
-    &__hint {
-    }
-
-    &__icon {
-    }
-
-    &__text {
-    }
   }
+
   .info-card-editing-category {
     display: flex;
     padding: 24px 20px;
@@ -171,29 +153,29 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 200%;
-      color: #7e8d94;
+      color: $neutral-gray;
     }
 
     &__name {
       padding: 0px 8px;
-      background: #0077ff;
+      background: $blue-color;
       border-radius: 4px;
       font-family: 'Inter';
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
       line-height: 171%;
-      color: #ffffff;
+      color: $white-color;
     }
   }
   .tabs-card-editing-category {
     padding: 0 20px;
 
     & > * {
-      border-bottom: 1px solid #ebedf1;
+      border-bottom: 1px solid $neutral-white1;
     }
     & > *:first-child {
-      border-top: 1px solid #ebedf1;
+      border-top: 1px solid $neutral-white1;
     }
 
     &__item {
@@ -203,7 +185,7 @@
 
       &:hover {
         & .tab-card-editing-category {
-          background: #ebedf1;
+          background: $neutral-white1;
         }
       }
     }
@@ -215,13 +197,11 @@
 
     &__step {
       margin-right: 20px;
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 600;
-      font-size: 12px;
-      line-height: 167%;
+
+      @extend %font-inter--400_167;
+
       text-transform: uppercase;
-      color: #0077ff;
+      color: $blue-color;
     }
 
     &__title {
@@ -231,7 +211,7 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 171%;
-      color: #292929;
+      color: $dark-color;
     }
 
     &__arrow {
@@ -246,12 +226,10 @@
     }
     &__text {
       max-width: 329px;
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 167%;
-      color: #292929;
+
+      @extend %font-inter--400_167;
+
+      color: $dark-color;
     }
   }
 </style>

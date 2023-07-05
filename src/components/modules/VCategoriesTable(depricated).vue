@@ -367,7 +367,7 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 167%;
-      color: #7e8d94;
+      color: $neutral-gray;
     }
     &__buttons {
     }
@@ -412,19 +412,19 @@
   .parent-category {
     padding: 8px 8px 8px 16px;
     cursor: pointer;
-    border-bottom: 1px solid #ebedf1;
+    border-bottom: 1px solid $neutral-white1;
     background: rgba(244, 246, 247, 0.4);
 
     &:hover {
       background: #f4f6f7;
       .parent-category__button--add {
         .button {
-          background: #0077ff;
-          border-color: #0077ff;
-          color: #ffffff;
+          background: $blue-color;
+          border-color: $blue-color;
+          color: $white-color;
           &__image {
             path {
-              fill: #ffffff;
+              fill: $white-color;
             }
           }
         }
@@ -445,7 +445,7 @@
       font-weight: 700;
       font-size: 12px;
       line-height: 167%;
-      color: #292929;
+      color: $dark-color;
     }
 
     &__buttons {
@@ -481,7 +481,7 @@
       .list {
         &__item {
           &:first-child {
-            border-bottom: 1px solid #ebedf1;
+            border-bottom: 1px solid $neutral-white1;
           }
         }
         &__link {
@@ -490,7 +490,7 @@
           padding: 16px;
           &:hover {
             cursor: pointer;
-            background: #ebedf1;
+            background: $neutral-white1;
           }
         }
 
@@ -504,7 +504,7 @@
           font-weight: 400;
           font-size: 13px;
           line-height: 154%;
-          color: #292929;
+          color: $dark-color;
         }
       }
 
@@ -531,7 +531,7 @@
   // ----------------------------
   .child-item-category {
     background: #fff;
-    border-bottom: 1px solid #ebedf1;
+    border-bottom: 1px solid $neutral-white1;
     padding: 8px 8px 8px 16px;
     &:hover {
       background: #f4f6f7;

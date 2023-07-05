@@ -112,7 +112,7 @@
       align-items: center;
       height: 100%;
       margin-right: 8px;
-      @extend %font-nav-link;
+      @extend %font-inter--600;
     }
 
     &__arrow {
@@ -129,11 +129,11 @@
       top: 120%;
       border-radius: 4px;
       box-shadow: 0px 8px 24px -4px rgba(54, 54, 54, 0.1);
-      background: #ffffff;
+      background: $white-color;
     }
     &__item {
       white-space: nowrap;
-      @extend %font-dropdown-item;
+      @extend %font-inter--400;
     }
 
     &-slots--open {

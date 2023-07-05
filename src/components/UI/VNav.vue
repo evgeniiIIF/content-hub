@@ -54,30 +54,33 @@
       display: flex;
       height: 100%;
       & > * {
-        border-right: 1px solid #363636;
+        border-right: 1px solid $neutral-brown;
       }
       &:first-child {
-        border-left: 1px solid #363636;
+        border-left: 1px solid $neutral-brown;
       }
     }
 
     &__item {
       height: 100%;
       &:hover {
-        background: #363636;
+        background: $neutral-brown;
       }
     }
 
     &__dropdown {
       height: 100%;
-      @extend %font-nav-link;
+      @extend %font-inter--600;
     }
     &__link {
       display: flex;
       align-items: center;
+
       height: 100%;
       padding: 20px 24px;
-      @extend %font-nav-link;
+
+      @extend %font-inter--600;
+      color: $neutral-white;
     }
   }
 </style>

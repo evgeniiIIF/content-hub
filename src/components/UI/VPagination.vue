@@ -88,13 +88,13 @@
       width: 40px;
       height: 40px;
 
-      background: #ffffff;
+      background: $white-color;
       border: 1px solid #fff;
       border-radius: 4px;
       &:hover {
         cursor: pointer;
-        border-color: #0077ff;
-        color: #0077ff;
+        border-color: $blue-color;
+        color: $blue-color;
       }
     }
   }

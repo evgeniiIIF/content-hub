@@ -101,7 +101,7 @@
 </script>
 
 <style lang="scss">
-  $bg: #292929;
+  $bg: $dark-color;
   $bd: #2a2a2a;
   $hov: #00a19c;
 
@@ -123,20 +123,13 @@
     &__logo {
       display: flex;
       align-items: center;
-      margin-right: 80px;
-    }
-
-    &__nav {
-      margin-right: 20px;
+      margin-right: clamp(60px, 5vw, 80px);
     }
 
     &__content {
       flex: 1 1 auto;
       display: flex;
       justify-content: space-between;
-    }
-
-    &__signin {
     }
 
     .container {
@@ -155,8 +148,8 @@
       justify-content: center;
       padding: 18px;
       height: 100%;
-      border-left: 1px solid #363636;
-      border-right: 1px solid #363636;
+      border-left: 1px solid $neutral-brown;
+      border-right: 1px solid $neutral-brown;
     }
 
     &__dropdown {
@@ -164,9 +157,8 @@
         &__button {
           display: flex;
           align-items: center;
+          
           padding: 0;
-        }
-        &__arrow {
         }
       }
     }
@@ -182,13 +174,11 @@
     }
 
     &__text {
+      @extend %font-inter--400;
+
       margin-right: 8px;
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 154%;
-      color: #f8f8f6;
+
+      color: $neutral-white;
     }
     .dropdown__menu {
       width: 263px;

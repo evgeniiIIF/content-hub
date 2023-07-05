@@ -241,7 +241,7 @@
       font-style: normal;
       font-weight: 700;
       line-height: 138%;
-      color: #ffffff;
+      color: $white-color;
       @include af(32, 24);
     }
 

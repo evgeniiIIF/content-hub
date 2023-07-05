@@ -32,6 +32,34 @@ $z-iconMenu: 10;
 // @import "../../uikit/colors-and-type/colors-and-type.scss";
 // @import "../../uikit/cards/cards-page/cards-page.scss";
 
+// ================Fonts=================
+%type-h1 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 125%;
+  color: $dark-color;
+}
+
+%type-3 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 167%;
+  color: $white-color;
+}
+
+// ================FontsGroups=================
+
+%font-h1 {
+  @extend %type-h1;
+}
+%font-buttons {
+  @extend %type-3;
+}
+
 // ================Total=================
 
 html {
@@ -82,7 +110,7 @@ body {
 
 .card {
   padding: 40px 30px 30px;
-  background: #ffffff;
+  background: $white-color;
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
   border-radius: 4px;

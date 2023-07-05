@@ -31,24 +31,19 @@
 
     &__item {
       display: flex;
+
       &:first-child {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 167%;
-        color: #7e8d94;
+        @extend %font-inter--400_167;
+
+        color: $neutral-gray;
       }
       &:last-child {
         .breadcrumbs__image {
           display: none;
         }
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 167%;
-        color: #292929;
+
+        @extend %font-inter--400_167;
+        color: $dark-color;
       }
     }
     &__image {

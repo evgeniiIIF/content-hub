@@ -100,15 +100,12 @@
     min-height: 100%;
     left: 0;
     top: 0;
-    background: #ebedf1;
+    background: $neutral-white1;
 
     &__wrapper {
       display: flex;
       flex-direction: column;
       height: 100%;
-    }
-
-    &__top {
     }
 
     &__table {
@@ -130,7 +127,7 @@
       margin-bottom: 12px;
     }
     &__title {
-      @extend %font-h1;
+      @extend %font-inter--h1;
     }
 
     &__actions {
@@ -149,15 +146,7 @@
     &__button {
       .button {
         padding: 8px 22px 8px 14px;
-        &__image {
-        }
-
-        &__text {
-        }
       }
-    }
-
-    &__show-hide {
     }
   }
 
@@ -166,24 +155,20 @@
 
     &__button {
       padding: 2px 8px;
-      background: #292929;
+      background: $dark-color;
       border: none;
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 167%;
-      background: #ffffff;
-      color: #292929;
+
+      @extend %font-inter--400_167;
+
+      background: $white-color;
+      color: $dark-color;
     }
 
     &__button--all {
       border-radius: 4px 0px 0px 4px;
-      color: #ffffff;
-      background: #292929;
-    }
 
-    &__button--active {
+      color: $white-color;
+      background: $dark-color;
     }
 
     &__button--inactive {

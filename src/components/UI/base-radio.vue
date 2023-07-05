@@ -39,7 +39,7 @@ export default {
     cursor: pointer;
     border: 1px solid #fff;
     border-radius: 4px;
-    background: #FFFFFF;
+    background: $white-color;
 
     &__input {
         opacity: 0;

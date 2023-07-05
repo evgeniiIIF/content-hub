@@ -474,7 +474,7 @@
   }
 
   .head-table {
-    background: #c2c9d2;
+    background: $border-light2;
     border-radius: 4px;
     padding: 12px 16px;
 
@@ -513,7 +513,7 @@
   .item-category {
     padding: 8px 8px 8px 16px;
     cursor: pointer;
-    border-bottom: 1px solid #ebedf1;
+    border-bottom: 1px solid $neutral-white1;
     background: rgba(244, 246, 247, 0.4);
 
     &:hover {
@@ -521,13 +521,13 @@
 
       .item-category__button--add {
         .button {
-          background: #0077ff;
-          border-color: #0077ff;
-          color: #ffffff;
+          background: $blue-color;
+          border-color: $blue-color;
+          color: $white-color;
 
           &__image {
             path {
-              fill: #ffffff;
+              fill: $white-color;
             }
           }
         }
@@ -555,7 +555,7 @@
       font-weight: 700;
       font-size: 12px;
       line-height: 167%;
-      color: #292929;
+      color: $dark-color;
     }
 
     &__ozon {
@@ -639,7 +639,7 @@
             font-weight: 400;
             font-size: 13px;
             line-height: 154%;
-            color: #292929;
+            color: $dark-color;
           }
         }
       }
@@ -650,7 +650,7 @@
         &__item {
           white-space: nowrap;
           &:not(:last-child) {
-            border-bottom: 1px solid #ebedf1;
+            border-bottom: 1px solid $neutral-white1;
           }
         }
         &__link {
@@ -659,7 +659,7 @@
           padding: 16px;
           &:hover {
             cursor: pointer;
-            background: #ebedf1;
+            background: $neutral-white1;
           }
         }
 
@@ -673,7 +673,7 @@
           font-weight: 400;
           font-size: 13px;
           line-height: 154%;
-          color: #292929;
+          color: $dark-color;
         }
       }
 

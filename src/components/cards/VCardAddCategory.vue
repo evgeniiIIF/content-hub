@@ -190,8 +190,7 @@
     },
 
     async created() {
-      // await this.fetchData();
-      // console.log(this.data);
+      await this.fetchData();
     },
   };
 </script>
@@ -222,7 +221,7 @@
           background: #fff;
           font-weight: 400;
 
-          color: #292929;
+          color: $dark-color;
         }
 
         .card-add-category__item--active {
@@ -231,7 +230,7 @@
 
         .card-add-category__name {
           padding-left: 10px;
-          color: #292929;
+          color: $dark-color;
 
           &:hover {
             font-weight: 700;
@@ -250,7 +249,7 @@
 
     &__item {
       font-weight: 700;
-      background: #0077ff;
+      background: $blue-color;
       color: #fff;
     }
 
@@ -268,7 +267,7 @@
 
       &:hover {
         background: #eee;
-        color: #292929;
+        color: $dark-color;
       }
     }
   }
@@ -280,10 +279,7 @@
     height: 100%;
     padding: 40px 40px 20px;
     border-radius: 16px 0px 0px 16px;
-    background: #ffffff;
-
-    &__top {
-    }
+    background: $white-color;
 
     &__body {
       flex: 1 1 auto;
@@ -293,12 +289,8 @@
     &__title {
       flex: 0 0 210px;
       margin-right: 80px;
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 20px;
-      line-height: 32px;
-      color: #292929;
+      @extend %font-inter--400_32;
+      color: $dark-color;
     }
 
     &__body-content {
@@ -311,7 +303,7 @@
 
     &__input {
       .input__input {
-        border-color: #c2c9d2;
+        border-color: $border-light2;
       }
     }
 
@@ -323,7 +315,7 @@
       margin-right: 16px;
       .button {
         background: transparent;
-        color: #0077ff;
+        color: $blue-color;
       }
     }
 

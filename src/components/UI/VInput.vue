@@ -220,7 +220,7 @@ v-else
     &__input {
       padding: 8px 12px;
       outline: none;
-      border: 1px solid #ffffff;
+      border: 1px solid $white-color;
 
       font-family: 'Inter';
       font-style: normal;
@@ -230,7 +230,7 @@ v-else
       color: #000;
 
       border-radius: 4px;
-      background: #ffffff;
+      background: $white-color;
 
       &::placeholder {
         font-family: 'Inter';

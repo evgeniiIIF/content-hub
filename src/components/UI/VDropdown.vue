@@ -131,9 +131,12 @@
     &__title {
       display: flex;
       align-items: center;
+
       height: 100%;
       margin-right: 8px;
-      @extend %font-nav-link;
+
+      @extend %font-inter--600;
+      color: $neutral-white;
     }
 
     &__arrow {
@@ -150,17 +153,18 @@
       top: 120%;
       border-radius: 4px;
       box-shadow: 0px 8px 24px -4px rgba(54, 54, 54, 0.1);
-      background: #ffffff;
+      background: $white-color;
     }
     &__item {
-      @extend %font-dropdown-item;
+      @extend %font-inter--400;
+
       &:not(:last-child) {
-        border-bottom: 1px solid #ebedf1;
+        border-bottom: 1px solid $neutral-white1;
       }
 
       &--active {
         &.dropdown__link {
-          background: #0077ff;
+          background: $blue-color;
           color: #fff;
           font-weight: 700;
         }
@@ -174,9 +178,9 @@
       font-weight: 400;
       font-size: 13px;
       line-height: 154%;
-      color: #292929;
+      color: $dark-color;
       &:hover {
-        background: #0077ff;
+        background: $blue-color;
         color: #fff;
         font-weight: 700;
       }

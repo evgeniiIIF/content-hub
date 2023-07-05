@@ -5,3 +5,43 @@
 
 @import '@/assets/fonts/Roboto/stylesheet.scss';
 @import '@/assets/fonts/Inter/stylesheet.scss';
+
+%font-inter--h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 125%;
+}
+
+%font-inter--400 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(12px, 1vw, 13px);
+    line-height: 154%;
+}
+
+%font-inter--600 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: clamp(12px, 1vw, 13px);
+    line-height: 154%;
+}
+
+%font-inter--400_167 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 167%;
+}
+
+%font-inter--400_32 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+}

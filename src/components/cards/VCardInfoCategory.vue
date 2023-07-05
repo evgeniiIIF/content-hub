@@ -129,15 +129,11 @@
     .input--url {
       .input__input {
         background: #f4f6f7;
-        color: #7e8d94;
+        color: $neutral-gray;
       }
     }
   }
-
-  .card-info-category {
-    &__rectagle {
-    }
-  }
+  
   .rectagle-card-info-category {
     border-radius: 4px;
     background: #f4f6f7;
@@ -158,7 +154,7 @@
       font-size: 12px;
       font-family: Inter;
       line-height: 20px;
-      color: #7e8d94;
+      color: $neutral-gray;
     }
 
     &__value {
@@ -166,7 +162,7 @@
       font-size: 12px;
       font-family: Inter;
       line-height: 20px;
-      color: #292929;
+      color: $dark-color;
     }
   }
 </style>

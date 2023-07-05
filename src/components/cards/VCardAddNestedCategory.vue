@@ -109,7 +109,7 @@
           </div>
         </div>
         <button
-          :style="{ opacity: bodyItems.length === 1 ? 0 : 1, 'pointer-events': bodyItems.length === 1 ? 'none' : 'auto' }"
+          :style="{ opacity: bodyIndex === 0 ? 0 : 1, 'pointer-events': bodyIndex === 0 ? 'none' : 'auto' }"
           class="card-add-category-nested__body-remove-button"
           @click="removeBodyItem(bodyIndex)"
         >
@@ -251,7 +251,7 @@
     padding: 40px 40px 20px;
     padding-right: 0;
     border-radius: 16px 0px 0px 16px;
-    background: #ffffff;
+    background: $white-color;
 
     &__close {
       background: transparent;
@@ -264,6 +264,7 @@
       right: 10px;
       top: 10px;
       border-radius: 50%;
+
       &:hover {
         background: #eee;
       }
@@ -307,7 +308,7 @@
       font-weight: 400;
       font-size: 20px;
       line-height: 32px;
-      color: #292929;
+      color: $dark-color;
     }
 
     &__top {
@@ -315,7 +316,7 @@
 
     &__input {
       .input__input {
-        border-color: #c2c9d2;
+        border-color: $border-light2;
       }
     }
 
@@ -327,14 +328,8 @@
       margin-right: 16px;
       .button {
         background: transparent;
-        color: #0077ff;
+        color: $blue-color;
       }
-    }
-
-    &__button--bg {
-    }
-
-    &__info {
     }
 
     &__list {
@@ -345,12 +340,12 @@
           background: #fff;
           font-weight: 400;
 
-          color: #292929;
+          color: $dark-color;
         }
 
         .card-add-category-nested__name {
           padding-left: 10px;
-          color: #292929;
+          color: $dark-color;
 
           &:hover {
             font-weight: 700;
@@ -366,13 +361,15 @@
 
     &__item {
       font-weight: 700;
-      background: #0077ff;
+      background: $blue-color;
       color: #fff;
     }
 
     &__name {
       display: block;
+
       padding: 4px;
+
       font-family: 'Inter';
       font-style: normal;
       font-size: 14px;
@@ -380,7 +377,7 @@
 
       &:hover {
         background: #eee;
-        color: #292929;
+        color: $dark-color;
       }
     }
   }
@@ -401,14 +398,14 @@
       font-weight: 400;
       font-size: 20px;
       line-height: 160%;
-      color: #292929;
+      color: $dark-color;
     }
     &__add-more-button {
       align-self: center;
       margin-top: 20px;
       .button {
         background: transparent;
-        color: #0077ff;
+        color: $blue-color;
       }
     }
     &__separator {
@@ -422,7 +419,7 @@
         height: 24px;
         padding: 4px;
         border-radius: 50%;
-        background: #ebedf1;
+        background: $neutral-white1;
       }
       &::after {
         content: '';
@@ -432,11 +429,11 @@
         display: block;
         height: 1px;
         width: 100%;
-        background: #ebedf1;
+        background: $neutral-white1;
       }
     }
     &__bottom {
-      border-top: 1px solid #ebedf1;
+      border-top: 1px solid $neutral-white1;
       padding: 20px 40px;
     }
   }

@@ -94,102 +94,87 @@
 </script>
 
 <style lang="scss">
-  // @import '../assets//scss/settings.scss';
+  .categories {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    left: 0;
+    top: 0;
+    background: $neutral-white1;
 
-  // .categories {
-  //   position: absolute;
-  //   width: 100%;
-  //   min-height: 100%;
-  //   left: 0;
-  //   top: 0;
-  //   background: #ebedf1;
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      
+      height: 100%;
+    }
 
-  //   &__wrapper {
-  //     display: flex;
-  //     flex-direction: column;
-  //     height: 100%;
-  //   }
+    &__table {
+      flex: 1 1 auto;
+    }
 
-  //   &__top {
-  //   }
+    &__bottom {
+      padding: 41px 0 80px 0;
+    }
+  }
 
-  //   &__table {
-  //     flex: 1 1 auto;
-  //   }
+  .top {
+    padding: 34px 0 24px 0;
 
-  //   &__bottom {
-  //     padding: 41px 0 80px 0;
-  //   }
-  // }
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-  // .top {
-  //   padding: 34px 0 24px 0;
+      margin-bottom: 12px;
+    }
+    &__title {
+      @extend %font-h1;
+    }
 
-  //   &__row {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     align-items: center;
-  //     margin-bottom: 12px;
-  //   }
-  //   &__title {
-  //     @extend %font-h1;
-  //   }
+    &__actions {
+      display: flex;
+    }
 
-  //   &__actions {
-  //     display: flex;
-  //   }
+    &__input {
+      width: 320px;
+      margin-right: 24px;
 
-  //   &__input {
-  //     width: 320px;
-  //     margin-right: 24px;
+      .input__input {
+        padding: 9px 16px 9px 45px;
+      }
+    }
 
-  //     .input__input {
-  //       padding: 9px 16px 9px 45px;
-  //     }
-  //   }
+    &__button {
+      .button {
+        padding: 8px 22px 8px 14px;
+      }
+    }
+  }
 
-  //   &__button {
-  //     .button {
-  //       padding: 8px 22px 8px 14px;
-  //       &__image {
-  //       }
+  .show-hide-categories {
+    @include mr(1px);
 
-  //       &__text {
-  //       }
-  //     }
-  //   }
+    &__button {
+      padding: 2px 8px;
+      background: $dark-color;
+      border: none;
 
-  //   &__show-hide {
-  //   }
-  // }
+      @extend %font-inter--400_167;
 
-  // .show-hide-categories {
-  //   @include mr(1px);
+      background: $white-color;
+      color: $dark-color;
+    }
 
-  //   &__button {
-  //     padding: 2px 8px;
-  //     background: #292929;
-  //     border: none;
-  //     font-family: 'Inter';
-  //     font-style: normal;
-  //     font-weight: 400;
-  //     font-size: 12px;
-  //     line-height: 167%;
-  //     background: #ffffff;
-  //     color: #292929;
-  //   }
+    &__button--all {
+      border-radius: 4px 0px 0px 4px;
 
-  //   &__button--all {
-  //     border-radius: 4px 0px 0px 4px;
-  //     color: #ffffff;
-  //     background: #292929;
-  //   }
+      color: $white-color;
+      background: $dark-color;
+    }
 
-  //   &__button--active {
-  //   }
-
-  //   &__button--inactive {
-  //     border-radius: 0px 4px 4px 0px;
-  //   }
-  // }
+    &__button--inactive {
+      border-radius: 0px 4px 4px 0px;
+    }
+  }
 </style>

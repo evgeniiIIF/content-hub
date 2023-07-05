@@ -16,26 +16,34 @@ $phoneWidth: 480px;
 $smPhoneWidth: 320px;
 
 // Main color
-$default-color: #fff;
-$primary-color: #202020;
-$secondery-color: #121212;
-$success-color: #26de81;
-$danger-color: #fc5c65;
-$warning-color: #fed330;
-$light-color: #999999;
-$purple-color: #8854d0;
+$default-color           : #fff;
+$white-color             : #ffffff;
+$primary-color           : #202020;
+$secondery-color         : #121212;
+$dark-color              : #292929;
+$success-color           : #26de81;
+$danger-color            : #fc5c65;
+$warning-color           : #fed330;
+$light-color             : #999999;
+$purple-color            : #8854d0;
+$blue-color              : #0077ff;
 
 // Neutral Color
-$neutral-primary: #303133;
-$neutral-regular: #606266;
-$neutral-secondary: #909399;
-$neutral-placeholder: #c0c4cc;
+$neutral-primary         : #303133;
+$neutral-regular         : #606266; 
+$neutral-secondary       : #909399; 
+$neutral-placeholder     : #C0C4CC;
+$neutral-white           : #f8f8f6;
+$neutral-gray            : #7e8d94;
+$neutral-brown           : #363636;
+$neutral-white1          : #ebedf1;
 
 // Border Color
-$border-base: #dcdfe6;
-$border-light: #e4e7ed;
-$border-lighter: #ebeef5;
-$border-lightex: #f2f6fc;
+$border-base             : #DCDFE6;
+$border-light            : #E4E7ED;
+$border-lighter          : #EBEEF5;
+$border-lightex          : #F2F6FC;
+$border-light2           : #c2c9d2;
 
 // z-indexs
 $z-header: 1010;
@@ -98,4 +106,45 @@ $br-modile: 600px;
 }
 %font-buttons {
   @extend %type-3;
+}
+
+
+%font-inter--h1 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 125%;
+}
+
+%font-inter--400 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(12px, 1vw, 13px);
+  line-height: 154%;
+}
+
+%font-inter--600 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(12px, 1vw, 13px);
+  line-height: 154%;
+}
+
+%font-inter--400_167 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 167%;
+}
+
+%font-inter--400_32 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
 }

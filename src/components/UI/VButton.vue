@@ -36,11 +36,11 @@
     font-size: 14px;
     line-height: 133%;
     cursor: pointer;
-    color: #ffffff;
-    border: 2px solid #0077ff;
+    color: $white-color;
+    border: 2px solid $blue-color;
 
     border-radius: 4px;
-    background: #0077ff;
+    background: $blue-color;
     &:hover {
       background: darken($color: #0077ff, $amount: 2%);
     }

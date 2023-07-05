@@ -33,7 +33,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background: #ebedf1;
+    background: $neutral-white1;
 
     &__container {
       height: 100%;
