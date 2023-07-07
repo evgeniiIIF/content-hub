@@ -77,12 +77,14 @@ v-else
         :pattern="opts.pattern"
         :type="opts.type"
         :name="opts.name"
+        :title="opts.value"
         :value="opts.value"
         :index="index"
         :placeholder="opts.placeholder"
         :maxlength="opts.maxlength"
         autocomplete="off"
         @input="onInput"
+        @focus="$emit('onFocus')"
       />
 
       <span
@@ -106,7 +108,7 @@ v-else
         type: Number,
       },
     },
-    emits: ['onInput', 'onInputTel'],
+    emits: ['onInput', 'onInputTel', 'onFocus'],
 
     data() {
       return {

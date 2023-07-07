@@ -21,7 +21,7 @@ export default {
       await axios.get('http://dev1.content-hub.ru/api/categories/ozon').then((response) => {
         const data = response.data;
         const items = data.children;
-        console.log(items);
+        // console.log(items);
         store.commit('setItems', items);
       });
     },

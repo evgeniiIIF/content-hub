@@ -28,7 +28,10 @@
       class="select__button"
       @click="openMenu"
     >
-      <VInput :opts="opts">
+      <VInput
+        :opts="opts"
+        @onFocus="$emit('onFocus')"
+      >
         <VArrowDownSVG />
       </VInput>
     </div>
@@ -113,6 +116,7 @@
     cursor: pointer;
 
     & .input__input {
+      padding-right: 36px;
       cursor: pointer;
       border-color: $border-light2;
     }
