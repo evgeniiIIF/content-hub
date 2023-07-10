@@ -72,13 +72,13 @@ v-else
       >
       </textarea>
       <input
-        v-if="opts.type === 'text'"
+        v-if="opts.type === 'text' || opts.type === 'email' || opts.type === 'password'"
         class="input__input"
         :pattern="opts.pattern"
         :type="opts.type"
         :name="opts.name"
-        :title="opts.value"
         :value="opts.value"
+        :readonly="opts.readonly"
         :index="index"
         :placeholder="opts.placeholder"
         :maxlength="opts.maxlength"
@@ -222,7 +222,7 @@ v-else
     &__input {
       padding: 8px 12px;
       outline: none;
-      border: 1px solid $white-color;
+      border: 1px solid #c2c9d2;
 
       font-family: 'Inter';
       font-style: normal;
@@ -248,8 +248,9 @@ v-else
     }
     &__icon {
       position: absolute;
-      left: 0;
-      top: 0;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 36px;
       height: 100%;
       display: flex;

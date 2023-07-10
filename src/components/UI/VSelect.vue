@@ -57,6 +57,9 @@
       name: {
         type: String,
       },
+      indexName: {
+        type: String,
+      },
       // selectItems: {
       //   type: Array,
       //   default() {

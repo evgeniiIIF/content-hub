@@ -84,7 +84,7 @@
                 <template #menu>
                   <ul class="list">
                     <li class="list__item">
-                      <RouterLink to="/editing">
+                      <RouterLink to="/">
                         <div class="list__link">
                           <img
                             class="list__image"

@@ -25,7 +25,8 @@
             </template>
             <template #menu>
               <VCheckboxList
-                :items="headCategories"
+                :items="headCategories.slice(1)"
+                :isChecked="headCategories.slice(1)"
                 @onChange="setShowHideNthChildRowTable($event)"
               />
             </template>
@@ -155,49 +156,42 @@
             </div>
             <div class="item-category__name">{{ itemL2.name }}</div>
             <template v-if="itemL2.children_count == 0">
-              <div class="item-category__ozon ozon-list">
-                <!-- <VSelect
-                  :opts="dynamicItemSelectOptsOzon(itemCategoryIndexL1, itemCategoryIndexL2)"
-                  :ref="`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`"
-                  @onFocus="loadOzonSelectItems"
-                >
-                  <template #menu>
-                    <VRecursiveList :items="ozonSelectItems">
-                      <template #slot1="{ itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
-                        <div
-                          class="ozon-list__name"
-                          @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemL1)"
-                        >
-                          {{ itemL1.name + ' ' + itemCategoryIndexL2 }}
-                        </div>
-                      </template>
-                      <template #slot2="{ itemL1, itemL2, indexL1, indexL2 }">
-                        <div
-                          class="ozon-list__name"
-                          @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemL2)"
-                        >
-                          {{ itemL2.name }}
-                        </div>
-                      </template>
-                    </VRecursiveList>
-                  </template>
-                </VSelect> -->
+              <div class="item-category__ozon select-list">
                 <VSelect
                   :ref="`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`"
                   @onFocus="loadOzonSelectItems(itemCategoryIndexL1, itemCategoryIndexL2)"
-                  :opts="{
-                    type: 'text',
-                    value: 'opts.value',
-                    name: 'opts.name',
-                    placeholder: 'opts.placeholder',
-                    icon: true,
-                  }"
+                  :opts="optsTemplateItemCategorySelect"
                 >
                   <template #menu>
+                    <div class="select-list__filter">
+                      <div class="select-list__filter-wrapper">
+                        <input
+                          type="text"
+                          class="select-list__filter-input"
+                          @input="onInputFilter($event)"
+                        />
+                        <div class="select-list__filter-icon">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M11.9456 13.1237C11.0498 13.7793 9.94506 14.1663 8.74992 14.1663C5.75838 14.1663 3.33325 11.7412 3.33325 8.74967C3.33325 5.75813 5.75838 3.33301 8.74992 3.33301C11.7415 3.33301 14.1666 5.75813 14.1666 8.74967C14.1666 9.94471 13.7796 11.0494 13.1241 11.9451L16.4151 15.2361C16.7456 15.5666 16.7496 16.0983 16.4242 16.4238C16.0988 16.7492 15.567 16.7451 15.2366 16.4146L11.9456 13.1237ZM12.4999 8.74967C12.4999 10.8207 10.821 12.4997 8.74992 12.4997C6.67885 12.4997 4.99992 10.8207 4.99992 8.74967C4.99992 6.67861 6.67885 4.99967 8.74992 4.99967C10.821 4.99967 12.4999 6.67861 12.4999 8.74967Z"
+                              fill="#0077FF"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
                     <VRecursiveList :items="ozonSelectItems">
                       <template #slot1="{ itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                         <div
-                          class="ozon-list__name"
+                          class="select-list__name"
                           @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemL1)"
                         >
                           {{ itemL1.name + ' ' + itemCategoryIndexL2 }}
@@ -205,7 +199,7 @@
                       </template>
                       <template #slot2="{ itemL1, itemL2, indexL1, indexL2 }">
                         <div
-                          class="ozon-list__name"
+                          class="select-list__name"
                           @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemL2)"
                         >
                           {{ itemL2.name }}
@@ -296,7 +290,7 @@
                   <template #menu>
                     <ul class="list">
                       <li class="list__item">
-                        <RouterLink to="/editing">
+                        <RouterLink to="/">
                           <div class="list__link">
                             <img
                               class="list__image"
@@ -373,15 +367,30 @@
         showVCardAddNestedCategory: false,
         showVCardInfoCategory: false,
 
+        // setShowHideNthChildRowTable
         prevNthChildren: [],
+        // \setShowHideNthChildRowTable
 
+        // <VCardAddNestedCategory> && <VCardAddInfoCategory>
         parentItemData: {
           names: [],
           id: null,
         },
+        // </VCardAddNestedCategory> && </VCardAddInfoCategory>
 
-        itemsSelectOptsOzon: {},
+        // <itemCategorySelect>
+        currentSelect: null,
+
+        optsTemplateItemCategorySelect: {
+          value: '-',
+          type: 'text',
+          name: 'opts.name',
+          placeholder: 'opts.placeholder',
+          readonly: true,
+          icon: true,
+        },
       };
+      // <\ itemCategorySelect>
     },
 
     computed: {
@@ -391,108 +400,45 @@
       ...mapGetters('categoriesOzon', {
         ozonSelectItems: 'items',
       }),
-      computedSelectOptsOzon() {
-        // if (!!Object.keys(this.itemsSelectOptsOzon).length) {
-        //   console.log(!!Object.keys(this.itemsSelectOptsOzon).length);
-        //   // console.log(this.itemsSelectOptsOzon[`index(${this.itemCategoryIndexL1}>${this.itemCategoryIndexL2})`]);
-        //   // this.$nextTick(() => {
-        //   //   return this.itemsSelectOptsOzon[`index(${this.itemCategoryIndexL1}>${this.itemCategoryIndexL2})`];
-        //   // });
-        //   // return {
-        //   //   type: 'text',
-        //   //   value: 'xxxx',
-        //   //   name: 'opts.name',
-        //   //   placeholder: 'opts.placeholder',
-        //   //   icon: true,
-        //   // };
-        // } else {
-        // }
-        // return {
-        //   type: 'text',
-        //   value: 'opts.value',
-        //   name: 'opts.name',
-        //   placeholder: 'opts.placeholder',
-        //   icon: true,
-        // };
-        // this.itemsSelectOptsOzon[`index(${this.itemCategoryIndexL1}>${this.itemCategoryIndexL2})`] = {
-        //   type: 'text',
-        //   value: 'opts.value',
-        //   name: 'opts.name',
-        //   placeholder: 'opts.placeholder',
-        //   icon: true,
-        // };
-        // return this.itemsSelectOptsOzon[`index(${this.itemCategoryIndexL1}>${this.itemCategoryIndexL2})`];
-        // get() {
-        //   return (itemCategoryIndexL1,itemCategoryIndexL2) => {
-        // 	console.log(itemCategoryIndexL1);
-        //     // возвращаемое значение зависит от индекса
-        //     // в данном примере возвращаем item с добавленным индексом
-        //     // return this.items[index] + ' ' + index;
-        //   // return this.itemsSelectOptsOzon[`index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
-        //   }
-        // }
-      },
+
+      // filteredSelectItems() {
+      //   if (this.filterValue) {
+      //     return this.yourObject.filter((item) => {
+      //       return Object.keys(item).some((key) => {
+      //         return String(item[key]).toLowerCase().startsWith(this.filterValue.toLowerCase());
+      //       });
+      //     });
+      //   } else {
+      //     return this.yourObject;
+      //   }
+      // },
     },
 
     methods: {
       ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
 
-      // updateItemSelectOptsOzon(itemCategoryIndexL1, itemCategoryIndexL2) {
-      //   const key = `index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`;
-      //   const opts = {
-      //     type: 'text',
-      //     value: 'opts.value',
-      //     name: 'opts.name',
-      //     placeholder: 'opts.placeholder',
-      //     icon: true,
-      //   };
-      //   this.$set(this.itemsSelectOptsOzon, key, opts);
+      // onInputFilter(e) {
+      //   console.log(e.target.value);
+      //   this.ozonSelectItems = this.ozonSelectItems.filter((item) => {
+      //     item.name.startsWith(e.target.value);
+      //   });
       // },
 
       async loadOzonSelectItems(itemCategoryIndexL1, itemCategoryIndexL2) {
         if (this.ozonSelectItems.length === 0) {
           await this.GET_ITEMS_SELECT_OZON();
         }
-
-        // this.itemCategoryIndexL1 = itemCategoryIndexL1;
-        // this.itemCategoryIndexL2 = itemCategoryIndexL2;
-
-        // this.itemsSelectOptsOzon[`index(${this.itemCategoryIndexL1}>${this.itemCategoryIndexL2})`] = {
-        //   type: 'text',
-        //   value: 'opts.value',
-        //   name: 'opts.name',
-        //   placeholder: 'opts.placeholder',
-        //   icon: true,
-        // };
-        this.itemCategoryIndexL1 = itemCategoryIndexL1;
-        this.itemCategoryIndexL2 = itemCategoryIndexL2;
-        console.log(this.itemsSelectOptsOzon);
-      },
-
-      dynamicItemSelectOptsOzon(itemCategoryIndexL1, itemCategoryIndexL2) {
-        this.itemsSelectOptsOzon[`index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`] = {
-          type: 'text',
-          value: 'opts.value',
-          name: 'opts.name',
-          placeholder: 'opts.placeholder',
-          icon: true,
-        };
-
-        console.log(this.itemsSelectOptsOzon);
-
-        return this.itemsSelectOptsOzon[`index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
       },
 
       onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, item) {
-        this.$refs[`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`].$props.opts.value = item.name;
-        console.log(this.$refs[`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`].opts);
+        this.currentSelect = this.$refs[`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
+        const input = this.currentSelect.$el.querySelector('input');
+        input.value = item.name;
+        input.title = item.name;
+        this.currentSelect.menuIsOpen = false;
 
-        // this.itemsSelectOptsOzon[`index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`].value = item.name;
-
-        this.$refs[`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`].menuIsOpen = false;
-
-        // console.log(this.itemsSelectOptsOzon);
+        // console.log(input, item.id);
       },
 
       setShowHideNthChildRowTable(isChecked) {
@@ -524,7 +470,6 @@
               nthChild.style.display = 'none';
             }
           });
-          // const nthChildrenAll = document.querySelectorAll(`.row-table > *:nth-child(${indexItem})`);
         });
       },
 
@@ -882,25 +827,25 @@
   }
 
   .select {
-    &__menu {
-      padding: 8px 0;
-    }
+    // &__menu {
+    //   padding: 8px 0;
+    // }
 
     .list {
       display: block;
 
       .list {
-        .ozon-list__name {
-          padding-left: 20px;
+        .select-list__name {
+          padding-left: 28px;
         }
       }
     }
   }
 
-  .ozon-list {
+  .select-list {
     &__name {
       @extend %font-inter--400_167;
-      padding: 8px;
+      padding: 12px 16px 12px 16px;
 
       &:hover {
         background: #eee;
@@ -915,6 +860,38 @@
         font-weight: 700;
         background: $blue-color;
       }
+    }
+
+    &__filter {
+      position: sticky;
+      top: 0;
+      left: 0;
+      background: #fff;
+      padding: 16px;
+    }
+    &__filter-wrapper {
+      position: relative;
+    }
+    &__filter-input {
+      width: 100%;
+      font-family: Inter;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;
+      text-overflow: ellipsis;
+      color: #7e8d94;
+
+      padding: 6px 10px 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #c2c9d2;
+      background: #fff;
+    }
+    &__filter-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 

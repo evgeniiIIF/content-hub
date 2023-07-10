@@ -3,18 +3,25 @@ import { createRouter, createWebHistory } from 'vue-router';
 import VEditingCategorySection from '../views/VEditingCategorySection.vue';
 import VCategoriesSectionView from '../views/VCategoriesSectionView.vue';
 import VLocalAttributesViews from '@/views/VLocalAttributesViews.vue';
+import VLoginView from '@/views/VLoginView.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'categoties',
-    component: VCategoriesSectionView,
-  },
-  {
-    path: '/editing',
     name: 'editing',
     component: VEditingCategorySection,
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: VLoginView,
+  },
+  {
+    path: '/categories',
+    name: 'categories',
+    component: VCategoriesSectionView,
+  },
+
   {
     path: '/local-attributes',
     name: 'local-attributes',
