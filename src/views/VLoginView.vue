@@ -13,7 +13,10 @@
               class="login__input"
               v-for="opts in loginFormItems.inputs"
             >
-              <VInput :opts="opts">
+              <VInput
+                :opts="opts"
+                @onInput="onInput($event)"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -93,13 +96,20 @@
     methods: {
       ...mapActions('login', ['SEND_USER_DATA']),
 
-      onSubmit(e) {
+      onInput(e) {
+        const input = e.target;
+        this.loginFormItems.inputs[input.name].value = input.value;
+        console.log(this.loginFormItems);
+      },
+
+      async onSubmit(e) {
         const loginData = {
           email: this.loginFormItems.inputs.email.value,
           password: this.loginFormItems.inputs.password.value,
         };
-        this.SEND_USER_DATA(loginData);
-        // console.log(loginData);
+        await this.SEND_USER_DATA(loginData);
+        console.log(loginData);
+        this.$router.push('/');
       },
     },
   };

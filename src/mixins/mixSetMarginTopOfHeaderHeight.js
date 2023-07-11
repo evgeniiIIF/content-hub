@@ -5,27 +5,41 @@ const mixSetMarginTopOfHeaderHeight = {
   mixins: [computedHeaderHeight, mobileMixin],
 
   watch: {
-    isMobile() {
-      this.setMarginTop();
+    $route(to, from) {
+      // Обработка изменений URL
+      // console.log('from:', from.path);
+      // console.log('to:', to.path);
+
+      if (to.path === '/login') {
+        this.unsetMarginTop();
+        // console.log('UNSsetMT');
+      } else {
+        this.setMarginTop();
+        // console.log('setMT');
+      }
     },
-    isMobileForHead() {
-      this.setMarginTop();
-    },
+    // isMobile() {
+    //   this.setMarginTop();
+    // },
+    // isMobileForHead() {
+    //   this.setMarginTop();
+    // },
   },
   methods: {
     setMarginTop() {
-      const main = this.$refs.main;
-      if (this.isMobileForHead || true) {
-        main.style.marginTop = this.getComputedHeaderHeight();
-      } else {
-        main.style.marginTop = '';
-      }
+      const main = document.querySelector('main');
+      main.style.marginTop = this.getComputedHeaderHeight();
+    },
+    unsetMarginTop() {
+      const main = document.querySelector('main');
+      main.style.marginTop = '';
     },
   },
-  beforeCreate() {
-    window.addEventListener('load', () => {
-      this.setMarginTop();
-    });
+  mounted() {
+    // console.log('mounted');
+    // window.addEventListener('load', () => {
+    //   this.setMarginTop();
+    // });
   },
 };
 

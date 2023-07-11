@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper">
-    <VHeader />
+    <VHeader v-if="$route.meta.showHeader !== false" />
     <VMain />
+
     <!-- <VFooter /> -->
     <!-- <Transition name="fade">
       <VModalWindowUIFC

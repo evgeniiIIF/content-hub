@@ -157,7 +157,7 @@
         &__button {
           display: flex;
           align-items: center;
-          
+
           padding: 0;
         }
       }

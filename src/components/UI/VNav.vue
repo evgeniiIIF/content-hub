@@ -15,6 +15,12 @@
             :dropdownItems="menuItem.dropdownItems"
           />
         </div>
+        <RouterLink
+          v-else-if="menuItem.name === 'Категории'"
+          class="nav__link"
+          to="/categories"
+          >{{ menuItem.name }}</RouterLink
+        >
         <a
           v-else
           class="nav__link"

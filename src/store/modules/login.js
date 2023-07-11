@@ -4,11 +4,20 @@ export default {
   namespaced: true,
 
   state: {
+    authenticated: false,
+    token: '',
+
     success: false,
     successConsult: false,
     pending: false,
   },
   getters: {
+    authenticated(state) {
+      return state.authenticated;
+    },
+    token(state) {
+      return state.token;
+    },
     success(state) {
       return state.success;
     },
@@ -20,6 +29,22 @@ export default {
     },
   },
   mutations: {
+    init(state) {
+      if (localStorage.getItem('token')) {
+        console.log('init');
+        state.token = JSON.parse(localStorage.getItem('token'));
+      }
+    },
+    setAuthenticated(state) {
+      state.authenticated = true;
+      // localStorage.setItem('authenticated', true);
+      // localStorage.removeItem('authenticated');
+    },
+    // saveAuthenticated(state) {
+    // },
+    setToken(state, payload) {
+      state.token = payload;
+    },
     setSuccess(state) {
       state.success = true;
     },
@@ -46,10 +71,12 @@ export default {
           password: userData.password,
         })
         .then((response) => {
-          console.log(response.data);
-
-          if (response.data === 'ok') {
+          if (response.data.success === true) {
             store.commit('resetPending');
+            store.commit('setAuthenticated');
+            // console.log(store.getters.authenticated, 'authenticated log from vuex/login.js');
+            console.log(response.data.response.token);
+            store.commit('setToken', response.data.response.token);
           }
         });
     },

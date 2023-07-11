@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { mapGetters } from 'vuex';
+
 export default {
   namespaced: true,
 
@@ -7,6 +9,8 @@ export default {
     items: [],
   },
   getters: {
+    ...mapGetters('login', ['token']),
+
     items(state) {
       return state.items;
     },
@@ -18,14 +22,16 @@ export default {
   },
   actions: {
     async GET_ITEMS_CATEGORIES(store) {
+      console.log(store.getters.items + '  tock');
       await axios
-        .get('http://dev1.content-hub.ru/api/categories', {
+        .get('http://api.hub.absit.ru/api/v1/categories', {
           headers: {
             // 'Content-Type': 'application/json',
             // Authorization: 'Bearer your_token_here',
             // 'Access-Control-Allow-Origin': '*',
             // 'Access-Control-Allow-Methods': 'GET, POST',
             // 'Access-Control-Allow-Headers': '*',
+            Authorization: 'Bearer 9Lv7Myr4qTlkqPi6B2idqiLWT7d0lAg1YYCCc6aF',
           },
         })
         .then((response) => {
