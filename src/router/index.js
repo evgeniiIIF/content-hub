@@ -47,8 +47,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authenticated = store.getters['login/authenticated'];
-  console.log(authenticated, 'authenticated log from vueRouter');
+  const authenticated = store.getters['login/getAuthenticated'];
+  // console.log(authenticated, 'authenticated log from vueRouter');
 
   // Если компонент требует авторизации и пользователь не авторизован, перенаправляем на страницу входа
   if (to.matched.some((record) => record.meta.requiresAuth) && !authenticated) {

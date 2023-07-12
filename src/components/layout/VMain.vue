@@ -3,7 +3,7 @@
     ref="main"
     class="main"
   >
-    <RouterView />
+    <slot></slot>
   </main>
 </template>
 

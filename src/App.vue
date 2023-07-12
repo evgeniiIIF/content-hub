@@ -1,7 +1,11 @@
+<!-- <VHeader v-if="$route.meta.showHeader !== false"/> -->
+
 <template>
   <div class="wrapper">
-    <VHeader v-if="$route.meta.showHeader !== false" />
-    <VMain />
+    <VHeader v-if="isVisibleVHeader" />
+    <VMain>
+      <RouterView />
+    </VMain>
 
     <!-- <VFooter /> -->
     <!-- <Transition name="fade">
@@ -50,7 +54,16 @@
       return {};
     },
     methods: {},
-    computed: {},
+    computed: {
+      ...mapGetters('login', {
+        isAuthenticated: 'getAuthenticated',
+      }),
+      isVisibleVHeader() {
+        let visible = this.$route.meta.showHeader !== false && this.isAuthenticated;
+        // console.log(visible + ' visible');
+        return visible;
+      },
+    },
   };
 </script>
 <style lang="scss">

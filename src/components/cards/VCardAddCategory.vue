@@ -104,14 +104,13 @@
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
   import VSelect from '../UI/VSelect.vue';
-  import VSelect2 from '../UI/VSelect2.vue';
 
   export default {
     name: 'VCardAddCategory',
 
     emits: ['onCloseSlidingBlock'],
 
-    components: { VInput, VButton, VSelect2, VSelect },
+    components: { VInput, VButton, VSelect },
     data() {
       return {
         // selectMenuItems: [],

@@ -188,7 +188,7 @@
                         </div>
                       </div>
                     </div>
-                    <VRecursiveList :items="ozonSelectItems">
+                    <VRecursiveList :items="filteredSelectItems">
                       <template #slot1="{ itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                         <div
                           class="select-list__name"
@@ -389,6 +389,8 @@
           readonly: true,
           icon: true,
         },
+
+        filterValueSelect: '',
       };
       // <\ itemCategorySelect>
     },
@@ -401,29 +403,43 @@
         ozonSelectItems: 'items',
       }),
 
-      // filteredSelectItems() {
-      //   if (this.filterValue) {
-      //     return this.yourObject.filter((item) => {
-      //       return Object.keys(item).some((key) => {
-      //         return String(item[key]).toLowerCase().startsWith(this.filterValue.toLowerCase());
-      //       });
-      //     });
-      //   } else {
-      //     return this.yourObject;
-      //   }
-      // },
+      filteredSelectItems() {
+        return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
+      },
     },
 
     methods: {
       ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
 
-      // onInputFilter(e) {
-      //   console.log(e.target.value);
-      //   this.ozonSelectItems = this.ozonSelectItems.filter((item) => {
-      //     item.name.startsWith(e.target.value);
-      //   });
-      // },
+      filterRecursively(obj, filterValue) {
+        const filter = (obj, filterValue) => {
+          if (filterValue) {
+            // console.log(this.ozonSelectItems);
+            return obj.filter((item) => {
+              if (item.name.toLowerCase().startsWith(filterValue.toLowerCase())) {
+                return true;
+              }
+
+              if (item.children && item.children.length > 0) {
+                obj.children = filter(item.children, filterValue);
+              }
+            });
+          } else {
+            return obj;
+          }
+        };
+
+        return filter(obj, filterValue);
+      },
+
+      onInputFilter(e) {
+        this.filterValueSelect = e.target.value;
+        // console.log(this.filterValueSelect);
+        // this.ozonSelectItems = this.ozonSelectItems.filter((item) => {
+        //   item.name.startsWith(e.target.value);
+        // });
+      },
 
       async loadOzonSelectItems(itemCategoryIndexL1, itemCategoryIndexL2) {
         if (this.ozonSelectItems.length === 0) {

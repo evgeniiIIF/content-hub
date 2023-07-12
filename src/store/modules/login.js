@@ -12,11 +12,19 @@ export default {
     pending: false,
   },
   getters: {
-    authenticated(state) {
-      return state.authenticated;
+    getAuthenticated(state) {
+      if (localStorage.getItem('authenticated')) {
+        return localStorage.getItem('authenticated');
+      } else {
+        return state.authenticated;
+      }
     },
-    token(state) {
-      return state.token;
+    getToken(state) {
+      if (localStorage.getItem('token')) {
+        return localStorage.getItem('token');
+      } else {
+        return state.token;
+      }
     },
     success(state) {
       return state.success;
@@ -29,21 +37,16 @@ export default {
     },
   },
   mutations: {
-    init(state) {
-      if (localStorage.getItem('token')) {
-        console.log('init');
-        state.token = JSON.parse(localStorage.getItem('token'));
-      }
-    },
     setAuthenticated(state) {
       state.authenticated = true;
-      // localStorage.setItem('authenticated', true);
+      localStorage.setItem('authenticated', true);
       // localStorage.removeItem('authenticated');
     },
-    // saveAuthenticated(state) {
-    // },
+
     setToken(state, payload) {
       state.token = payload;
+      localStorage.setItem('token', payload);
+      // localStorage.removeItem('token');
     },
     setSuccess(state) {
       state.success = true;
@@ -74,9 +77,10 @@ export default {
           if (response.data.success === true) {
             store.commit('resetPending');
             store.commit('setAuthenticated');
-            // console.log(store.getters.authenticated, 'authenticated log from vuex/login.js');
-            console.log(response.data.response.token);
             store.commit('setToken', response.data.response.token);
+            // console.log(response.data);
+            // console.log(store.getters.authenticated, 'authenticated log from vuex/login.js');
+            console.log(store.getters.getToken, 'authenticated log from vuex/login.js');
           }
         });
     },

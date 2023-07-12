@@ -108,7 +108,7 @@
           password: this.loginFormItems.inputs.password.value,
         };
         await this.SEND_USER_DATA(loginData);
-        console.log(loginData);
+        console.log('loginData vLoadin');
         this.$router.push('/');
       },
     },

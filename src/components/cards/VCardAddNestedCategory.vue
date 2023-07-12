@@ -138,7 +138,6 @@
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
   import VSelect from '../UI/VSelect.vue';
-  import VSelect2 from '../UI/VSelect2.vue';
 
   export default {
     name: 'VCardAddNestedCategory',
@@ -147,7 +146,7 @@
         type: Object,
       },
     },
-    components: { VInput, VButton, VSelect2, VSelect, VBreadcrumbs },
+    components: { VInput, VButton, VSelect, VBreadcrumbs },
     data() {
       return {
         selectMenuItems: [],

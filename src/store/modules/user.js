@@ -1,31 +1,27 @@
 import axios from 'axios';
 
-import { mapGetters } from 'vuex';
-
 export default {
   namespaced: true,
-
   state: {
-    items: [],
+    block: {},
   },
   getters: {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
-      // return rootState.login.token;
       return rootGetters['login/getToken'];
     },
-    items(state) {
-      return state.items;
+    block(state) {
+      return state.block;
     },
   },
   mutations: {
-    setItems(state, payload) {
-      state.items = payload;
+    setBlock(state, payload) {
+      state.block = payload;
     },
   },
   actions: {
-    async GET_ITEMS_CATEGORIES(store) {
-      // console.log(store.getters.getTokenFromLogin + '  tockenfrom login');
-      const url = 'http://api.hub.absit.ru/api/v1/categories';
+    async GET_BLOCK(store) {
+      const url = 'http://api.hub.absit.ru/api/v1/user';
+      // console.log(store.getters.getTokenFromLogin + 'from userjs');
       await axios
         .get(url, {
           headers: {
@@ -39,10 +35,28 @@ export default {
         })
         .then((response) => {
           const data = response.data;
-          const items = data.data;
-          store.commit('setItems', items);
-          // console.log(items);
+          const block = data;
+          store.commit('setBlock', block);
         });
     },
   },
 };
+
+// copy to compunent
+
+// import { mapActions, mapGetters } from 'vuex';
+
+// computed: {
+// 	...mapGetters('partners', {
+// 		partnersItems: 'items'
+// 	})
+// },
+
+// methods: {
+// 	...mapActions('partners', ['GET_PARTNERS_ITEMS'])
+// },
+
+// async mounted() {
+// 	await this.GET_PARTNERS_ITEMS()
+// 	console.log(this.partnersItems);
+// }

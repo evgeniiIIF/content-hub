@@ -31,7 +31,7 @@
                       alt="photo"
                     />
                   </div>
-                  <div class="dropdown-header-signin__text">Alexandr Dmitriev</div>
+                  <div class="dropdown-header-signin__text">{{ userData.name }}</div>
                   <div class="dropdown__arrow">
                     <img
                       src="@/assets/img/static/arrows/arrow_down_20px.svg"
@@ -50,8 +50,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   // components
   import VLogo from '@/components/UI/VLogo.vue';
@@ -92,11 +91,23 @@
         ],
       };
     },
-    computed: {},
+    computed: {
+      ...mapGetters('user', {
+        userData: 'block',
+      }),
+    },
 
     watch: {},
 
-    methods: {},
+    methods: {
+      ...mapActions('user', {
+        GET_USER_DATA: 'GET_BLOCK',
+      }),
+    },
+    async mounted() {
+      await this.GET_USER_DATA();
+      // console.log(this.userData);
+    },
   };
 </script>
 
@@ -181,7 +192,7 @@
       color: $neutral-white;
     }
     .dropdown__menu {
-      width: 263px;
+      width: 100%;
       top: 146%;
       left: auto;
       right: 0;

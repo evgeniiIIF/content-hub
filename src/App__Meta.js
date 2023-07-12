@@ -7,20 +7,19 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    async mounted() {
-      await axios
-        .get('https://api.abs-autoservice.ru/api/header?format=json')
-        .then((response) => {
-          document.getElementById('page-title').textContent = response.data.title;
-          document.getElementById('page-description').content = response.data.description;
-          document.getElementById('page-keywords').content = response.data.metakey;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      this.loadScriptHeader();
-    },
+    // async mounted() {
+    //   await axios
+    //     .get('https://api.abs-autoservice.ru/api/header?format=json')
+    //     .then((response) => {
+    //       document.getElementById('page-title').textContent = response.data.title;
+    //       document.getElementById('page-description').content = response.data.description;
+    //       document.getElementById('page-keywords').content = response.data.metakey;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    //   this.loadScriptHeader();
+    // },
   },
 };
 
