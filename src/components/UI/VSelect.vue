@@ -127,6 +127,9 @@
       & .input__input {
         border-radius: 4px 4px 0 0;
       }
+      & .input__icon {
+        transform: translateY(-50%) rotate(180deg);
+      }
     }
 
     & .input__icon {
@@ -175,12 +178,6 @@
       background: $white-color;
     }
     &__item {
-    }
-
-    &--open {
-      & .input__icon {
-        transform: rotate(180deg);
-      }
     }
   }
 </style>

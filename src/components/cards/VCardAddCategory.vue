@@ -11,24 +11,20 @@
     </button>
     <div class="card-add-category__body">
       <h3 class="card-add-category__title">Добавить категорию</h3>
-      <div class="card-add-category__body-content">
+      <form
+        class="card-add-category__body-content"
+        @submit.prevent="onSubmit"
+      >
         <div class="card-add-category__inputs">
-          <div
-            class="card-add-category__input"
-            v-for="input in inputs"
-            :key="input.name"
-          >
-            <VSelect
-              v-if="input.select"
-              :opts="input"
-            >
+          <div class="card-add-category__input">
+            <VSelect :opts="inputs[0]">
               <template #menu>
                 <ul class="card-add-category__list">
                   <li
                     class="card-add-category__item"
-                    v-for="(itemSelectMenu, index) in input.items"
+                    v-for="(itemSelectMenu, index) in inputs[0].items"
                     :key="itemSelectMenu.name"
-                    @click.stop="selectionItem(itemSelectMenu.name)"
+                    @click.stop="selectionItem(itemSelectMenu)"
                   >
                     <span
                       class="card-add-category__name"
@@ -43,7 +39,7 @@
                         class="card-add-category__item"
                         v-for="(itemSelectMenu2, index2) in itemSelectMenu.children"
                         :key="itemSelectMenu2.name"
-                        @click.stop="selectionItem(itemSelectMenu2.name)"
+                        @click.stop="selectionItem(itemSelectMenu2)"
                       >
                         <span
                           class="card-add-category__name"
@@ -58,7 +54,7 @@
                             class="card-add-category__item"
                             v-for="(itemSelectMenu3, index3) in itemSelectMenu2.children"
                             :key="itemSelectMenu3.name"
-                            @click.stop="selectionItem(itemSelectMenu3.name)"
+                            @click.stop="selectionItem(itemSelectMenu3)"
                           >
                             <span
                               class="card-add-category__name"
@@ -73,9 +69,17 @@
                 </ul>
               </template>
             </VSelect>
+          </div>
+          <div class="card-add-category__input">
             <VInput
-              v-else
-              :opts="input"
+              :opts="inputs[1]"
+              @onInput="onInputName"
+            />
+          </div>
+          <div class="card-add-category__input">
+            <VInput
+              :opts="inputs[2]"
+              @onInput="onInputDescription"
             />
           </div>
         </div>
@@ -87,7 +91,7 @@
             <VButton>Сохранить изменения</VButton>
           </div>
         </div>
-      </div>
+      </form>
     </div>
     <!-- <div class="card-add-category__bottom">
       <div class="card-add-category__info info-card-add-category">
@@ -105,6 +109,8 @@
   import VInput from '../UI/VInput.vue';
   import VSelect from '../UI/VSelect.vue';
 
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'VCardAddCategory',
 
@@ -113,7 +119,8 @@
     components: { VInput, VButton, VSelect },
     data() {
       return {
-        // selectMenuItems: [],
+        dataForCreateCategory: {},
+
         currentSelected: null,
 
         inputs: [
@@ -159,6 +166,11 @@
         ],
       };
     },
+    computed: {
+      ...mapGetters('localCategoriesItems', {
+        categoriesItems: 'items',
+      }),
+    },
     watch: {
       // selectMenuItems(oldValue, newValue) {
       //   this.selectMenuItems = newValue;
@@ -167,29 +179,33 @@
       // },
     },
     methods: {
-      async fetchData() {
-        try {
-          const url = 'http://localhost:3001/data';
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error('Ошибка сети при чтении файла JSON');
-          }
-          const jsonData = await response.json();
-          // this.selectMenuItems = jsonData;
-          this.inputs[0].items = jsonData;
-          // console.log(this.inputs[0].items);
-        } catch (error) {
-          console.error('Не удалось прочитать JSON файл:', error);
-        }
+      ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
+      ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
+
+      onSubmit() {
+        // console.log(this.dataForCreateCategory);
+        this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
       },
-      selectionItem(payload) {
-        this.inputs[0].value = payload;
-        this.currentSelected = payload;
+
+      onInputName(e) {
+        this.dataForCreateCategory.name = e.target.value;
+      },
+      onInputDescription(e) {
+        this.dataForCreateCategory.description = e.target.value;
+      },
+
+      selectionItem(itemSelectMenu) {
+        this.inputs[0].value = itemSelectMenu.name;
+        this.currentSelected = itemSelectMenu.name;
+
+        // this.dataForCreateCategory.name = itemSelectMenu.name;
+        this.dataForCreateCategory.id = itemSelectMenu.id;
       },
     },
 
     async created() {
-      // await this.fetchData();
+      await this.GET_ITEMS_CATEGORIES();
+      this.inputs[0].items = this.categoriesItems;
     },
   };
 </script>

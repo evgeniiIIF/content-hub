@@ -169,6 +169,7 @@
                           type="text"
                           class="select-list__filter-input"
                           @input="onInputFilter($event)"
+                          @keydown="onBackspakeFilterSelect($event, selectNameAll, filterValueSelect)"
                         />
                         <div class="select-list__filter-icon">
                           <svg
@@ -380,6 +381,7 @@
 
         // <itemCategorySelect>
         currentSelect: null,
+        selectNameAll: null,
 
         optsTemplateItemCategorySelect: {
           value: '-',
@@ -413,16 +415,22 @@
       ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
 
       filterRecursively(obj, filterValue) {
-        const filter = (obj, filterValue) => {
+        const copyObj = JSON.parse(JSON.stringify(obj));
+
+        const filterFunc = (copyObj, filterValue) => {
           if (filterValue) {
-            // console.log(this.ozonSelectItems);
-            return obj.filter((item) => {
-              if (item.name.toLowerCase().startsWith(filterValue.toLowerCase())) {
-                return true;
+            return copyObj.filter((item) => {
+              const corect =
+                item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+                item.children.some((childItem) => {
+                  return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
+                });
+              if (item.children_count > 0) {
+                item.children = filterFunc(item.children, filterValue);
               }
 
-              if (item.children && item.children.length > 0) {
-                obj.children = filter(item.children, filterValue);
+              if (corect) {
+                return true;
               }
             });
           } else {
@@ -430,15 +438,34 @@
           }
         };
 
-        return filter(obj, filterValue);
+        return filterFunc(copyObj, filterValue);
       },
 
       onInputFilter(e) {
         this.filterValueSelect = e.target.value;
-        // console.log(this.filterValueSelect);
-        // this.ozonSelectItems = this.ozonSelectItems.filter((item) => {
-        //   item.name.startsWith(e.target.value);
-        // });
+
+        this.selectNameAll = e.target.closest('.select__menu').querySelectorAll('.select-list__name');
+        this.selectNameAll = Array.from(this.selectNameAll).filter((item) => item.innerText.toLowerCase().startsWith(this.filterValueSelect.toLowerCase()));
+
+        this.highlightMatching(this.selectNameAll, this.filterValueSelect);
+      },
+
+      onBackspakeFilterSelect(e, selectNameAll, filterValueSelect) {
+        if (e.keyCode === 8) {
+          this.filterValueSelect = e.target.value.slice(0, -1);
+          this.highlightMatching(selectNameAll, filterValueSelect);
+        }
+      },
+
+      highlightMatching(arr, filterValue) {
+        arr.forEach((item) => {
+          if (filterValue) {
+            item.style.background = 'transparent';
+            item.style.background = 'yellow';
+          } else {
+            item.style.background = 'transparent';
+          }
+        });
       },
 
       async loadOzonSelectItems(itemCategoryIndexL1, itemCategoryIndexL2) {
@@ -454,7 +481,10 @@
         input.title = item.name;
         this.currentSelect.menuIsOpen = false;
 
-        // console.log(input, item.id);
+        // reset filter
+        this.currentSelect.$el.querySelector('.select-list__filter-input').value = '';
+        this.filterValueSelect = '';
+        this.highlightMatching(this.selectNameAll, this.filterValueSelect);
       },
 
       setShowHideNthChildRowTable(isChecked) {
@@ -490,7 +520,6 @@
       },
 
       closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
-        // console.log(`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`);
         const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
 
         if (currentItemCategoryDropdownSlots.menuIsOpen) {
@@ -513,8 +542,6 @@
         this.showVCardAddNestedCategory = textButton === 'Добавить субкатегорию';
         this.showVCardInfoCategory = textButton === 'Информация';
 
-        // console.log(textButton);
-        // console.log(this.parentItemData);
         this.isOpenSlidingBlock = true;
       },
     },
