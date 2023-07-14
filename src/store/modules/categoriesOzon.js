@@ -7,6 +7,9 @@ export default {
     items: [],
   },
   getters: {
+    getTokenFromLogin(state, getters, rootState, rootGetters) {
+      return rootGetters['login/getToken'];
+    },
     items(state) {
       return state.items;
     },
@@ -18,10 +21,17 @@ export default {
   },
   actions: {
     async GET_ITEMS_SELECT_OZON(store) {
-      await axios.get('http://dev1.content-hub.ru/api/categories/ozon').then((response) => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      };
+
+      await axios.get('http://api.hub.absit.ru/api/v1/categories/ozonCategories', config).then((response) => {
         const data = response.data;
-        const items = data.children;
-        // console.log(items);
+        const items = data;
+        console.log(items);
         store.commit('setItems', items);
       });
     },

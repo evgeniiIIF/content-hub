@@ -61,7 +61,7 @@ v-else
       <textarea
         v-if="opts.type === 'textarea'"
         :type="opts.type"
-        :value="opts.value"
+        :value="opts.value || value"
         :name="opts.name"
         :cols="opts.cols"
         :rows="opts.rows"
@@ -77,7 +77,7 @@ v-else
         :pattern="opts.pattern"
         :type="opts.type"
         :name="opts.name"
-        :value="opts.value"
+        :value="opts.value || value"
         :readonly="opts.readonly"
         :index="index"
         :placeholder="opts.placeholder"
@@ -85,6 +85,7 @@ v-else
         autocomplete="off"
         @input="onInput"
         @focus="$emit('onFocus')"
+        @change="$emit('onChange', $event)"
       />
 
       <span
@@ -107,8 +108,11 @@ v-else
       index: {
         type: Number,
       },
+      value: {
+        type: String,
+      },
     },
-    emits: ['onInput', 'onInputTel', 'onFocus'],
+    emits: ['onInput', 'onInputTel', 'onFocus', 'onChange'],
 
     data() {
       return {

@@ -21,23 +21,22 @@ export default {
   actions: {
     async GET_BLOCK(store) {
       const url = 'http://api.hub.absit.ru/api/v1/user';
+      const config = {
+        headers: {
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+          // Authorization: 'Bearer your_token_here',
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': 'GET, POST',
+          // 'Access-Control-Allow-Headers': '*',
+          Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
+        },
+      };
       // console.log(store.getters.getTokenFromLogin + 'from userjs');
-      await axios
-        .get(url, {
-          headers: {
-            // 'Content-Type': 'application/json',
-            // Authorization: 'Bearer your_token_here',
-            // 'Access-Control-Allow-Origin': '*',
-            // 'Access-Control-Allow-Methods': 'GET, POST',
-            // 'Access-Control-Allow-Headers': '*',
-            Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
-          },
-        })
-        .then((response) => {
-          const data = response.data;
-          const block = data;
-          store.commit('setBlock', block);
-        });
+      await axios.get(url, config).then((response) => {
+        const data = response.data;
+        const block = data;
+        store.commit('setBlock', block);
+      });
     },
   },
 };

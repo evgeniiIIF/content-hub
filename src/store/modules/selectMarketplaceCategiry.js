@@ -1,7 +1,4 @@
 import axios from 'axios';
-// import qs from 'qs';
-// const qs = require('qs');
-// const querystring = require('querystring');
 
 export default {
   namespaced: true,
@@ -43,14 +40,10 @@ export default {
     },
   },
   actions: {
-    async SEND_CATEGORY_DATA(store, data) {
-      const dataFor = {
-        parent_id: data.id,
-        name: data.name,
-        description: data.description,
-        ozonCategory: 740,
-        aliCategory: 709,
-      };
+    async SELECT_MARKETPLACE_CATEGORY(store, updateData) {
+      const url = `http://api.hub.absit.ru/api/v1/categories/${updateData.localCategory_id}/update`;
+      console.log(updateData);
+      const data = {};
 
       const config = {
         headers: {
@@ -58,16 +51,18 @@ export default {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       };
-
+      // console.log(store.getters.pending);
       store.commit('setPending');
+      // console.log(store.getters.pending);
+
       await axios
-        .post('http://api.hub.absit.ru/api/v1/categories/store', dataFor, config)
+        .patch(url, data, config)
         .then((response) => {
-          console.log('su');
           console.log(response.data);
 
           if (response.data.success === true) {
             store.commit('resetPending');
+            // console.log(store.getters.pending);
           }
         })
         .catch((error) => {

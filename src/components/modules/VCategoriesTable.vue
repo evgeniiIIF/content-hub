@@ -36,11 +36,11 @@
     </div>
     <div class="table__body js-dropdown-menu--root">
       <VRecursiveList :items="categoriesItems">
-        <template #slot1="{ itemL1, indexL1, itemCategoryIndexL1 = indexL1 }">
+        <template #slot1="{ itemL1, itemCategoryItemL1 = itemL1, indexL1, itemCategoryIndexL1 = indexL1 }">
           <div
             class="item-category row-table"
             :ref="`itemCategory(index-${itemCategoryIndexL1})`"
-            :class="{ 'js-dropdown-menu__button': itemL1.children_count > 0 }"
+            :class="{ 'js-dropdown-menu__button': itemCategoryItemL1.children_count > 0 }"
             @mouseleave="closeOwnDropdown($event, itemCategoryIndexL1)"
           >
             <div class="item-category__icon">
@@ -75,7 +75,30 @@
                 />
               </svg>
             </div>
-            <div class="item-category__name">{{ itemL1.name }}</div>
+            <div
+              class="pending"
+              v-if="itemCategoryName_PENDING"
+            >
+              PENDING...
+            </div>
+            <div
+              class="item-category__name-wrapper"
+              v-else
+            >
+              <div class="item-category__name">
+                {{ itemCategoryItemL1.name }}
+              </div>
+              <div
+                class="item-category__name--with-input"
+                @click.stop
+              >
+                <VInput
+                  :opts="optsTemplateItemCategoryInputName"
+                  :value="itemCategoryItemL1.name"
+                  @onChange="onUpdateItemCategoryName($event, itemCategoryItemL1)"
+                />
+              </div>
+            </div>
             <div
               class="item-category__buttons"
               @click.stop
@@ -102,17 +125,17 @@
           </div>
         </template>
 
-        <template #slot2="{ itemL1, itemL2, indexL1, itemCategoryIndexL1 = indexL1, indexL2, itemCategoryIndexL2 = indexL2 }">
+        <template #slot2="{ itemL1, itemL2, itemCategoryItemL2 = itemL2, indexL1, itemCategoryIndexL1 = indexL1, indexL2, itemCategoryIndexL2 = indexL2 }">
           <div
             class="item-category row-table"
             :ref="`itemCategory(index-${itemCategoryIndexL1}>${itemCategoryIndexL2})`"
-            :class="{ 'js-dropdown-menu__button': itemL2.children_count > 0 }"
-            :style="{ background: itemL2.children_count == 0 ? '#fff' : '' }"
+            :class="{ 'js-dropdown-menu__button': itemCategoryItemL2.children_count > 0 }"
+            :style="{ background: itemCategoryItemL2.children_count == 0 ? '#fff' : '' }"
             @mouseleave="closeOwnDropdown($event, itemCategoryIndexL1, itemCategoryIndexL2)"
           >
             <div
               class="item-category__icon"
-              v-if="itemL2.children_count > 0"
+              v-if="itemCategoryItemL2.children_count > 0"
             >
               <svg
                 class="item-category__icon-plus"
@@ -154,8 +177,31 @@
                 alt="dec"
               />
             </div>
-            <div class="item-category__name">{{ itemL2.name }}</div>
-            <template v-if="itemL2.children_count == 0">
+            <div
+              class="pending"
+              v-if="itemCategoryName_PENDING"
+            >
+              PENDING...
+            </div>
+            <div
+              class="item-category__name-wrapper"
+              v-else
+            >
+              <div class="item-category__name">
+                {{ itemCategoryItemL2.name }}
+              </div>
+              <div
+                class="item-category__name--with-input"
+                @click.stop
+              >
+                <VInput
+                  :opts="optsTemplateItemCategoryInputName"
+                  :value="itemCategoryItemL2.name"
+                  @onChange="onUpdateItemCategoryName($event, itemCategoryItemL2)"
+                />
+              </div>
+            </div>
+            <template v-if="itemCategoryItemL2.children_count == 0">
               <div class="item-category__ozon select-list">
                 <VSelect
                   :ref="`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`"
@@ -190,20 +236,20 @@
                       </div>
                     </div>
                     <VRecursiveList :items="filteredSelectItems">
-                      <template #slot1="{ itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
+                      <template #slot1="{ itemL1, selectMarketplaceItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                         <div
                           class="select-list__name"
-                          @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemL1)"
+                          @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, selectMarketplaceItemL1, itemCategoryItemL2)"
                         >
-                          {{ itemL1.name + ' ' + itemCategoryIndexL2 }}
+                          {{ selectMarketplaceItemL1.name }}
                         </div>
                       </template>
-                      <template #slot2="{ itemL1, itemL2, indexL1, indexL2 }">
+                      <template #slot2="{ itemL2, selectMarketplaceItemL2 = itemL2, indexL1, indexL2 }">
                         <div
                           class="select-list__name"
-                          @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemL2)"
+                          @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, selectMarketplaceItemL2, itemCategoryItemL2)"
                         >
-                          {{ itemL2.name }}
+                          {{ selectMarketplaceItemL2.name }}
                         </div>
                       </template>
                     </VRecursiveList>
@@ -265,7 +311,20 @@
                 alt="dec"
               />
             </div>
-            <div class="item-category__name">{{ itemL3.name }}</div>
+            <!-- <div class="item-category__name">{{ itemL3.name }}</div> -->
+            <div class="item-category__name-wrapper">
+              <div class="item-category__name">{{ itemL3.name }}</div>
+              <div
+                class="item-category__name--with-input"
+                @click.stop
+              >
+                <VInput
+                  :opts="optsTemplateItemCategoryInputName"
+                  :value="itemL3.name"
+                  @onChange="onUpdateItemCategoryName($event, itemL3)"
+                />
+              </div>
+            </div>
             <div class="item-category__ozon">-</div>
             <div class="item-category__aliexpress">-</div>
             <div class="item-category__wildberries">-</div>
@@ -350,6 +409,7 @@
   import VRecursiveList from '@/components/UI-FC/VRecursiveList.vue';
   import VCheckboxList from '../UI/VCheckboxList.vue';
   import VSelect from '../UI/VSelect.vue';
+  import VInput from '../UI/VInput.vue';
 
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
@@ -358,7 +418,7 @@
   export default {
     name: 'VCategoriesTable',
     mixins: [mixDropdownMenuFn],
-    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect },
+    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect, VInput },
 
     data() {
       return {
@@ -378,6 +438,15 @@
           id: null,
         },
         // </VCardAddNestedCategory> && </VCardAddInfoCategory>
+
+        // <itemCategorySelect>
+        optsTemplateItemCategoryInputName: {
+          value: '',
+          type: 'text',
+          name: 'opts.name',
+          placeholder: 'opts.placeholder',
+        },
+        // <\ itemCategorySelect>
 
         // <itemCategorySelect>
         currentSelect: null,
@@ -404,6 +473,9 @@
       ...mapGetters('categoriesOzon', {
         ozonSelectItems: 'items',
       }),
+      ...mapGetters('updateCategoryName', {
+        itemCategoryName_PENDING: 'pending',
+      }),
 
       filteredSelectItems() {
         return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
@@ -413,6 +485,17 @@
     methods: {
       ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
+      ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME']),
+      ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY']),
+
+      async onUpdateItemCategoryName(e, item) {
+        const data = {
+          name: e.target.value,
+          id: item.id,
+        };
+        await this.UPDATE_CATEGORY_NAME(data);
+        await this.GET_ITEMS_CATEGORIES();
+      },
 
       filterRecursively(obj, filterValue) {
         const copyObj = JSON.parse(JSON.stringify(obj));
@@ -422,9 +505,10 @@
             return copyObj.filter((item) => {
               const corect =
                 item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
-                item.children.some((childItem) => {
-                  return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
-                });
+                (item.children &&
+                  item.children.some((childItem) => {
+                    return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
+                  }));
               if (item.children_count > 0) {
                 item.children = filterFunc(item.children, filterValue);
               }
@@ -474,17 +558,30 @@
         }
       },
 
-      onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, item) {
+      async onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemMarketplace, itemCategory) {
+        console.log(itemCategory, itemMarketplace);
+
         this.currentSelect = this.$refs[`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
         const input = this.currentSelect.$el.querySelector('input');
-        input.value = item.name;
-        input.title = item.name;
+        input.value = itemMarketplace.name;
+        input.title = itemMarketplace.name;
         this.currentSelect.menuIsOpen = false;
 
         // reset filter
         this.currentSelect.$el.querySelector('.select-list__filter-input').value = '';
         this.filterValueSelect = '';
-        this.highlightMatching(this.selectNameAll, this.filterValueSelect);
+        if (this.selectNameAll) {
+          this.highlightMatching(this.selectNameAll, this.filterValueSelect);
+        }
+
+        // send data
+        const data = {
+          localCategory_id: itemCategory.id,
+          marketplace_id: itemMarketplace.id,
+        };
+        await this.SELECT_MARKETPLACE_CATEGORY(data);
+
+        console.log(data);
       },
 
       setShowHideNthChildRowTable(isChecked) {
@@ -679,7 +776,16 @@
         opacity: 1;
       }
       .item-category__name {
-        text-decoration-line: underline;
+        display: none;
+
+        // text-decoration-line: underline;
+        // .input__input {
+        //   border-color: #c2c9d2;
+        //   background: $white-color;
+        // }
+      }
+      .item-category__name--with-input {
+        display: block;
       }
     }
 
@@ -699,6 +805,24 @@
       font-size: 12px;
       line-height: 167%;
       color: $dark-color;
+    }
+
+    &__name--with-input {
+      display: none;
+
+      .input__input {
+        height: auto;
+        // border-color: transparent;
+        // background: transparent;
+        // padding-top: 0;
+        // padding-bottom: 0;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 167%;
+        color: $dark-color;
+      }
     }
 
     &__ozon {

@@ -66,23 +66,24 @@ export default {
   },
   actions: {
     async SEND_USER_DATA(store, userData) {
+      const data = {
+        email: userData.email,
+        password: userData.password,
+      };
+      const url = 'http://api.hub.absit.ru/api/v1/login';
+
       store.commit('setPending');
 
-      await axios
-        .post('http://api.hub.absit.ru/api/v1/login', {
-          email: userData.email,
-          password: userData.password,
-        })
-        .then((response) => {
-          if (response.data.success === true) {
-            store.commit('resetPending');
-            store.commit('setAuthenticated');
-            store.commit('setToken', response.data.response.token);
-            // console.log(response.data);
-            // console.log(store.getters.authenticated, 'authenticated log from vuex/login.js');
-            console.log(store.getters.getToken, 'authenticated log from vuex/login.js');
-          }
-        });
+      await axios.post(url, data).then((response) => {
+        if (response.data.success === true) {
+          store.commit('resetPending');
+          store.commit('setAuthenticated');
+          store.commit('setToken', response.data.response.token);
+          // console.log(response.data);
+          // console.log(store.getters.authenticated, 'authenticated log from vuex/login.js');
+          console.log(store.getters.getToken, 'authenticated log from vuex/login.js');
+        }
+      });
     },
     SET_SUCCESS(store) {
       store.commit('setSuccess');

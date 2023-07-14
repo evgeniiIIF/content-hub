@@ -25,24 +25,24 @@ export default {
   actions: {
     async GET_ITEMS_CATEGORIES(store) {
       // console.log(store.getters.getTokenFromLogin + '  tockenfrom login');
+      const config = {
+        headers: {
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+          // Authorization: 'Bearer your_token_here',
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': 'GET, POST',
+          // 'Access-Control-Allow-Headers': '*',
+          Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
+        },
+      };
+
       const url = 'http://api.hub.absit.ru/api/v1/categories';
-      await axios
-        .get(url, {
-          headers: {
-            // 'Content-Type': 'application/json',
-            // Authorization: 'Bearer your_token_here',
-            // 'Access-Control-Allow-Origin': '*',
-            // 'Access-Control-Allow-Methods': 'GET, POST',
-            // 'Access-Control-Allow-Headers': '*',
-            Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
-          },
-        })
-        .then((response) => {
-          const data = response.data;
-          const items = data.data;
-          store.commit('setItems', items);
-          // console.log(items);
-        });
+      await axios.get(url, config).then((response) => {
+        const data = response.data;
+        const items = data.data;
+        store.commit('setItems', items);
+        // console.log(items);
+      });
     },
   },
 };
