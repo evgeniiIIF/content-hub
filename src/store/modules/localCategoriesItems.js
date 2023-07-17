@@ -41,7 +41,7 @@ export default {
         const data = response.data;
         const items = data.data;
         store.commit('setItems', items);
-        // console.log(items);
+        console.log(items);
       });
     },
   },

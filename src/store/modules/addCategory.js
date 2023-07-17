@@ -18,9 +18,6 @@ export default {
     success(state) {
       return state.success;
     },
-    successConsult(state) {
-      return state.successConsult;
-    },
     pending(state) {
       return state.pending;
     },
@@ -28,9 +25,6 @@ export default {
   mutations: {
     setSuccess(state) {
       state.success = true;
-    },
-    setSuccessConsult(state) {
-      state.successConsult = true;
     },
     resetSuccess(state) {
       state.success = false;
@@ -52,6 +46,8 @@ export default {
         aliCategory: 709,
       };
 
+      console.log(dataFor);
+
       const config = {
         headers: {
           Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
@@ -66,22 +62,25 @@ export default {
           console.log('su');
           console.log(response.data);
 
+          store.commit('setSuccess');
+          setTimeout(() => {
+            store.commit('resetSuccess');
+          }, 3000);
+
+          store.commit('resetPending');
           if (response.data.success === true) {
-            store.commit('resetPending');
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
     SET_SUCCESS(store) {
       store.commit('setSuccess');
     },
     RESET_SUCCESS(store) {
       store.commit('resetSuccess');
-    },
-    SET_SUCCESS_CONSULT(store) {
-      store.commit('setSuccessConsult');
     },
   },
 };

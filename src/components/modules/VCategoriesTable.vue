@@ -207,6 +207,7 @@
                   :ref="`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`"
                   @onFocus="loadOzonSelectItems(itemCategoryIndexL1, itemCategoryIndexL2)"
                   :opts="optsTemplateItemCategorySelect"
+                  :value="itemCategoryItemL2.ozonCategory ? itemCategoryItemL2.ozonCategory.name : '-'"
                 >
                   <template #menu>
                     <div class="select-list__filter">
@@ -239,7 +240,7 @@
                       <template #slot1="{ itemL1, selectMarketplaceItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                         <div
                           class="select-list__name"
-                          @click.stop="onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, selectMarketplaceItemL1, itemCategoryItemL2)"
+                          title="Нельзя выбрать родительскую категорию"
                         >
                           {{ selectMarketplaceItemL1.name }}
                         </div>
@@ -325,7 +326,7 @@
                 />
               </div>
             </div>
-            <div class="item-category__ozon">-</div>
+            <div class="item-category__ozon">{{ itemL3.ozonCategory }}</div>
             <div class="item-category__aliexpress">-</div>
             <div class="item-category__wildberries">-</div>
             <div class="item-category__yandex">-</div>
@@ -453,7 +454,7 @@
         selectNameAll: null,
 
         optsTemplateItemCategorySelect: {
-          value: '-',
+          // value: '-',
           type: 'text',
           name: 'opts.name',
           placeholder: 'opts.placeholder',
@@ -559,7 +560,7 @@
       },
 
       async onSelectMarketplaceCategory(itemCategoryIndexL1, itemCategoryIndexL2, itemMarketplace, itemCategory) {
-        console.log(itemCategory, itemMarketplace);
+        // console.log(itemCategory, itemMarketplace);
 
         this.currentSelect = this.$refs[`VSelectOzon-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
         const input = this.currentSelect.$el.querySelector('input');
@@ -581,7 +582,7 @@
         };
         await this.SELECT_MARKETPLACE_CATEGORY(data);
 
-        console.log(data);
+        // console.log(data);
       },
 
       setShowHideNthChildRowTable(isChecked) {
@@ -1010,6 +1011,12 @@
   }
 
   .select-list {
+    & .select__menu > .list > .list__item {
+      & > .select-list__name {
+        cursor: not-allowed;
+      }
+    }
+
     &__name {
       @extend %font-inter--400_167;
       padding: 12px 16px 12px 16px;

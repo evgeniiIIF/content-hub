@@ -3,7 +3,13 @@
     :class="classes"
     :is="tag"
   >
-    <slot></slot>
+    <div
+      v-if="pending"
+      class="button__pending"
+    >
+      <div class="button__pending-preloader"></div>
+    </div>
+    <slot v-else></slot>
   </component>
 </template>
 
@@ -13,6 +19,10 @@
       tag: {
         type: String,
         default: 'button',
+      },
+      pending: {
+        type: Boolean,
+        default: false,
       },
     },
 
@@ -49,14 +59,38 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+
     &__image {
       display: flex;
       align-items: center;
       margin-right: 8px;
     }
 
+    .button__pending {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .button__pending-preloader {
+      width: 20px;
+      height: 20px;
+      border: 4px solid #fff;
+      border-radius: 50%;
+      border-left-color: transparent;
+      animation: 1s infinite linear preloader-animation;
+    }
+
     .button-with-icon__text {
       margin-right: 16px;
+    }
+  }
+
+  @keyframes preloader-animation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 </style>

@@ -88,7 +88,7 @@
             <VButton>Отменить</VButton>
           </div>
           <div class="card-add-category__button--bg">
-            <VButton>Сохранить изменения</VButton>
+            <VButton :pending="isAddCategoryPending">Сохранить изменения</VButton>
           </div>
         </div>
       </form>
@@ -170,6 +170,9 @@
       ...mapGetters('localCategoriesItems', {
         categoriesItems: 'items',
       }),
+      ...mapGetters('addCategory', {
+        isAddCategoryPending: 'pending',
+      }),
     },
     watch: {
       // selectMenuItems(oldValue, newValue) {
@@ -182,9 +185,11 @@
       ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
 
-      onSubmit() {
+      async onSubmit() {
         // console.log(this.dataForCreateCategory);
-        this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
+        await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
+        this.$emit('onCloseSlidingBlock');
+        await this.GET_ITEMS_CATEGORIES();
       },
 
       onInputName(e) {
@@ -335,6 +340,10 @@
     }
 
     &__button--bg {
+      .button__pending {
+        width: 145.517px;
+        height: 18.602px;
+      }
     }
 
     &__bottom {
