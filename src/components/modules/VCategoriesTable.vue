@@ -217,6 +217,7 @@
                           class="select-list__filter-input"
                           @input="onInputFilter($event)"
                           @keydown="onBackspakeFilterSelect($event, selectNameAll, filterValueSelect)"
+                          @blur="onBlurFilterInput($event)"
                         />
                         <div class="select-list__filter-icon">
                           <svg
@@ -272,6 +273,7 @@
                           class="select-list__filter-input"
                           @input="onInputFilter($event)"
                           @keydown="onBackspakeFilterSelect($event, selectNameAll, filterValueSelect)"
+                          @blur="onBlurFilterInput($event)"
                         />
                         <div class="select-list__filter-icon">
                           <svg
@@ -549,6 +551,14 @@
       ...mapActions('categoriesAli', ['GET_ITEMS_SELECT_ALI']),
       ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME']),
       ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY']),
+
+      onBlurFilterInput(e) {
+        e.target.value = '';
+        this.filterValueSelect = '';
+        if (this.selectNameAll) {
+          this.highlightMatching(this.selectNameAll, this.filterValueSelect);
+        }
+      },
 
       async onUpdateItemCategoryName(e, item) {
         const data = {
@@ -857,6 +867,24 @@
       }
       .item-category__name--with-input {
         display: block;
+      }
+
+      .input {
+        &__input {
+          border-color: #c2c9d2;
+        }
+        &__icon {
+          display: flex;
+        }
+      }
+    }
+
+    .input {
+      &__input {
+        border-color: transparent;
+      }
+      &__icon {
+        display: none;
       }
     }
 
