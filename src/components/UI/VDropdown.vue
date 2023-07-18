@@ -73,13 +73,13 @@
       openMenu() {
         this.menuIsOpen = !this.menuIsOpen;
         document.addEventListener('click', this.closeMenu, true);
-        console.log(this.menuIsOpen + ' op');
+        // console.log(this.menuIsOpen + ' op');
       },
       closeMenu(e) {
         const currentDropdown = this.$refs.currentDropdown;
 
         if (currentDropdown && !currentDropdown.contains(e.target)) {
-          console.log(this.menuIsOpen + ' close');
+          // console.log(this.menuIsOpen + ' close');
 
           this.menuIsOpen = false;
           document.removeEventListener('click', this.closeMenu, true);

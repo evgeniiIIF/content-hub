@@ -46,7 +46,7 @@ export default {
         aliCategory: 709,
       };
 
-      console.log(dataFor);
+      // console.log(dataFor);
 
       const config = {
         headers: {
@@ -59,8 +59,8 @@ export default {
       await axios
         .post('http://api.hub.absit.ru/api/v1/categories/store', dataFor, config)
         .then((response) => {
-          console.log('su');
-          console.log(response.data);
+          // console.log('su');
+          // console.log(response.data);
 
           store.commit('setSuccess');
           setTimeout(() => {

@@ -42,9 +42,10 @@ export default {
   actions: {
     async SELECT_MARKETPLACE_CATEGORY(store, updateData) {
       const url = `http://api.hub.absit.ru/api/v1/categories/${updateData.localCategory_id}/update`;
-      // console.log(updateData);
+      console.log(updateData);
+
       const data = {
-        ozonCategory: updateData.marketplace_id,
+        [updateData.mapketplaceCategoryName]: updateData.marketplace_id,
       };
 
       const config = {

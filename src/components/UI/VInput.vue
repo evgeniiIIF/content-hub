@@ -135,7 +135,7 @@ v-else
         }
       },
       handleKeyDown(event) {
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
 
         if (event.keyCode === 8) {
           this.backSpace = true;

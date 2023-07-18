@@ -20,7 +20,7 @@ export default {
     },
   },
   actions: {
-    async GET_ITEMS_SELECT_OZON(store) {
+    async GET_ITEMS_SELECT_ALI(store) {
       const config = {
         headers: {
           Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
@@ -28,7 +28,7 @@ export default {
         },
       };
 
-      await axios.get('http://api.hub.absit.ru/api/v1/categories/ozonCategories', config).then((response) => {
+      await axios.get('http://api.hub.absit.ru/api/v1/categories/aliCategories', config).then((response) => {
         const data = response.data;
         const items = data;
         // console.log(items);

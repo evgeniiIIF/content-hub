@@ -391,7 +391,7 @@
         this.showVCardAddNestedCategory = textButton === 'Добавить субкатегорию';
         this.showVCardInfoCategory = textButton === 'Информация';
 
-        console.log(textButton);
+        // console.log(textButton);
         this.isOpenSlidingBlock = true;
       },
       async fetchData() {
@@ -402,7 +402,7 @@
             throw new Error('Ошибка сети при чтении файла JSON');
           }
           const jsonData = await response.json();
-          console.log(jsonData);
+          // console.log(jsonData);
           this.data = jsonData;
         } catch (error) {
           console.error('Не удалось прочитать JSON файл:', error);

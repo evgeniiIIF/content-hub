@@ -81,7 +81,7 @@ export default {
           store.commit('setToken', response.data.response.token);
           // console.log(response.data);
           // console.log(store.getters.authenticated, 'authenticated log from vuex/login.js');
-          console.log(store.getters.getToken, 'authenticated log from vuex/login.js');
+          // console.log(store.getters.getToken, 'authenticated log from vuex/login.js');
         }
       });
     },

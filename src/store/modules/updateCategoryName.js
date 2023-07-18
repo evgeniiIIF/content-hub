@@ -59,7 +59,7 @@ export default {
       await axios
         .patch(url, data, config)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
 
           if (response.data.success === true) {
             store.commit('resetPending');
