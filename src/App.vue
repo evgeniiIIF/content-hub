@@ -5,7 +5,7 @@
     <VHeader v-if="isVisibleVHeader" />
     <div
       class="success success--add-category"
-      v-if="isAddCategorySuccess"
+      v-if="isAddCategorySuccess || isSelectMarketplaceCategirySuccess"
     >
       <div class="success__message">
         <span class="success__icon"
@@ -24,7 +24,7 @@
             />
           </svg>
         </span>
-        <p class="success__text">Категория «Аккумуляторы и аксессуары» успешно добавлена</p>
+        <p class="success__text">{{ currentMessage }}</p>
       </div>
       <button
         @click="closeSuccessWindow"
@@ -99,6 +99,7 @@
     },
     methods: {
       ...mapActions('addCategory', ['RESET_SUCCESS']),
+      ...mapActions('selectMarketplaceCategiry', ['RESET_SUCCESS']),
       closeSuccessWindow() {
         this.RESET_SUCCESS();
       },
@@ -109,10 +110,19 @@
       }),
       ...mapGetters('addCategory', {
         isAddCategorySuccess: 'success',
+        messageAddCategory: 'getMessage',
       }),
+      ...mapGetters('selectMarketplaceCategiry', {
+        isSelectMarketplaceCategirySuccess: 'success',
+        messageSelectMarketplaceCategiry: 'getMessage',
+      }),
+
+      currentMessage() {
+        return this.messageSelectMarketplaceCategiry || this.messageAddCategory;
+      },
+
       isVisibleVHeader() {
         let visible = this.$route.meta.showHeader !== false && this.isAuthenticated;
-        // console.log(visible + ' visible');
         return visible;
       },
     },

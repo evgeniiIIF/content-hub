@@ -1,15 +1,12 @@
 import axios from 'axios';
-// import qs from 'qs';
-// const qs = require('qs');
-// const querystring = require('querystring');
 
 export default {
   namespaced: true,
 
   state: {
     success: false,
-    successConsult: false,
     pending: false,
+    message: '',
   },
   getters: {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
@@ -20,6 +17,9 @@ export default {
     },
     pending(state) {
       return state.pending;
+    },
+    getMessage(state) {
+      return state.message;
     },
   },
   mutations: {
@@ -34,6 +34,12 @@ export default {
     },
     resetPending(state) {
       state.pending = false;
+    },
+    setMessage(state, payload) {
+      state.message = payload;
+    },
+    resetMessage(state) {
+      state.message = '';
     },
   },
   actions: {
@@ -63,8 +69,11 @@ export default {
           // console.log(response.data);
 
           store.commit('setSuccess');
+          store.commit('setMessage', response.data.message);
+
           setTimeout(() => {
             store.commit('resetSuccess');
+            store.commit('resetMessage');
           }, 3000);
 
           store.commit('resetPending');

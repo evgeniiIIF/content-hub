@@ -205,7 +205,7 @@
               <div class="item-category__ozon select-list">
                 <VSelect
                   :ref="`ozonCategory-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`"
-                  @onFocus="loadOzonSelectItems(itemCategoryIndexL1, itemCategoryIndexL2)"
+                  @onFocus="loadOzonSelectItems('ozonCategory', itemCategoryIndexL1, itemCategoryIndexL2)"
                   :opts="optsTemplateItemCategorySelect"
                   :value="itemCategoryItemL2.ozonCategory ? itemCategoryItemL2.ozonCategory.name : '-'"
                 >
@@ -217,7 +217,6 @@
                           class="select-list__filter-input"
                           @input="onInputFilter($event)"
                           @keydown="onBackspakeFilterSelect($event, selectNameAll, filterValueSelect)"
-                          @blur="onBlurFilterInput($event)"
                         />
                         <div class="select-list__filter-icon">
                           <svg
@@ -249,7 +248,7 @@
                       <template #slot2="{ itemL2, selectOzonItemL2 = itemL2, indexL1, indexL2 }">
                         <div
                           class="select-list__name"
-                          @click.stop="onSelectMarketplaceCategory('ozonCategory', itemCategoryIndexL1, itemCategoryIndexL2, selectOzonItemL2, itemCategoryItemL2)"
+                          @click.stop="onSelectMarketplaceCategory('ozonCategory', selectOzonItemL2, itemCategoryItemL2)"
                         >
                           {{ selectOzonItemL2.name }}
                         </div>
@@ -261,7 +260,7 @@
               <div class="item-category__aliexpress select-list">
                 <VSelect
                   :ref="`aliCategory-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`"
-                  @onFocus="loadAliSelectItems(itemCategoryIndexL1, itemCategoryIndexL2)"
+                  @onFocus="loadAliSelectItems('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2)"
                   :opts="optsTemplateItemCategorySelect"
                   :value="itemCategoryItemL2.aliCategory ? itemCategoryItemL2.aliCategory.main_name : '-'"
                 >
@@ -273,7 +272,6 @@
                           class="select-list__filter-input"
                           @input="onInputFilter($event)"
                           @keydown="onBackspakeFilterSelect($event, selectNameAll, filterValueSelect)"
-                          @blur="onBlurFilterInput($event)"
                         />
                         <div class="select-list__filter-icon">
                           <svg
@@ -305,7 +303,7 @@
                       <template #slot2="{ itemL2, selectAliItemL2 = itemL2, indexL1, indexL2 }">
                         <div
                           class="select-list__name"
-                          @click.stop="onSelectMarketplaceCategory('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2, selectAliItemL2, itemCategoryItemL2)"
+                          @click.stop="onSelectMarketplaceCategory('aliCategory', selectAliItemL2, itemCategoryItemL2)"
                         >
                           {{ selectAliItemL2.name }}
                         </div>
@@ -354,13 +352,13 @@
           </div>
         </template>
 
-        <template #slot3="{ itemL3, indexL1, indexL2, indexL3 }">
+        <template #slot3="{ itemL3, itemCategoryItemL3 = itemL3, indexL1, itemCategoryIndexL1 = indexL1, indexL2, itemCategoryIndexL2 = indexL2, indexL3, itemCategoryIndexL3 = indexL3 }">
           <div
             class="item-category row-table"
-            :ref="`itemCategory(index-${indexL1}>${indexL2}>${indexL3})`"
-            :class="{ 'js-dropdown-menu__button': itemL3.children_count > 0 }"
-            :style="{ background: itemL3.children_count == 0 ? '#fff' : '' }"
-            @mouseleave="closeOwnDropdown($event, indexL1, indexL2, indexL3)"
+            :ref="`itemCategory(index-${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`"
+            :class="{ 'js-dropdown-menu__button': itemCategoryItemL3.children_count > 0 }"
+            :style="{ background: itemCategoryItemL3.children_count == 0 ? '#fff' : '' }"
+            @mouseleave="closeOwnDropdown($event, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3)"
           >
             <div class="item-category__icon">
               <img
@@ -368,25 +366,132 @@
                 alt="dec"
               />
             </div>
-            <!-- <div class="item-category__name">{{ itemL3.name }}</div> -->
             <div class="item-category__name-wrapper">
-              <div class="item-category__name">{{ itemL3.name }}</div>
+              <div class="item-category__name">{{ itemCategoryItemL3.name }}</div>
               <div
                 class="item-category__name--with-input"
                 @click.stop
               >
                 <VInput
                   :opts="optsTemplateItemCategoryInputName"
-                  :value="itemL3.name"
-                  @onChange="onUpdateItemCategoryName($event, itemL3)"
+                  :value="itemCategoryItemL3.name"
+                  @onChange="onUpdateItemCategoryName($event, itemCategoryItemL3)"
                 />
               </div>
             </div>
-            <div class="item-category__ozon">{{ itemL3.ozonCategory }}</div>
-            <div class="item-category__aliexpress">-</div>
+            <div class="item-category__ozon select-list">
+              <VSelect
+                :ref="`ozonCategory-index(${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`"
+                @onFocus="loadOzonSelectItems('ozonCategory', itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3)"
+                :opts="optsTemplateItemCategorySelect"
+                :value="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.ozonCategory.name : '-'"
+              >
+                <template #menu>
+                  <div class="select-list__filter">
+                    <div class="select-list__filter-wrapper">
+                      <input
+                        type="text"
+                        class="select-list__filter-input"
+                        @input="onInputFilter($event)"
+                        @keydown="onBackspakeFilterSelect($event, selectNameAll, filterValueSelect)"
+                      />
+                      <div class="select-list__filter-icon">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M11.9456 13.1237C11.0498 13.7793 9.94506 14.1663 8.74992 14.1663C5.75838 14.1663 3.33325 11.7412 3.33325 8.74967C3.33325 5.75813 5.75838 3.33301 8.74992 3.33301C11.7415 3.33301 14.1666 5.75813 14.1666 8.74967C14.1666 9.94471 13.7796 11.0494 13.1241 11.9451L16.4151 15.2361C16.7456 15.5666 16.7496 16.0983 16.4242 16.4238C16.0988 16.7492 15.567 16.7451 15.2366 16.4146L11.9456 13.1237ZM12.4999 8.74967C12.4999 10.8207 10.821 12.4997 8.74992 12.4997C6.67885 12.4997 4.99992 10.8207 4.99992 8.74967C4.99992 6.67861 6.67885 4.99967 8.74992 4.99967C10.821 4.99967 12.4999 6.67861 12.4999 8.74967Z"
+                            fill="#0077FF"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <VRecursiveList :items="filteredSelectItemsOzon">
+                    <template #slot1="{ itemL1, selectOzonItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
+                      <div
+                        class="select-list__name"
+                        title="Нельзя выбрать родительскую категорию"
+                      >
+                        {{ selectOzonItemL1.name }}
+                      </div>
+                    </template>
+                    <template #slot2="{ itemL2, selectOzonItemL2 = itemL2, indexL1, indexL2 }">
+                      <div
+                        class="select-list__name"
+                        @click.stop="onSelectMarketplaceCategory('ozonCategory', selectOzonItemL2, itemCategoryItemL3)"
+                      >
+                        {{ selectOzonItemL2.name }}
+                      </div>
+                    </template>
+                  </VRecursiveList>
+                </template>
+              </VSelect>
+            </div>
+            <div class="item-category__aliexpress">
+              <VSelect
+                :ref="`aliCategory-index(${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`"
+                @onFocus="loadAliSelectItems('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3)"
+                :opts="optsTemplateItemCategorySelect"
+                :value="itemCategoryItemL3.aliCategory ? itemCategoryItemL3.aliCategory.main_name : '-'"
+              >
+                <template #menu>
+                  <div class="select-list__filter">
+                    <div class="select-list__filter-wrapper">
+                      <input
+                        type="text"
+                        class="select-list__filter-input"
+                        @input="onInputFilter($event)"
+                        @keydown="onBackspakeFilterSelect($event, selectNameAll, filterValueSelect)"
+                      />
+                      <div class="select-list__filter-icon">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M11.9456 13.1237C11.0498 13.7793 9.94506 14.1663 8.74992 14.1663C5.75838 14.1663 3.33325 11.7412 3.33325 8.74967C3.33325 5.75813 5.75838 3.33301 8.74992 3.33301C11.7415 3.33301 14.1666 5.75813 14.1666 8.74967C14.1666 9.94471 13.7796 11.0494 13.1241 11.9451L16.4151 15.2361C16.7456 15.5666 16.7496 16.0983 16.4242 16.4238C16.0988 16.7492 15.567 16.7451 15.2366 16.4146L11.9456 13.1237ZM12.4999 8.74967C12.4999 10.8207 10.821 12.4997 8.74992 12.4997C6.67885 12.4997 4.99992 10.8207 4.99992 8.74967C4.99992 6.67861 6.67885 4.99967 8.74992 4.99967C10.821 4.99967 12.4999 6.67861 12.4999 8.74967Z"
+                            fill="#0077FF"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <VRecursiveList :items="filteredSelectItemsAli">
+                    <template #slot1="{ itemL1, selectAliItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
+                      <div
+                        class="select-list__name"
+                        title="Нельзя выбрать родительскую категорию"
+                      >
+                        {{ selectAliItemL1.name }}
+                      </div>
+                    </template>
+                    <template #slot2="{ itemL2, selectAliItemL2 = itemL2, indexL1, indexL2 }">
+                      <div
+                        class="select-list__name"
+                        @click.stop="onSelectMarketplaceCategory('aliCategory', selectAliItemL2, itemCategoryItemL3)"
+                      >
+                        {{ selectAliItemL2.name }}
+                      </div>
+                    </template>
+                  </VRecursiveList>
+                </template>
+              </VSelect>
+            </div>
             <div class="item-category__wildberries">-</div>
             <div class="item-category__yandex">-</div>
-            <div class="item-category__products">{{ itemL3.children_count }}</div>
+            <div class="item-category__products">{{ itemCategoryItemL3.children_count }}</div>
             <div
               class="item-category__buttons"
               @click.stop
@@ -538,10 +643,18 @@
       }),
 
       filteredSelectItemsOzon() {
-        return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
+        if (this.filterValueSelect) {
+          return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
+        } else {
+          return this.ozonSelectItems;
+        }
       },
       filteredSelectItemsAli() {
-        return this.filterRecursively(this.AliSelectItems, this.filterValueSelect);
+        if (this.filterValueSelect) {
+          return this.filterRecursively(this.AliSelectItems, this.filterValueSelect);
+        } else {
+          return this.AliSelectItems;
+        }
       },
     },
 
@@ -551,14 +664,6 @@
       ...mapActions('categoriesAli', ['GET_ITEMS_SELECT_ALI']),
       ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME']),
       ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY']),
-
-      onBlurFilterInput(e) {
-        e.target.value = '';
-        this.filterValueSelect = '';
-        if (this.selectNameAll) {
-          this.highlightMatching(this.selectNameAll, this.filterValueSelect);
-        }
-      },
 
       async onUpdateItemCategoryName(e, item) {
         const data = {
@@ -625,23 +730,33 @@
         });
       },
 
-      async loadOzonSelectItems(itemCategoryIndexL1, itemCategoryIndexL2) {
+      async loadOzonSelectItems(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3 = '') {
+        if (itemCategoryIndexL3 !== '') {
+          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`];
+        } else {
+          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
+        }
+        console.log(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3);
         if (this.ozonSelectItems.length === 0) {
           await this.GET_ITEMS_SELECT_OZON();
         }
       },
 
-      async loadAliSelectItems(itemCategoryIndexL1, itemCategoryIndexL2) {
+      async loadAliSelectItems(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3 = '') {
+        if (itemCategoryIndexL3 !== '') {
+          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`];
+        } else {
+          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
+        }
         if (this.AliSelectItems.length === 0) {
           await this.GET_ITEMS_SELECT_ALI();
           // console.log(this.AliSelectItems);
         }
       },
 
-      async onSelectMarketplaceCategory(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemMarketplace, itemCategory) {
-        console.log(mapketplaceCategoryName, itemCategory, itemMarketplace);
+      async onSelectMarketplaceCategory(mapketplaceCategoryName, itemMarketplace, itemCategory) {
+        console.log(this.currentSelect);
 
-        this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
         const input = this.currentSelect.$el.querySelector('input');
         input.value = itemMarketplace.name;
         input.title = itemMarketplace.name;
@@ -699,7 +814,9 @@
 
       closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
         const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
-
+        if (this.currentSelect) {
+          this.currentSelect.menuIsOpen = false;
+        }
         if (currentItemCategoryDropdownSlots.menuIsOpen) {
           currentItemCategoryDropdownSlots.menuIsOpen = false;
           document.removeEventListener('click', currentItemCategoryDropdownSlots.closeMenu, true);
@@ -721,6 +838,16 @@
         this.showVCardInfoCategory = textButton === 'Информация';
 
         this.isOpenSlidingBlock = true;
+      },
+    },
+
+    watch: {
+      currentSelect(newValue, oldValue) {
+        if (oldValue !== null) {
+          oldValue.$el.querySelector('.select-list__filter-input').value = '';
+        }
+        this.filterValueSelect = '';
+        console.log(oldValue, newValue);
       },
     },
 

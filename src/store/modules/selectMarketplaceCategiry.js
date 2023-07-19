@@ -5,8 +5,8 @@ export default {
 
   state: {
     success: false,
-    successConsult: false,
     pending: false,
+    message: '',
   },
   getters: {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
@@ -15,19 +15,16 @@ export default {
     success(state) {
       return state.success;
     },
-    successConsult(state) {
-      return state.successConsult;
-    },
     pending(state) {
       return state.pending;
+    },
+    getMessage(state) {
+      return state.message;
     },
   },
   mutations: {
     setSuccess(state) {
       state.success = true;
-    },
-    setSuccessConsult(state) {
-      state.successConsult = true;
     },
     resetSuccess(state) {
       state.success = false;
@@ -38,11 +35,17 @@ export default {
     resetPending(state) {
       state.pending = false;
     },
+    setMessage(state, payload) {
+      state.message = payload;
+    },
+    resetMessage(state) {
+      state.message = '';
+    },
   },
   actions: {
     async SELECT_MARKETPLACE_CATEGORY(store, updateData) {
       const url = `http://api.hub.absit.ru/api/v1/categories/${updateData.localCategory_id}/update`;
-      console.log(updateData);
+      // console.log(updateData);
 
       const data = {
         [updateData.mapketplaceCategoryName]: updateData.marketplace_id,
@@ -64,7 +67,16 @@ export default {
           console.log(response.data);
 
           if (response.data.success === true) {
+            store.commit('setSuccess');
+            store.commit('setMessage', response.data.message);
+
+            setTimeout(() => {
+              store.commit('resetSuccess');
+              store.commit('resetMessage');
+            }, 3000);
+
             store.commit('resetPending');
+
             // console.log(store.getters.pending);
           }
         })

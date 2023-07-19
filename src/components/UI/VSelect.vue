@@ -138,6 +138,7 @@
       left: auto;
       right: 0;
       justify-content: center;
+      pointer-events: none;
       svg path {
         // fill: red;
       }
