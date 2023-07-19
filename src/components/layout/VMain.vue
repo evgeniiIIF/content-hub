@@ -20,6 +20,7 @@
 
 <style lang="scss">
   .main {
+    background: $neutral-white1;
   }
   .add-cat {
     background: #eee;

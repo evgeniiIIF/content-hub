@@ -94,87 +94,87 @@
 </script>
 
 <style lang="scss">
-  .categories {
-    position: absolute;
-    width: 100%;
-    min-height: 100%;
-    left: 0;
-    top: 0;
-    background: $neutral-white1;
+  // .categories {
+  //   position: absolute;
+  //   width: 100%;
+  //   min-height: 100%;
+  //   left: 0;
+  //   top: 0;
+  //   background: $neutral-white1;
 
-    &__wrapper {
-      display: flex;
-      flex-direction: column;
-      
-      height: 100%;
-    }
+  //   &__wrapper {
+  //     display: flex;
+  //     flex-direction: column;
 
-    &__table {
-      flex: 1 1 auto;
-    }
+  //     height: 100%;
+  //   }
 
-    &__bottom {
-      padding: 41px 0 80px 0;
-    }
-  }
+  //   &__table {
+  //     flex: 1 1 auto;
+  //   }
 
-  .top {
-    padding: 34px 0 24px 0;
+  //   &__bottom {
+  //     padding: 41px 0 80px 0;
+  //   }
+  // }
 
-    &__row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+  // .top {
+  //   padding: 34px 0 24px 0;
 
-      margin-bottom: 12px;
-    }
-    &__title {
-      @extend %font-h1;
-    }
+  //   &__row {
+  //     display: flex;
+  //     justify-content: space-between;
+  //     align-items: center;
 
-    &__actions {
-      display: flex;
-    }
+  //     margin-bottom: 12px;
+  //   }
+  //   &__title {
+  //     @extend %font-h1;
+  //   }
 
-    &__input {
-      width: 320px;
-      margin-right: 24px;
+  //   &__actions {
+  //     display: flex;
+  //   }
 
-      .input__input {
-        padding: 9px 16px 9px 45px;
-      }
-    }
+  //   &__input {
+  //     width: 320px;
+  //     margin-right: 24px;
 
-    &__button {
-      .button {
-        padding: 8px 22px 8px 14px;
-      }
-    }
-  }
+  //     .input__input {
+  //       padding: 9px 16px 9px 45px;
+  //     }
+  //   }
 
-  .show-hide-categories {
-    @include mr(1px);
+  //   &__button {
+  //     .button {
+  //       padding: 8px 22px 8px 14px;
+  //     }
+  //   }
+  // }
 
-    &__button {
-      padding: 2px 8px;
-      background: $dark-color;
-      border: none;
+  // .show-hide-categories {
+  //   @include mr(1px);
 
-      @extend %font-inter--400_167;
+  //   &__button {
+  //     padding: 2px 8px;
+  //     background: $dark-color;
+  //     border: none;
 
-      background: $white-color;
-      color: $dark-color;
-    }
+  //     @extend %font-inter--400_167;
 
-    &__button--all {
-      border-radius: 4px 0px 0px 4px;
+  //     background: $white-color;
+  //     color: $dark-color;
+  //   }
 
-      color: $white-color;
-      background: $dark-color;
-    }
+  //   &__button--all {
+  //     border-radius: 4px 0px 0px 4px;
 
-    &__button--inactive {
-      border-radius: 0px 4px 4px 0px;
-    }
-  }
+  //     color: $white-color;
+  //     background: $dark-color;
+  //   }
+
+  //   &__button--inactive {
+  //     border-radius: 0px 4px 4px 0px;
+  //   }
+  // }
 </style>

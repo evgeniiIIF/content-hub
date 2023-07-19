@@ -72,14 +72,16 @@
             email: {
               type: 'email',
               name: 'email',
-              value: 'example@example.com',
+              // value: 'example@example.com',
+              value: '',
               label: 'E-mail',
               placeholder: 'placeholder',
             },
             password: {
               type: 'password',
               name: 'password',
-              value: 'password',
+              // value: 'password',
+              value: '',
               label: 'Пароль',
               placeholder: 'placeholder',
               icon: true,

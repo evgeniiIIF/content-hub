@@ -97,10 +97,13 @@
   .categories {
     position: absolute;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     left: 0;
     top: 0;
-    background: $neutral-white1;
+
+    .container {
+      height: 100%;
+    }
 
     &__wrapper {
       display: flex;

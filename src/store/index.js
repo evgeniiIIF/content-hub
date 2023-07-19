@@ -8,6 +8,7 @@ import login from './modules/login.js';
 import user from './modules/user.js';
 import updateCategoryName from './modules/updateCategoryName.js';
 import selectMarketplaceCategiry from './modules/selectMarketplaceCategiry.js';
+import deleteCategory from './modules/deleteCategory.js';
 
 export default createStore({
   modules: {
@@ -19,6 +20,7 @@ export default createStore({
     addCategory,
     updateCategoryName,
     selectMarketplaceCategiry,
+    deleteCategory,
   },
   strict: process.env.NODE_ENV !== 'production',
 });

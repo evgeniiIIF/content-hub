@@ -524,7 +524,10 @@
                         </RouterLink>
                       </li>
                       <li class="list__item">
-                        <div class="list__link">
+                        <div
+                          class="list__link"
+                          @click="deleteCategory($event, itemCategoryItemL3)"
+                        >
                           <img
                             class="list__image"
                             src="@/assets/img/static/buttons-icon/Trash_Empty_20px.svg"
@@ -664,6 +667,12 @@
       ...mapActions('categoriesAli', ['GET_ITEMS_SELECT_ALI']),
       ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME']),
       ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY']),
+      ...mapActions('deleteCategory', ['DELETE_CATEGORY']),
+
+      async deleteCategory(e, itemCategory) {
+        // console.log('DELETE_CATEGORY', itemCategory);
+        this.DELETE_CATEGORY(itemCategory);
+      },
 
       async onUpdateItemCategoryName(e, item) {
         const data = {

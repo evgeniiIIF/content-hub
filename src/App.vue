@@ -5,7 +5,7 @@
     <VHeader v-if="isVisibleVHeader" />
     <div
       class="success success--add-category"
-      v-if="isAddCategorySuccess || isSelectMarketplaceCategirySuccess"
+      v-if="isAddCategorySuccess || isSelectMarketplaceCategirySuccess || isCategoryDeleteSuccess"
     >
       <div class="success__message">
         <span class="success__icon"
@@ -98,10 +98,25 @@
       return {};
     },
     methods: {
-      ...mapActions('addCategory', ['RESET_SUCCESS']),
-      ...mapActions('selectMarketplaceCategiry', ['RESET_SUCCESS']),
+      ...mapActions('addCategory', {
+        resetAddCategorySuccess: 'RESET_SUCCESS',
+      }),
+      ...mapActions('selectMarketplaceCategiry', {
+        resetSelectMarketplaceCategorySuccess: 'RESET_SUCCESS',
+      }),
+      ...mapActions('deleteCategory', {
+        resetDeleteCategorySuccess: 'RESET_SUCCESS',
+      }),
       closeSuccessWindow() {
-        this.RESET_SUCCESS();
+        if (this.isSelectMarketplaceCategirySuccess) {
+          this.resetSelectMarketplaceCategorySuccess();
+        }
+        if (this.isAddCategorySuccess) {
+          this.resetAddCategorySuccess();
+        }
+        if (this.isCategoryDeleteSuccess) {
+          this.resetDeleteCategorySuccess();
+        }
       },
     },
     computed: {
@@ -116,9 +131,13 @@
         isSelectMarketplaceCategirySuccess: 'success',
         messageSelectMarketplaceCategiry: 'getMessage',
       }),
+      ...mapGetters('deleteCategory', {
+        isCategoryDeleteSuccess: 'success',
+        messageCategoryDelete: 'getMessage',
+      }),
 
       currentMessage() {
-        return this.messageSelectMarketplaceCategiry || this.messageAddCategory;
+        return this.messageSelectMarketplaceCategiry || this.messageAddCategory || this.messageCategoryDelete;
       },
 
       isVisibleVHeader() {

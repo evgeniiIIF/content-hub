@@ -43,16 +43,14 @@ export default {
     },
   },
   actions: {
-    async SEND_CATEGORY_DATA(store, data) {
-      console.log(data);
+    async DELETE_CATEGORY(store, data) {
+      const url = `http://api.hub.absit.ru/api/v1/categories/${data.id}/delete `;
 
-      const dataFor = {
-        parent_id: data.id,
-        name: data.name,
-        description: data.description,
-      };
-
-      // console.log(dataFor);
+      // const dataFor = {
+      //   parent_id: data.id,
+      //   name: data.name,
+      //   description: data.description,
+      // };
 
       const config = {
         headers: {
@@ -63,9 +61,8 @@ export default {
 
       store.commit('setPending');
       await axios
-        .post('http://api.hub.absit.ru/api/v1/categories/store', dataFor, config)
+        .delete(url, config)
         .then((response) => {
-          // console.log('su');
           console.log(response.data);
 
           store.commit('setSuccess');
