@@ -50,6 +50,7 @@ export default {
         headers: {
           Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
           'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
         },
       };
       // console.log(store.getters.pending);

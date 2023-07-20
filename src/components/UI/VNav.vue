@@ -59,19 +59,16 @@
     &__list {
       display: flex;
       height: 100%;
-      & > * {
-        border-right: 1px solid $neutral-brown;
-      }
-      &:first-child {
-        border-left: 1px solid $neutral-brown;
-      }
+      // & > * {
+      //   border-right: 1px solid $neutral-brown;
+      // }
+      // &:first-child {
+      //   border-left: 1px solid $neutral-brown;
+      // }
     }
 
     &__item {
       height: 100%;
-      &:hover {
-        background: $neutral-brown;
-      }
     }
 
     &__dropdown {

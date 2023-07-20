@@ -154,28 +154,29 @@
   }
 
   .show-hide-categories {
+    display: inline-block;
+    padding: 2px;
+    background: #ffffff;
+    border-radius: 8px;
     @include mr(1px);
 
     &__button {
-      padding: 2px 8px;
-      background: $dark-color;
+      border-radius: 4px;
+      padding: 4px 16px;
       border: none;
 
       @extend %font-inter--400_167;
 
-      background: $white-color;
       color: $dark-color;
+      background: transparent;
     }
 
     &__button--all {
-      border-radius: 4px 0px 0px 4px;
-
       color: $white-color;
-      background: $dark-color;
+      background: #07f;
     }
 
     &__button--inactive {
-      border-radius: 0px 4px 4px 0px;
     }
   }
 </style>

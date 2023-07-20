@@ -55,6 +55,7 @@ export default {
         headers: {
           Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
           'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
         },
       };
       // console.log(store.getters.pending);
@@ -67,7 +68,7 @@ export default {
           console.log(response.data);
 
           if (response.data.success === true) {
-            store.commit('setSuccess');
+            // store.commit('setSuccess');
             store.commit('setMessage', response.data.message);
 
             setTimeout(() => {

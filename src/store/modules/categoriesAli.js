@@ -22,9 +22,14 @@ export default {
   actions: {
     async GET_ITEMS_SELECT_ALI(store) {
       const config = {
+        // headers: {
+        //   Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
+        //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        // },
         headers: {
           Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
-          // 'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
         },
       };
 

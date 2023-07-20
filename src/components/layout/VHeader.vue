@@ -85,8 +85,14 @@
             ],
           },
           { name: 'Магазины', href: 'changeme' },
+          {
+            name: 'Товары',
+            dropdownItems: [
+              { name: 'Локальный список', href: 'changeme' },
+              { name: 'Сопоставить поля с полями МП', href: 'changeme' },
+            ],
+          },
           { name: 'Категории', href: 'changeme' },
-          { name: 'Номенклатура', href: 'changeme' },
           { name: 'Ценообраование', href: 'changeme' },
         ],
       };
@@ -143,6 +149,18 @@
       justify-content: space-between;
     }
 
+    &__nav {
+      .nav__item {
+        padding: 4px;
+      }
+      .nav__link,
+      .dropdown__button {
+        &:hover {
+          border-radius: 8px;
+          background: $neutral-brown;
+        }
+      }
+    }
     .container {
       padding-left: 35px;
       padding-right: 35px;
@@ -159,8 +177,8 @@
       justify-content: center;
       padding: 18px;
       height: 100%;
-      border-left: 1px solid $neutral-brown;
-      border-right: 1px solid $neutral-brown;
+      // border-left: 1px solid $neutral-brown;
+      // border-right: 1px solid $neutral-brown;
     }
 
     &__dropdown {

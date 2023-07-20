@@ -168,7 +168,7 @@
 
   .success {
     position: fixed;
-    top: 61px;
+    top: 68.2px;
     left: 0;
     width: 100%;
     padding: 16px 12px;

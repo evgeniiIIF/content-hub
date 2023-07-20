@@ -23,12 +23,9 @@ export default {
       const url = 'http://api.hub.absit.ru/api/v1/user';
       const config = {
         headers: {
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-          // Authorization: 'Bearer your_token_here',
-          // 'Access-Control-Allow-Origin': '*',
-          // 'Access-Control-Allow-Methods': 'GET, POST',
-          // 'Access-Control-Allow-Headers': '*',
           Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
         },
       };
       // console.log(store.getters.getTokenFromLogin + 'from userjs');
