@@ -1039,6 +1039,25 @@
         left: auto;
         right: 200%;
       }
+      .checkbox-list__item {
+        padding: 8px 12px;
+        width: 237px;
+      }
+      .checkbox {
+        &__pseudo-flag {
+          width: 48px;
+          height: 24px;
+          border-color: #c2c9d2;
+          background: #c2c9d2;
+          border-radius: 12px;
+        }
+        &__pseudo-flag-check-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #fff;
+        }
+      }
     }
     &__button {
       border: none;
