@@ -44,7 +44,7 @@ export default {
   },
   actions: {
     async SEND_CATEGORY_DATA(store, data) {
-      console.log(data);
+      // console.log(data);
 
       const dataFor = {
         parent_id: data.id,
@@ -52,7 +52,7 @@ export default {
         description: data.description,
       };
 
-      // console.log(dataFor);
+      console.log(dataFor);
 
       const config = {
         headers: {

@@ -46,7 +46,7 @@
                           :class="{ 'card-add-category__item--active': itemSelectMenu2.name === currentSelected }"
                           >{{ itemSelectMenu2.name }}</span
                         >
-                        <ul
+                        <!-- <ul
                           v-if="itemSelectMenu2.children_count"
                           class="card-add-category__list"
                         >
@@ -62,7 +62,7 @@
                               >{{ itemSelectMenu3.name }}</span
                             >
                           </li>
-                        </ul>
+                        </ul> -->
                       </li>
                     </ul>
                   </li>
@@ -119,7 +119,11 @@
     components: { VInput, VButton, VSelect },
     data() {
       return {
-        dataForCreateCategory: {},
+        dataForCreateCategory: {
+          id: 0,
+          name: '',
+          description: '',
+        },
 
         currentSelected: null,
 

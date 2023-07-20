@@ -1,5 +1,8 @@
 <template>
-  <div class="card-add-category-nested">
+  <form
+    class="card-add-category-nested"
+    @submit.prevent="onSubmitNestedCategory"
+  >
     <button
       class="card-add-category-nested__close"
       @click="$emit('onCloseSlidingBlock')"
@@ -130,10 +133,12 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   import VBreadcrumbs from '../UI/VBreadcrumbs.vue';
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
@@ -196,6 +201,11 @@
         ],
       };
     },
+    computed: {
+      ...mapGetters('addCategory', {
+        isAddCategoryPending: 'pending',
+      }),
+    },
     watch: {
       // selectMenuItems(oldValue, newValue) {
       //   this.selectMenuItems = newValue;
@@ -204,12 +214,18 @@
       // },
     },
     methods: {
+      ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
+
+      onSubmitNestedCategory() {
+        console.log('onSubmitNestedCategory');
+      },
       onInput(e, bodyIndex, inputIndex) {
         this.bodyItems[bodyIndex][inputIndex].value = e.target.value;
       },
       addMore(bodyItem) {
         let inputs = JSON.parse(JSON.stringify(this.inputs));
         this.bodyItems.push(inputs);
+        console.log(this.bodyItems);
       },
       removeBodyItem(bodyIndex) {
         this.bodyItems = this.bodyItems.filter((item, index) => index !== bodyIndex);
