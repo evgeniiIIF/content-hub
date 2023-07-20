@@ -63,7 +63,7 @@ export default {
           // console.log(response.data);
 
           if (response.data.success === true) {
-            store.commit('resetPending');
+            // store.commit('resetPending');
             // console.log(store.getters.pending);
           }
         })
@@ -79,6 +79,9 @@ export default {
     },
     SET_SUCCESS_CONSULT(store) {
       store.commit('setSuccessConsult');
+    },
+    RESET_PENDING(store) {
+      store.commit('resetPending');
     },
   },
 };

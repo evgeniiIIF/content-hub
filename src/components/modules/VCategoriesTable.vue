@@ -428,8 +428,19 @@
                 />
               </svg>
             </div>
-            <div class="item-category__name-wrapper">
-              <div class="item-category__name">{{ itemCategoryItemL3.name }}</div>
+            <div
+              class="pending"
+              v-if="itemCategoryName_PENDING"
+            >
+              PENDING...
+            </div>
+            <div
+              class="item-category__name-wrapper"
+              v-else
+            >
+              <div class="item-category__name">
+                {{ itemCategoryItemL3.name }}
+              </div>
               <div
                 class="item-category__name--with-input"
                 @click.stop
@@ -735,7 +746,7 @@
       ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
       ...mapActions('categoriesAli', ['GET_ITEMS_SELECT_ALI']),
-      ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME']),
+      ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME', 'RESET_PENDING']),
       ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY', 'SET_SUCCESS']),
       ...mapActions('deleteCategory', ['DELETE_CATEGORY']),
 
@@ -751,6 +762,7 @@
         };
         await this.UPDATE_CATEGORY_NAME(data);
         await this.GET_ITEMS_CATEGORIES();
+        this.RESET_PENDING();
       },
 
       filterRecursively(obj, filterValue) {
