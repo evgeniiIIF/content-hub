@@ -123,7 +123,7 @@
   $hov: #00a19c;
 
   .header {
-    position: fixed;
+    position: sticky;
     left: 0;
     top: 0;
     width: 100%;

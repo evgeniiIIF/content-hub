@@ -159,6 +159,33 @@
     }
 
     &__checkbox {
+      .checkbox {
+        &__label {
+          justify-content: start;
+        }
+        & input {
+          &:checked {
+            & ~ .checkbox__pseudo-flag-wrapper .checkbox__pseudo-flag {
+              background: transparent;
+              & .checkbox__pseudo-flag-check-icon {
+                display: flex;
+              }
+            }
+          }
+        }
+
+        &__pseudo-flag {
+          width: 16px;
+          height: 16px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &__pseudo-flag-check-icon {
+          display: none;
+        }
+      }
     }
 
     &__buttons {

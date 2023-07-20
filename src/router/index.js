@@ -20,7 +20,7 @@ const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
-    meta: { showHeader: false },
+    meta: { showHeader: false, showFooter: false },
   },
   {
     path: '/categories',

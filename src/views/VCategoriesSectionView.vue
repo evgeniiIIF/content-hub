@@ -54,9 +54,6 @@
         <div class="categories__table">
           <VCategoriesTable />
         </div>
-        <div class="categories__bottom">
-          <VPagination />
-        </div>
       </div>
     </div>
     <VSlidingBlockSlotUIFC
@@ -72,13 +69,12 @@
   import VSlidingBlockSlotUIFC from '@/components/UI-FC/VSlidingBlockSlotUIFC.vue';
   import VButton from '@/components/UI/VButton.vue';
   import VInput from '@/components/UI/VInput.vue';
-  import VPagination from '@/components/UI/VPagination.vue';
   import VCardAddCategory from '@/components/cards/VCardAddCategory.vue';
   import VCategoriesTable from '@/components/modules/VCategoriesTable.vue';
 
   export default {
     name: 'VCategoriesSectionView',
-    components: { VInput, VButton, VPagination, VSlidingBlockSlotUIFC, VCardAddCategory, VCategoriesTable },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddCategory, VCategoriesTable },
     data() {
       return {
         isOpenSlidingBlock: false,
@@ -95,28 +91,11 @@
 
 <style lang="scss">
   .categories {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-
-    .container {
-      height: 100%;
-    }
-
     &__wrapper {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
     }
 
     &__table {
       flex: 1 1 auto;
-    }
-
-    &__bottom {
-      padding: 41px 0 80px 0;
     }
   }
 

@@ -51,7 +51,7 @@
       <RouterView />
     </VMain>
 
-    <!-- <VFooter /> -->
+    <VFooter v-if="isVisibleVFooter" />
     <!-- <Transition name="fade">
       <VModalWindowUIFC
         v-if="showDialog"
@@ -86,13 +86,13 @@
 
   import VHeader from './components/layout/VHeader.vue';
   import VMain from './components/layout/VMain.vue';
-  // import VFooter from './components/layout/VFooter.vue';
+  import VFooter from './components/layout/VFooter.vue';
 
   export default {
     components: {
       VHeader,
       VMain,
-      // VFooter,
+      VFooter,
     },
     data() {
       return {};
@@ -142,6 +142,10 @@
 
       isVisibleVHeader() {
         let visible = this.$route.meta.showHeader !== false && this.isAuthenticated;
+        return visible;
+      },
+      isVisibleVFooter() {
+        let visible = this.$route.meta.showFooter !== false && this.isAuthenticated;
         return visible;
       },
     },

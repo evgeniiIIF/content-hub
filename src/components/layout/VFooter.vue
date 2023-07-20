@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <div class="footer__body">footer</div>
+      <div class="footer__body"><VPagination /></div>
     </div>
   </footer>
 </template>
@@ -10,8 +10,14 @@
   import { mapActions } from 'vuex';
   import { mapGetters } from 'vuex';
 
+  import VPagination from '@/components/UI/VPagination.vue';
+
   export default {
     name: 'VFooter',
+
+    components: {
+      VPagination,
+    },
     data() {
       return {};
     },
@@ -20,4 +26,12 @@
   };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .footer {
+    background: $neutral-white1;
+
+    &__body {
+      padding: 41px 0 80px 0;
+    }
+  }
+</style>
