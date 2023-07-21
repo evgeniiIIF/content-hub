@@ -71,12 +71,12 @@ export default {
             // store.commit('setSuccess');
             store.commit('setMessage', response.data.message);
 
-            setTimeout(() => {
-              store.commit('resetSuccess');
-              store.commit('resetMessage');
-            }, 3000);
+            // setTimeout(() => {
+            //   store.commit('resetSuccess');
+            //   store.commit('resetMessage');
+            // }, 3000);
 
-            store.commit('resetPending');
+            // store.commit('resetPending');
 
             // console.log(store.getters.pending);
           }
@@ -91,8 +91,8 @@ export default {
     RESET_SUCCESS(store) {
       store.commit('resetSuccess');
     },
-    SET_SUCCESS_CONSULT(store) {
-      store.commit('setSuccessConsult');
+    RESET_MESSAGE(store) {
+      store.commit('resetMessage');
     },
   },
 };

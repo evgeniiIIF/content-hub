@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-// import { mapGetters } from 'vuex';
-
 export default {
   namespaced: true,
 
@@ -23,8 +21,9 @@ export default {
     },
   },
   actions: {
-    async GET_ITEMS_CATEGORIES(store) {
-      // console.log(store.getters.getTokenFromLogin + '  tockenfrom login');
+    async GET_ITEMS_MARKETS(store) {
+      const url = 'http://api.hub.absit.ru/api/v1/markets';
+
       const config = {
         headers: {
           Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
@@ -33,12 +32,13 @@ export default {
         },
       };
 
-      const url = 'http://api.hub.absit.ru/api/v1/categories';
+      // console.log(store.getters.getTokenFromLogin + '  tockenfrom login');
+
       await axios.get(url, config).then((response) => {
         const data = response.data;
         const items = data.data;
         store.commit('setItems', items);
-        // console.log(items);
+        console.log(items);
       });
     },
   },

@@ -6,6 +6,7 @@ import VCategoriesSectionView from '../views/VCategoriesSectionView.vue';
 import VLocalAttributesViews from '@/views/VLocalAttributesViews.vue';
 import VLoginView from '@/views/VLoginView.vue';
 import VHomeView from '@/views/VHomeView.vue';
+import VMarketsSectionView from '@/views/VMarketsSectionView';
 
 const routes = [
   {
@@ -39,6 +40,18 @@ const routes = [
       requiresAuth: true, // Указывает, что компонент требует авторизации
     },
   },
+
+  // <VMarketsSectionView>
+  {
+    path: '/shops',
+    name: 'shops',
+    component: VMarketsSectionView,
+    meta: {
+      requiresAuth: true, // Указывает, что компонент требует авторизации
+      showFooter: false,
+    },
+  },
+  // </VMarketsSectionView>
 ];
 
 const router = createRouter({

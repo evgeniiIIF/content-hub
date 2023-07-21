@@ -235,6 +235,7 @@
                   @onFocus="loadOzonSelectItems('ozonCategory', itemCategoryIndexL1, itemCategoryIndexL2)"
                   :opts="optsTemplateItemCategorySelect"
                   :value="itemCategoryItemL2.ozonCategory ? itemCategoryItemL2.ozonCategory.name : '-'"
+                  :title="itemCategoryItemL2.ozonCategory ? itemCategoryItemL2.ozonCategory.name : ''"
                 >
                   <template #menu>
                     <div class="select-list__filter">
@@ -290,6 +291,7 @@
                   @onFocus="loadAliSelectItems('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2)"
                   :opts="optsTemplateItemCategorySelect"
                   :value="itemCategoryItemL2.aliCategory ? itemCategoryItemL2.aliCategory.main_name : '-'"
+                  :title="itemCategoryItemL2.ozonCategory ? itemCategoryItemL2.ozonCategory.name : ''"
                 >
                   <template #menu>
                     <div class="select-list__filter">
@@ -338,7 +340,7 @@
                       <template #slot3="{ itemL3, selectAliItemL3 = itemL3, indexL1, indexL2 }">
                         <div
                           class="select-list__name"
-                          @click.stop="onSelectMarketplaceCategory('aliCategory', selectAliItemL2, itemCategoryItemL2)"
+                          @click.stop="onSelectMarketplaceCategory('aliCategory', selectAliItemL3, itemCategoryItemL2)"
                         >
                           {{ selectAliItemL3.name }}
                         </div>
@@ -458,6 +460,7 @@
                 @onFocus="loadOzonSelectItems('ozonCategory', itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3)"
                 :opts="optsTemplateItemCategorySelect"
                 :value="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.ozonCategory.name : '-'"
+                :title="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.ozonCategory.name : ''"
               >
                 <template #menu>
                   <div class="select-list__filter">
@@ -507,12 +510,13 @@
                 </template>
               </VSelect>
             </div>
-            <div class="item-category__aliexpress">
+            <div class="item-category__aliexpress select-list">
               <VSelect
                 :ref="`aliCategory-index(${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`"
                 @onFocus="loadAliSelectItems('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3)"
                 :opts="optsTemplateItemCategorySelect"
                 :value="itemCategoryItemL3.aliCategory ? itemCategoryItemL3.aliCategory.main_name : '-'"
+                :title="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.ozonCategory.name : ''"
               >
                 <template #menu>
                   <div class="select-list__filter">
@@ -561,7 +565,7 @@
                     <template #slot3="{ itemL3, selectAliItemL3 = itemL3, indexL1, indexL2 }">
                       <div
                         class="select-list__name"
-                        @click.stop="onSelectMarketplaceCategory('aliCategory', selectAliItemL2, itemCategoryItemL2)"
+                        @click.stop="onSelectMarketplaceCategory('aliCategory', selectAliItemL3, itemCategoryItemL3)"
                       >
                         {{ selectAliItemL3.name }}
                       </div>
@@ -592,7 +596,7 @@
                   </template>
                   <template #menu>
                     <ul class="list">
-                      <li class="list__item">
+                      <!-- <li class="list__item">
                         <RouterLink to="/">
                           <div class="list__link">
                             <img
@@ -603,7 +607,7 @@
                             <span class="list__text">Редактировать</span>
                           </div>
                         </RouterLink>
-                      </li>
+                      </li> -->
                       <li class="list__item">
                         <div
                           class="list__link"
@@ -747,7 +751,7 @@
       ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
       ...mapActions('categoriesAli', ['GET_ITEMS_SELECT_ALI']),
       ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME', 'RESET_PENDING']),
-      ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY', 'SET_SUCCESS']),
+      ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY', 'RESET_SUCCESS', 'SET_SUCCESS', 'RESET_MESSAGE']),
       ...mapActions('deleteCategory', ['DELETE_CATEGORY']),
 
       async deleteCategory(e, itemCategory) {
@@ -867,8 +871,12 @@
           mapketplaceCategoryName,
         };
         await this.SELECT_MARKETPLACE_CATEGORY(data);
-        await this.GET_ITEMS_CATEGORIES();
         this.SET_SUCCESS();
+        setTimeout(() => {
+          this.RESET_SUCCESS();
+          this.RESET_MESSAGE();
+        }, 3000);
+        await this.GET_ITEMS_CATEGORIES();
 
         // console.log(data);
       },
@@ -955,7 +963,7 @@
 <style lang="scss">
   $offsetSubmenu: 12px;
 
-  .row-table {
+  .categories .row-table {
     display: flex;
     align-items: center;
 

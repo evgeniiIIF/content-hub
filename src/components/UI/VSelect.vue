@@ -32,6 +32,7 @@
         :opts="opts"
         @onFocus="$emit('onFocus')"
         :value="value"
+        :title="title"
       >
         <VArrowDownSVG />
       </VInput>
@@ -59,6 +60,9 @@
         type: String,
       },
       value: {
+        type: String,
+      },
+      title: {
         type: String,
       },
       // selectItems: {

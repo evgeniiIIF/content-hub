@@ -21,6 +21,12 @@
           to="/categories"
           >{{ menuItem.name }}</RouterLink
         >
+        <RouterLink
+          v-else-if="menuItem.name === 'Магазины'"
+          class="nav__link"
+          to="/shops"
+          >{{ menuItem.name }}</RouterLink
+        >
         <a
           v-else
           class="nav__link"

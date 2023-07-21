@@ -21,7 +21,7 @@
         <span class="button__text">Добавить субкатегорию</span>
       </VButton>
     </li>
-    <li class="list__item">
+    <!-- <li class="list__item">
       <RouterLink to="/">
         <VButton>
           <span class="button__image">
@@ -55,7 +55,7 @@
         />
         <span class="list__text">Удалить</span>
       </div>
-    </li>
+    </li> -->
   </ul>
 </template>
 <script>

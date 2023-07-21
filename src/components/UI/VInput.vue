@@ -78,6 +78,7 @@ v-else
         :type="opts.type"
         :name="opts.name"
         :value="opts.value || value"
+        :title="title"
         :readonly="opts.readonly"
         :index="index"
         :placeholder="opts.placeholder"
@@ -109,6 +110,9 @@ v-else
         type: Number,
       },
       value: {
+        type: String,
+      },
+      title: {
         type: String,
       },
     },
