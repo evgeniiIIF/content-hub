@@ -139,6 +139,8 @@
           { name: 'Категории', href: 'changeme' },
           { name: 'Ценообраование', href: 'changeme' },
           { name: 'Номенклатура', href: 'changeme' },
+          { name: 'Карточки товаров', href: 'changeme' },
+          { name: 'Информация о товаре', href: 'changeme' },
         ],
       };
     },

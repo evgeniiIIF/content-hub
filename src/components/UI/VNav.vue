@@ -33,6 +33,19 @@
           to="/nomenclature"
           >{{ menuItem.name }}</RouterLink
         >
+        <RouterLink
+          v-else-if="menuItem.name === 'Карточки товаров'"
+          class="nav__link"
+          to="/product-cards"
+          >{{ menuItem.name }}</RouterLink
+        >
+        <RouterLink
+          v-else-if="menuItem.name === 'Информация о товаре'"
+          class="nav__link"
+          to="/product-information"
+          >{{ menuItem.name }}</RouterLink
+        >
+
         <a
           v-else
           class="nav__link"

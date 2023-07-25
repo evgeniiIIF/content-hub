@@ -7,6 +7,8 @@ import VLoginView from '@/views/VLoginView.vue';
 import VHomeView from '@/views/VHomeView.vue';
 import VMarketsSectionView from '@/views/VMarketsSectionView';
 import VNomenclatureSectionView from '@/views/VNomenclatureSectionView';
+import VProductCardsSectionView from '@/views/VProductCardsSectionView';
+import VProductInformationSectionView from '@/views/VProductInformationSectionView';
 
 const routes = [
   // <VCategoriesSectionView>
@@ -65,6 +67,29 @@ const routes = [
     },
   },
   // </VNomenclatureSectionView>
+
+  // <VProductCardsSectionView>
+  {
+    path: '/product-cards',
+    name: 'product-cards',
+    component: VProductCardsSectionView,
+    meta: {
+      requiresAuth: true, // Указывает, что компонент требует авторизации
+    },
+  },
+  // </VProductCardsSectionView>
+
+  // <VProductInformationSectionView>
+  {
+    path: '/product-information',
+    name: 'product-information',
+    component: VProductInformationSectionView,
+    meta: {
+      requiresAuth: true, // Указывает, что компонент требует авторизации
+      showFooter: false,
+    },
+  },
+  // </VProductInformationSectionView>
 ];
 
 const router = createRouter({
