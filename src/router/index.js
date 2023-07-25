@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import store from '@/store';
 
-import VEditingCategorySection from '../views/VEditingCategorySection.vue';
 import VCategoriesSectionView from '../views/VCategoriesSectionView.vue';
 import VLocalAttributesViews from '@/views/VLocalAttributesViews.vue';
 import VLoginView from '@/views/VLoginView.vue';
 import VHomeView from '@/views/VHomeView.vue';
 import VMarketsSectionView from '@/views/VMarketsSectionView';
+import VNomenclatureSectionView from '@/views/VNomenclatureSectionView';
 
 const routes = [
+  // <VCategoriesSectionView>
   {
     path: '/',
     name: 'Home',
@@ -40,11 +41,12 @@ const routes = [
       requiresAuth: true, // Указывает, что компонент требует авторизации
     },
   },
+  // </VCategoriesSectionView>
 
   // <VMarketsSectionView>
   {
-    path: '/shops',
-    name: 'shops',
+    path: '/markets',
+    name: 'markets',
     component: VMarketsSectionView,
     meta: {
       requiresAuth: true, // Указывает, что компонент требует авторизации
@@ -52,6 +54,17 @@ const routes = [
     },
   },
   // </VMarketsSectionView>
+
+  // <VNomenclatureSectionView>
+  {
+    path: '/nomenclature',
+    name: 'nomenclature',
+    component: VNomenclatureSectionView,
+    meta: {
+      requiresAuth: true, // Указывает, что компонент требует авторизации
+    },
+  },
+  // </VNomenclatureSectionView>
 ];
 
 const router = createRouter({

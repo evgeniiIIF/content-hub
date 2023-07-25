@@ -24,7 +24,13 @@
         <RouterLink
           v-else-if="menuItem.name === 'Магазины'"
           class="nav__link"
-          to="/shops"
+          to="/markets"
+          >{{ menuItem.name }}</RouterLink
+        >
+        <RouterLink
+          v-else-if="menuItem.name === 'Номенклатура'"
+          class="nav__link"
+          to="/nomenclature"
           >{{ menuItem.name }}</RouterLink
         >
         <a

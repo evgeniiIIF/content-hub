@@ -4,7 +4,7 @@
       <input
         type="checkbox"
         v-model="currentIsChecked"
-        :value="item"
+        :value="text"
         @change="onChange"
       />
 
@@ -29,8 +29,11 @@
         </div>
       </div>
 
-      <div class="checkbox__content">
-        <span class="checkbox__text">{{ item }}</span>
+      <div
+        v-if="text"
+        class="checkbox__content"
+      >
+        <span class="checkbox__text">{{ text }}</span>
       </div>
     </label>
   </div>
@@ -38,9 +41,9 @@
 
 <script>
   export default {
-    name: 'VCheckboxList',
+    name: 'VCheckbox',
     props: {
-      item: {
+      text: {
         type: String,
       },
       isChecked: {

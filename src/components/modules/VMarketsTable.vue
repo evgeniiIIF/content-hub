@@ -83,7 +83,10 @@
                 @click.stop
               >
                 <div class="item-shops__button--more">
-                  <VDropdovnSlots>
+                  <VDropdovnSlots
+                    ref="dropdown"
+                    @click="closeOwnDropdown($event)"
+                  >
                     <template #button>
                       <button
                         class="button"
@@ -96,7 +99,50 @@
                       </button>
                     </template>
                     <template #menu>
-                      <VItemCategotyDropdownList @showSlidingBlock="showSlidingBlock($event, itemCategoryIndexL1)" />
+                      <ul class="list">
+                        <li class="list__item">
+                          <VButton>
+                            <span class="button__image">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  clip-rule="evenodd"
+                                  d="M12.1548 3.33288C12.8057 2.68201 13.861 2.68201 14.5118 3.33288L16.6667 5.4877C17.3175 6.13858 17.3175 7.19385 16.6667 7.84473L13.9228 10.5886C13.9227 10.5887 13.9226 10.5887 13.9226 10.5888C13.9225 10.5889 13.9225 10.5889 13.9224 10.589L7.25592 17.2555C7.09964 17.4118 6.88768 17.4995 6.66667 17.4995H3.33333C2.8731 17.4995 2.5 17.1265 2.5 16.6662V13.3329C2.5 13.1119 2.5878 12.8999 2.74408 12.7436L9.4103 6.0774C9.41045 6.07725 9.4106 6.07711 9.41074 6.07696C9.41089 6.07681 9.41104 6.07666 9.41119 6.07652L12.1548 3.33288ZM10 7.84473L4.16667 13.6781V15.8329H6.32149L12.1548 9.99955L10 7.84473ZM13.3333 8.82104L11.1785 6.66621L13.3333 4.51139L15.4882 6.66622L13.3333 8.82104Z"
+                                  fill="#0077FF"
+                                />
+                              </svg>
+                            </span>
+                            <span class="button__text">Редактировать магазин</span>
+                          </VButton>
+                        </li>
+                        <li class="list__item">
+                          <VButton>
+                            <span class="button__image">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  clip-rule="evenodd"
+                                  d="M5.83333 3.33366C5.83333 2.41318 6.57953 1.66699 7.5 1.66699H12.5C13.4205 1.66699 14.1667 2.41318 14.1667 3.33366V4.16699H16.6667C17.1269 4.16699 17.5 4.54009 17.5 5.00033C17.5 5.46056 17.1269 5.83366 16.6667 5.83366H15.8333V16.667C15.8333 17.5875 15.0871 18.3337 14.1667 18.3337H5.83333C4.91286 18.3337 4.16667 17.5875 4.16667 16.667V5.83366H3.33333C2.8731 5.83366 2.5 5.46056 2.5 5.00033C2.5 4.54009 2.8731 4.16699 3.33333 4.16699H5.83333V3.33366ZM7.5 4.16699H12.5V3.33366H7.5V4.16699ZM5.83333 5.83366V16.667H14.1667V5.83366H5.83333ZM8.33333 7.50033C8.79357 7.50033 9.16667 7.87342 9.16667 8.33366V14.167C9.16667 14.6272 8.79357 15.0003 8.33333 15.0003C7.8731 15.0003 7.5 14.6272 7.5 14.167V8.33366C7.5 7.87342 7.8731 7.50033 8.33333 7.50033ZM11.6667 7.50033C12.1269 7.50033 12.5 7.87342 12.5 8.33366V14.167C12.5 14.6272 12.1269 15.0003 11.6667 15.0003C11.2064 15.0003 10.8333 14.6272 10.8333 14.167V8.33366C10.8333 7.87342 11.2064 7.50033 11.6667 7.50033Z"
+                                  fill="#F2480D"
+                                />
+                              </svg>
+                            </span>
+                            <span class="button__text">Удалить</span>
+                          </VButton>
+                        </li>
+                      </ul>
                     </template>
                   </VDropdovnSlots>
                 </div>
@@ -106,7 +152,7 @@
         </VRecursiveList>
       </div>
     </div>
-    <VSlidingBlockSlotUIFC
+    <!-- <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
       :element="$refs.cardAddCategory"
       @onCloseSlidingBlock="isOpenSlidingBlock = false"
@@ -115,12 +161,12 @@
         @onCloseSlidingBlock="isOpenSlidingBlock = false"
         :parentItemData="parentItemData"
       />
-      <!-- <VCardInfoCategory
+      <VCardInfoCategory
         v-if="showVCardInfoCategory"
         @onCloseSlidingBlock="isOpenSlidingBlock = false"
         :parentItemData="parentItemData"
-      /> -->
-    </VSlidingBlockSlotUIFC>
+      />
+    </VSlidingBlockSlotUIFC> -->
   </div>
 </template>
 
@@ -135,6 +181,7 @@
   import VCheckboxList from '../UI/VCheckboxList.vue';
   import VSelect from '../UI/VSelect.vue';
   import VInput from '../UI/VInput.vue';
+  import VButton from '../UI/VButton.vue';
 
   import VCardAddNestedMarket from '../cards/VCardAddNestedMarket.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
@@ -143,284 +190,42 @@
   export default {
     name: 'VCategoriesTable',
     mixins: [mixDropdownMenuFn],
-    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedMarket, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect, VInput },
+    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedMarket, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect, VInput, VButton },
 
     data() {
       return {
         headCategories: ['Имя магазина', 'Подключенные склады', 'Статусы КТ', 'Принадлежность к МП'],
 
-        isOpenSlidingBlock: false,
-        // setShowHideNthChildRowTable
-        prevNthChildren: [],
-        // \setShowHideNthChildRowTable
-
-        // <VCardAddNestedMarket> && <VCardAddInfoCategory>
         parentItemData: {
           names: [],
           id: null,
         },
-        // </VCardAddNestedMarket> && </VCardAddInfoCategory>
 
-        // <itemCategorySelect>
-        optsTemplateItemCategoryInputName: {
-          value: '',
-          type: 'text',
-          name: 'opts.name',
-          placeholder: 'opts.placeholder',
+        currentElement: {
+          dropdownItemMarket: null,
         },
-        // <\ itemCategorySelect>
-
-        // <itemCategorySelect>
-        currentSelect: null,
-        selectNameAll: null,
-
-        optsTemplateItemCategorySelect: {
-          // value: '-',
-          type: 'text',
-          name: 'opts.name',
-          placeholder: 'opts.placeholder',
-          readonly: true,
-          icon: true,
-        },
-
-        filterValueSelect: '',
       };
-      // <\ itemCategorySelect>
     },
 
     computed: {
       ...mapGetters('marketsItems', {
         marketsItems: 'items',
       }),
-      ...mapGetters('categoriesOzon', {
-        ozonSelectItems: 'items',
-      }),
-      ...mapGetters('categoriesAli', {
-        AliSelectItems: 'items',
-      }),
-      ...mapGetters('updateCategoryName', {
-        itemCategoryName_PENDING: 'pending',
-      }),
-
-      filteredSelectItemsOzon() {
-        if (this.filterValueSelect) {
-          return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
-        } else {
-          return this.ozonSelectItems;
-        }
-      },
-      filteredSelectItemsAli() {
-        if (this.filterValueSelect) {
-          return this.filterRecursively(this.AliSelectItems, this.filterValueSelect);
-        } else {
-          return this.AliSelectItems;
-        }
-      },
     },
 
     methods: {
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
-      ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
-      ...mapActions('categoriesAli', ['GET_ITEMS_SELECT_ALI']),
-      ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME', 'RESET_PENDING']),
-      ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY', 'RESET_SUCCESS', 'SET_SUCCESS', 'RESET_MESSAGE']),
-      ...mapActions('deleteCategory', ['DELETE_CATEGORY']),
 
-      async deleteCategory(e, itemCategory) {
-        // console.log('DELETE_CATEGORY', itemCategory);
-        this.DELETE_CATEGORY(itemCategory);
-      },
-
-      async onUpdateItemCategoryName(e, item) {
-        const data = {
-          name: e.target.value,
-          id: item.id,
-        };
-        await this.UPDATE_CATEGORY_NAME(data);
-        await this.GET_ITEMS_CATEGORIES();
-        this.RESET_PENDING();
-      },
-
-      filterRecursively(obj, filterValue) {
-        const copyObj = JSON.parse(JSON.stringify(obj));
-        // console.log(copyObj);
-
-        const filterFunc = (copyObj, filterValue) => {
-          if (filterValue) {
-            return copyObj.filter((item) => {
-              const corect =
-                item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
-                (item.children &&
-                  item.children.some((childItem) => {
-                    return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
-                  }));
-              if (item.children_count > 0) {
-                item.children = filterFunc(item.children, filterValue);
-              }
-
-              if (corect) {
-                return true;
-              }
-            });
-          } else {
-            return obj;
-          }
-        };
-
-        return filterFunc(copyObj, filterValue);
-      },
-
-      onInputFilter(e) {
-        this.filterValueSelect = e.target.value;
-
-        this.selectNameAll = e.target.closest('.select__menu').querySelectorAll('.select-list__name');
-        this.selectNameAll = Array.from(this.selectNameAll).filter((item) => item.innerText.toLowerCase().startsWith(this.filterValueSelect.toLowerCase()));
-
-        this.highlightMatching(this.selectNameAll, this.filterValueSelect);
-      },
-
-      onBackspakeFilterSelect(e, selectNameAll, filterValueSelect) {
-        if (e.keyCode === 8) {
-          this.filterValueSelect = e.target.value.slice(0, -1);
-          this.highlightMatching(selectNameAll, filterValueSelect);
-        }
-      },
-
-      highlightMatching(arr, filterValue) {
-        arr.forEach((item) => {
-          if (filterValue) {
-            item.style.background = 'transparent';
-            item.style.background = 'yellow';
-          } else {
-            item.style.background = 'transparent';
-          }
-        });
-      },
-
-      async loadOzonSelectItems(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3 = '') {
-        if (itemCategoryIndexL3 !== '') {
-          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`];
-        } else {
-          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
-        }
-        console.log(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3);
-        if (this.ozonSelectItems.length === 0) {
-          await this.GET_ITEMS_SELECT_OZON();
-        }
-      },
-
-      async loadAliSelectItems(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3 = '') {
-        if (itemCategoryIndexL3 !== '') {
-          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2}>${itemCategoryIndexL3})`];
-        } else {
-          this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
-        }
-        if (this.AliSelectItems.length === 0) {
-          await this.GET_ITEMS_SELECT_ALI();
-          // console.log(this.AliSelectItems);
-        }
-      },
-
-      async onSelectMarketplaceCategory(mapketplaceCategoryName, itemMarketplace, itemCategory) {
-        console.log(this.currentSelect);
-
-        const input = this.currentSelect.$el.querySelector('input');
-        input.value = itemMarketplace.name;
-        input.title = itemMarketplace.name;
-        this.currentSelect.menuIsOpen = false;
-
-        // reset filter
-        this.currentSelect.$el.querySelector('.select-list__filter-input').value = '';
-        this.filterValueSelect = '';
-        if (this.selectNameAll) {
-          this.highlightMatching(this.selectNameAll, this.filterValueSelect);
-        }
-
-        // send data
-        const data = {
-          localCategory_id: itemCategory.id,
-          marketplace_id: itemMarketplace.id,
-          mapketplaceCategoryName,
-        };
-        await this.SELECT_MARKETPLACE_CATEGORY(data);
-        this.SET_SUCCESS();
-        setTimeout(() => {
-          this.RESET_SUCCESS();
-          this.RESET_MESSAGE();
-        }, 3000);
-        await this.GET_ITEMS_CATEGORIES();
-
-        // console.log(data);
-      },
-
-      setShowHideNthChildRowTable(isChecked) {
-        let hidenNthChieldIndexs = [];
-
-        if (this.prevNthChildren.length > 0) {
-          this.prevNthChildren.forEach((nthChild) => {
-            nthChild.style.display = 'block';
-          });
-        }
-
-        const arr = this.headCategories.filter((item, index) => {
-          if (index !== 0) {
-            if (isChecked.includes(item)) {
-              return true;
-            } else {
-              hidenNthChieldIndexs.push(index + 2);
-              return false;
-            }
-          }
-        });
-
-        hidenNthChieldIndexs.forEach((indexItem) => {
-          const rowsTableAll = document.querySelectorAll(`.row-table`);
-          rowsTableAll.forEach((rowTable) => {
-            if (rowTable.children.length > 3) {
-              const nthChild = rowTable.querySelector(`.row-table > *:nth-child(${indexItem})`);
-              this.prevNthChildren.push(nthChild);
-              nthChild.style.display = 'none';
-            }
-          });
-        });
-      },
-
-      closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
-        const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
-        if (this.currentSelect) {
-          this.currentSelect.menuIsOpen = false;
-        }
-        if (currentItemCategoryDropdownSlots.menuIsOpen) {
-          currentItemCategoryDropdownSlots.menuIsOpen = false;
-          document.removeEventListener('click', currentItemCategoryDropdownSlots.closeMenu, true);
-        }
-      },
-
-      showSlidingBlock(e, itemL1 = null, itemL2 = null) {
-        const textButton = e.currentTarget.querySelector('.button__text').textContent;
-        this.parentItemData.names = [];
-
-        if (itemL1 !== null) {
-          this.parentItemData.names.push(itemL1.name);
-        }
-        if (itemL2 !== null) {
-          this.parentItemData.names.push(itemL2.name);
-        }
-
-        this.showVCardAddNestedMarket = textButton === 'Добавить субкатегорию';
-        this.showVCardInfoCategory = textButton === 'Информация';
-
-        this.isOpenSlidingBlock = true;
-      },
-    },
-
-    watch: {
-      currentSelect(newValue, oldValue) {
-        if (oldValue !== null) {
-          oldValue.$el.querySelector('.select-list__filter-input').value = '';
-        }
-        this.filterValueSelect = '';
-        console.log(oldValue, newValue);
+      closeOwnDropdown(e) {
+        // const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
+        //   if (this.currentSelect) {
+        //     this.currentSelect.menuIsOpen = false;
+        //   }
+        //   if (currentItemCategoryDropdownSlots.menuIsOpen) {
+        //     currentItemCategoryDropdownSlots.menuIsOpen = false;
+        //     document.removeEventListener('click', currentItemCategoryDropdownSlots.closeMenu, true);
+        //   }
+        console.log(e);
       },
     },
 
@@ -435,7 +240,7 @@
 <style lang="scss">
   $offsetSubmenu: 12px;
 
-  .shops .row-table {
+  .markets .row-table {
     display: flex;
     align-items: center;
 

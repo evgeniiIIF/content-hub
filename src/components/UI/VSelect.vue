@@ -1,23 +1,13 @@
-<!-- <VDropdovnSlots>
-	<template #button>
-		<button
-			class="button"
-			type="button"
-		>
-			<img
-				src="@/assets/img/static/buttons-icon/More_Vertical_20px.svg"
-				alt="icon"
-			/>
-		</button>
-	</template>
-	<template #menu>
-		<ul>
-			<li>Option 1</li>
-			<li>Option 2</li>
-			<li>Option 3</li>
-		</ul>
-	</template>
-</VDropdovnSlots> -->
+<!-- <VSelect
+:opts="{
+	type: 'text',
+	name: 'filter-search',
+	placeholder: 'Бренд',
+	icon: true,
+}"
+>
+<template #menu> menu </template>
+</VSelect> -->
 
 <template>
   <div

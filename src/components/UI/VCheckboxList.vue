@@ -112,8 +112,7 @@
       }
     }
     &__pseudo-flag-wrapper {
-      padding: 10px;
-      border-radius: 50%;
+      // border-radius: 50%;
     }
 
     &__pseudo-flag {

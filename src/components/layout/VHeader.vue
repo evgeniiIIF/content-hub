@@ -138,6 +138,7 @@
           },
           { name: 'Категории', href: 'changeme' },
           { name: 'Ценообраование', href: 'changeme' },
+          { name: 'Номенклатура', href: 'changeme' },
         ],
       };
     },

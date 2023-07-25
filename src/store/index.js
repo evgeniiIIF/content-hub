@@ -11,10 +11,15 @@ import updateCategoryName from './modules/updateCategoryName.js';
 import selectMarketplaceCategiry from './modules/selectMarketplaceCategiry.js';
 import deleteCategory from './modules/deleteCategory.js';
 // </categories>
-// <shops>
-import marketsItems from './markets/marketsItems.js';
 
-// </shops>
+// <markets>
+import marketsItems from './markets/marketsItems.js';
+// </markets>
+
+// <nomenclature>
+import nomenclatureItems from './nomenclature/nomenclatureItems.js';
+// </nomenclature>
+
 export default createStore({
   modules: {
     // <categories>
@@ -28,9 +33,14 @@ export default createStore({
     selectMarketplaceCategiry,
     deleteCategory,
     // </categories>
-    // <shops>
+
+    // <markets>
     marketsItems,
-    // </shops>
+    // </markets>
+
+    // <nomenclature>
+    nomenclatureItems,
+    // </nomenclature>
   },
   strict: process.env.NODE_ENV !== 'production',
 });

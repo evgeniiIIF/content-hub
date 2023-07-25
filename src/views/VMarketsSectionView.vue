@@ -1,8 +1,8 @@
 <template>
-  <section class="shops">
-    <div class="shops__top">
+  <section class="markets">
+    <div class="markets__top">
       <div class="container">
-        <div class="shops__top-body top">
+        <div class="markets__top-body top">
           <div class="top__row">
             <h2 class="top__title">Магазины</h2>
             <div class="top__actions">
@@ -59,8 +59,8 @@
         </div>
       </div>
     </div>
-    <div class="shops__table">
-      <VShopsTable />
+    <div class="markets__table">
+      <VMarketsTable />
     </div>
     <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
@@ -76,11 +76,11 @@
   import VButton from '@/components/UI/VButton.vue';
   import VInput from '@/components/UI/VInput.vue';
   import VCardAddMarket from '@/components/cards/VCardAddMarket.vue';
-  import VShopsTable from '@/components/modules/VShopsTable.vue';
+  import VMarketsTable from '@/components/modules/VMarketsTable.vue';
 
   export default {
-    name: 'VShopsSectionView',
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VShopsTable },
+    name: 'VMarketsSectionView',
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VMarketsTable },
     data() {
       return {
         isOpenSlidingBlock: false,
