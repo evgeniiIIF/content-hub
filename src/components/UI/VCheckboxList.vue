@@ -63,7 +63,9 @@
     padding: 8px;
 
     &__item {
-      padding: 4px;
+      // padding: 4px;
+      // padding: 8px 12px;
+      // width: 237px;
       &:hover {
         border-radius: 4px;
         background: rgba(126, 141, 148, 0.2);
@@ -121,11 +123,19 @@
       // width: 16px;
       // height: 16px;
       transition: all 0.3s ease 0s;
-
       border: 2px solid #7e8d94;
       border-radius: 4px;
+      width: 48px;
+      height: 24px;
+      border-color: #c2c9d2;
+      background: #c2c9d2;
+      border-radius: 12px;
     }
     &__pseudo-flag-check-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
       // display: none;
       // justify-content: center;
       // align-items: center;

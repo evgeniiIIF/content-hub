@@ -1,3 +1,5 @@
+<!-- <VCheckbox text="anytext"/> -->
+
 <template>
   <div class="checkbox">
     <label class="checkbox__label">

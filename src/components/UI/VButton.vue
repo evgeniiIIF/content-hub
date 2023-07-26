@@ -1,3 +1,9 @@
+<!-- <VButton>
+	<span class="button__image">
+	</span>
+	<span class="button__text"></span>
+</VButton> -->
+
 <template>
   <component
     :class="classes"

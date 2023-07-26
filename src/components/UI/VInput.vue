@@ -12,6 +12,13 @@
     name: "problem",
     placeholder: "Опишите проблему",
 }, -->
+<!-- or -->
+<!-- {
+	type: 'text',
+	name: 'product-article',
+	value: '',
+	placeholder: 'placeholder',
+} -->
 
 <!-- icon: true -->
 <!-- <VInput
