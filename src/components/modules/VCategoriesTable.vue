@@ -27,6 +27,8 @@
               <VCheckboxList
                 :items="headCategories.slice(1)"
                 :isChecked="headCategories.slice(1)"
+                :checkboxTypeToggle="true"
+                textPosition="before"
                 @onChange="setShowHideNthChildRowTable($event)"
               />
             </template>
@@ -1048,7 +1050,7 @@
         right: 200%;
       }
       .checkbox-list__item {
-        padding: 8px 12px;
+        // padding: 12px 8px;
         width: 237px;
       }
     }

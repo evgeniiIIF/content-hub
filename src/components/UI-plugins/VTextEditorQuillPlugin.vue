@@ -1,5 +1,7 @@
 <template>
-  <div class="text-editor-quill-plugin js-text-editor-quill"></div>
+  <div class="text-editor-quill-plugin-wrapper">
+    <div class="js-text-editor-quill"></div>
+  </div>
 </template>
 <script>
   import 'quill/dist/quill.snow.css';
@@ -10,7 +12,7 @@
 
     mounted() {
       var toolbarOptions = [
-        [{ font: [] }],
+        // [{ font: [] }],
         [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
         // [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ['bold', 'italic', 'underline', 'strike'], // toggled buttons

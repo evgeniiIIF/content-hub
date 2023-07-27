@@ -1,8 +1,14 @@
+<!--
+	<VTagList
+:items="tagListItems"
+prefix="Бренд :"
+/> 
+-->
 <template>
   <ul class="tag-list">
     <li
       class="tag-list__item"
-      v-for="item in items"
+      v-for="item in currentItems"
       :key="item"
     >
       <div class="tag-list__content">
@@ -14,7 +20,10 @@
         </span>
         <p class="tag-list__text">{{ item }}</p>
       </div>
-      <div class="tag-list__close">
+      <div
+        class="tag-list__close"
+        @click="removeItem(item)"
+      >
         <button type="button">
           <svg
             width="20"
@@ -48,6 +57,20 @@
         type: String,
       },
     },
+    data() {
+      return {
+        currentItems: [],
+      };
+    },
+    methods: {
+      removeItem(eventItem) {
+        this.currentItems = this.currentItems.filter((item) => item !== eventItem);
+        // console.log(eventItem);
+      },
+    },
+    mounted() {
+      this.currentItems = this.items;
+    },
   };
 </script>
 
@@ -55,7 +78,11 @@
   .tag-list {
     display: flex;
     flex-wrap: wrap;
-    @include mr(4px);
+    // @include mr(4px);
+    gap: 8px;
+
+    width: 100%;
+
     &__item {
       display: flex;
       align-items: center;

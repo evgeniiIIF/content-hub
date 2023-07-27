@@ -1,4 +1,6 @@
-<template>
+<!-- <template>
+
+import VCheckbox from './VCheckbox.vue';
   <ul class="checkbox-list">
     <li
       class="checkbox-list__item"
@@ -26,34 +28,64 @@
       </div>
     </li>
   </ul>
+</template> -->
+
+<template>
+  <ul class="checkbox-list">
+    <li
+      class="checkbox-list__item"
+      v-for="item in items"
+    >
+      <VCheckbox
+        :text="item"
+        :textPosition="textPosition"
+        @onChange="onChange($event)"
+        :isChecked="currentIsChecked"
+        :checkboxTypeToggle="checkboxTypeToggle"
+      />
+    </li>
+  </ul>
 </template>
 
 <script>
+  import VCheckbox from './VCheckbox.vue';
+
   export default {
     name: 'VCheckboxList',
     props: {
       items: {
         type: Array,
       },
+      textPosition: {
+        type: String,
+        default: 'after',
+      },
       isChecked: {
         type: Array,
         default: [],
       },
+      checkboxTypeToggle: {
+        type: Boolean,
+        default: false,
+      },
     },
+    components: { VCheckbox },
+
     data() {
       return {
         currentIsChecked: [],
       };
     },
     methods: {
-      onChange() {
+      onChange(e) {
+        this.currentIsChecked = e;
         this.$emit('onChange', this.currentIsChecked);
-        // console.log(this.currentIsChecked);
       },
     },
     mounted() {
       this.currentIsChecked = this.isChecked;
     },
+    components: { VCheckbox },
   };
 </script>
 
@@ -63,9 +95,9 @@
     padding: 8px;
 
     &__item {
-      // padding: 4px;
-      // padding: 8px 12px;
       // width: 237px;
+      padding: 12px 8px;
+
       &:hover {
         border-radius: 4px;
         background: rgba(126, 141, 148, 0.2);
@@ -90,7 +122,7 @@
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      // justify-content: space-between;
       cursor: pointer;
     }
 
@@ -122,20 +154,8 @@
       // position: relative;
       // width: 16px;
       // height: 16px;
-      transition: all 0.3s ease 0s;
-      border: 2px solid #7e8d94;
-      border-radius: 4px;
-      width: 48px;
-      height: 24px;
-      border-color: #c2c9d2;
-      background: #c2c9d2;
-      border-radius: 12px;
     }
     &__pseudo-flag-check-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #fff;
       // display: none;
       // justify-content: center;
       // align-items: center;

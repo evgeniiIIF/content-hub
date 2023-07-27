@@ -1,51 +1,51 @@
-<!-- <VRadioButton
-:variant="itemRadio"
-:name="name"
+<!-- <VRadioButtonList
+:items="item.toolOpts.radioButtonsItems"
+:name="item.name"
 :currentPicked="currentPicked"
 @changePicked="changePicked($event)"
-></VRadioButton> -->
+/> -->
 
 <template>
-  <label
-    class="radio-button"
-    :class="variant === currentPicked ? 'radio-button--active' : ''"
-  >
-    <input
-      class="radio-button__input"
-      type="radio"
-      :value="variant"
-      :name="name"
-      @change="changePicked"
-    />
-    <span class="radio-button__flag">
-      <span class="radio-button__flag-inner"></span>
-    </span>
-    <span class="radio-button__title">{{ variant }}</span>
-  </label>
+  <ul class="item-info-product__tool-radio">
+    <li
+      class="item-info-product__tool-radio-item"
+      v-for="itemRadio in items"
+      :key="itemRadio"
+    >
+      <VRadioButton
+        :variant="itemRadio"
+        :name="name"
+        :currentPicked="currentPicked"
+        @changePicked="changePicked($event)"
+      ></VRadioButton>
+    </li>
+  </ul>
 </template>
 
 <script>
-  export default {
-    name: 'VRadioButton',
+  import VRadioButton from './VRadioButton.vue';
 
+  export default {
+    name: 'VRadioButtonList',
     props: {
       name: {
         type: String,
         required: true,
       },
-      variant: {
-        type: String,
+      items: {
+        type: Array,
       },
       currentPicked: {
         type: String,
         required: true,
       },
     },
-    // emits: ['changePicked'],
+    emits: ['changePicked'],
+    components: { VRadioButton },
     methods: {
-      changePicked() {
-        console.log(this.variant);
-        this.$emit('changePicked', this.variant);
+      changePicked(newVariant) {
+        console.log(newVariant);
+        this.$emit('changePicked', newVariant);
       },
     },
   };

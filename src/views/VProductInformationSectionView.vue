@@ -56,40 +56,57 @@
                 <h3 class="head-info-product__title-text">Информация о товаре</h3>
               </div>
               <div class="head-info-product__checkbox">
-                <VCheckboxList :items="['Показать только обязательные атрибуты']" />
+                <VCheckbox
+                  :text="'Показать только обязательные атрибуты'"
+                  textPosition="before"
+                  :checkboxTypeToggle="true"
+                />
               </div>
             </div>
             <ul class="info-product__list">
               <li
                 class="info-product__item item-info-product"
                 v-for="item in infoProductItems"
+                :class="item.column ? 'item-info-product--column' : ''"
               >
-                <div class="item-info-product__left">
+                <div class="item-info-product__info">
                   <span class="item-info-product__indicator"></span>
                   <p class="item-info-product__name">{{ item.name }}</p>
+
+                  <span class="item-info-product__info-icon">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M10.0003 3.33366C6.31843 3.33366 3.33366 6.31843 3.33366 10.0003C3.33366 13.6822 6.31843 16.667 10.0003 16.667C13.6822 16.667 16.667 13.6822 16.667 10.0003C16.667 6.31843 13.6822 3.33366 10.0003 3.33366ZM1.66699 10.0003C1.66699 5.39795 5.39795 1.66699 10.0003 1.66699C14.6027 1.66699 18.3337 5.39795 18.3337 10.0003C18.3337 14.6027 14.6027 18.3337 10.0003 18.3337C5.39795 18.3337 1.66699 14.6027 1.66699 10.0003ZM9.12549 6.58366C9.12549 6.12342 9.49858 5.75033 9.95882 5.75033H10.0422C10.5024 5.75033 10.8755 6.12342 10.8755 6.58366V6.66699C10.8755 7.12723 10.5024 7.50033 10.0422 7.50033H9.95882C9.49858 7.50033 9.12549 7.12723 9.12549 6.66699V6.58366ZM10.0003 8.33366C10.4606 8.33366 10.8337 8.70676 10.8337 9.16699L10.8337 13.3337C10.8337 13.7939 10.4606 14.167 10.0003 14.167C9.54009 14.167 9.16699 13.7939 9.16699 13.3337L9.16699 9.16699C9.16699 8.70676 9.54009 8.33366 10.0003 8.33366Z"
+                        fill="#C2C9D2"
+                      />
+                    </svg>
+                  </span>
                 </div>
                 <div class="item-info-product__tool">
                   <VSelect
                     v-if="item.toolOpts.select === true"
                     :opts="item.toolOpts"
                   />
-                  <ul
+                  <VTextEditorQuillPlugin v-else-if="item.toolOpts.textEditor === true" />
+                  <VRadioButtonList
                     v-else-if="item.toolOpts.radio === true"
-                    class="item-info-product__tool-radio"
-                  >
-                    <li
-                      class="item-info-product__tool-radio-item"
-                      v-for="itemRadio in item.toolOpts.radioButtonsItems"
-                      :key="itemRadio"
-                    >
-                      <VRadioButton
-                        :variant="itemRadio"
-                        :name="item.name"
-                        :currentPicked="currentPicked"
-                        @changePicked="changePicked($event)"
-                      ></VRadioButton>
-                    </li>
-                  </ul>
+                    :items="item.toolOpts.radioButtonsItems"
+                    :name="item.name"
+                    :currentPicked="currentPicked"
+                    @changePicked="changePicked($event)"
+                  />
+                  <VTagList
+                    v-else-if="item.toolOpts.tagList === true"
+                    :items="item.toolOpts.tagListItems"
+                  />
                   <VInput
                     v-else
                     :opts="item.toolOpts"
@@ -135,15 +152,15 @@
   import VCardAddMarket from '@/components/cards/VCardAddMarket.vue';
   import VNomenclatureTable from '@/components/modules/VNomenclatureTable.vue';
   import VSelect from '@/components/UI/VSelect.vue';
-  import VCheckboxList from '@/components/UI/VCheckboxList.vue';
+  import VCheckbox from '@/components/UI/VCheckbox.vue';
   import VTagList from '@/components/UI/VTagList.vue';
   import VTextEditorQuillPlugin from '@/components/UI-plugins/VTextEditorQuillPlugin.vue';
   import VNavVertical from '@/components/UI/VNavVertical.vue';
-  import VRadioButton from '@/components/UI/VRadioButton.vue';
+  import VRadioButtonList from '@/components/UI/VRadioButtonList.vue';
 
   export default {
     name: 'VProductInformationSectionView',
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckboxList, VTagList, VTextEditorQuillPlugin, VNavVertical, VRadioButton },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VTextEditorQuillPlugin, VNavVertical, VRadioButtonList },
     data() {
       return {
         currentPicked: '10%',
@@ -196,12 +213,35 @@
               radioButtonsItems: ['10%', '20%', 'Не облагается'],
             },
           },
+          {
+            name: 'Наименование бренда',
+            toolOpts: {
+              type: 'text',
+              name: 'brand-name',
+              value: '',
+              placeholder: 'brand-name',
+            },
+          },
+          {
+            name: 'Наименование бренда',
+            toolOpts: {
+              tagList: true,
+              tagListItems: ['ABSEL', 'Petronas', 'LiquiMoly', 'BOSCH', 'Varta'],
+            },
+          },
+          {
+            name: 'Аннотация',
+            column: true,
+            toolOpts: {
+              textEditor: true,
+            },
+          },
         ],
       };
     },
     methods: {
       changePicked(newVariant) {
-        console.log('newVariant, this.currentPicked');
+        console.log(newVariant, this.currentPicked);
         this.currentPicked = newVariant;
       },
     },
@@ -313,10 +353,51 @@
     padding: 16px;
     border-bottom: 1px solid #ebedf1;
 
-    &__left {
+    &--column {
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      border-bottom: none;
+
+      & .ql-container {
+        border-radius: 0 0 4px 4px;
+      }
+      & .ql-toolbar {
+        border-radius: 4px 4px 0 0;
+      }
+
+      .item-info-product {
+        &__info {
+          margin-bottom: 16px;
+        }
+        &__info-icon {
+          display: flex;
+          align-items: center;
+          margin-left: 8px;
+        }
+        &__tool {
+          width: 100%;
+          .text-editor-quill-plugin-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 300px;
+          }
+        }
+        &__tool-icon {
+          display: none;
+        }
+      }
+    }
+
+    &__info {
       display: flex;
       align-items: center;
       margin-right: 16px;
+    }
+
+    &__info-icon {
+      display: none;
     }
 
     &__indicator {
@@ -340,6 +421,14 @@
     &__tool {
       display: flex;
       width: 400px;
+
+      .tag-list {
+        min-height: 38px;
+        border-radius: 4px;
+        border: 1px solid var(--gray, #c2c9d2);
+        background: #fff;
+        padding: 6px;
+      }
     }
     &__tool-icon {
       margin-top: 9px;

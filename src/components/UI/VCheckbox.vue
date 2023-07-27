@@ -1,18 +1,35 @@
-<!-- <VCheckbox text="anytext"/> -->
-
 <template>
   <div class="checkbox">
     <label class="checkbox__label">
       <input
         type="checkbox"
-        v-model="currentIsChecked"
+        :checked="currentIsChecked"
         :value="text"
         @change="onChange"
       />
 
-      <div class="checkbox__pseudo-flag-wrapper">
-        <div class="checkbox__pseudo-flag">
-          <div class="checkbox__pseudo-flag-check-icon">
+      <div
+        v-if="textPosition === 'before'"
+        class="checkbox__content--before"
+      >
+        <span class="checkbox__text">{{ text }}</span>
+      </div>
+
+      <div
+        v-if="checkboxTypeToggle"
+        class="checkbox__toggle-wrapper"
+      >
+        <div class="checkbox__toggle-border">
+          <div class="checkbox__toggle-mark"></div>
+        </div>
+      </div>
+
+      <div
+        v-else
+        class="checkbox__check-wrapper"
+      >
+        <div class="checkbox__check-border">
+          <div class="checkbox__check-mark">
             <svg
               width="9"
               height="7"
@@ -32,8 +49,8 @@
       </div>
 
       <div
-        v-if="text"
-        class="checkbox__content"
+        v-if="textPosition === 'after'"
+        class="checkbox__content--after"
       >
         <span class="checkbox__text">{{ text }}</span>
       </div>
@@ -45,10 +62,18 @@
   export default {
     name: 'VCheckbox',
     props: {
+      isChecked: {
+        type: [Boolean, Array],
+        default: false,
+      },
       text: {
         type: String,
       },
-      isChecked: {
+      textPosition: {
+        type: String,
+        default: 'after',
+      },
+      checkboxTypeToggle: {
         type: Boolean,
         default: false,
       },
@@ -60,101 +85,151 @@
     },
     methods: {
       onChange() {
-        this.$emit('onChange', this.currentIsChecked);
-        // console.log(this.currentIsChecked);
+        if (Array.isArray(this.currentIsChecked)) {
+          const index = this.currentIsChecked.indexOf(this.text);
+
+          if (index !== -1) {
+            this.currentIsChecked.splice(index, 1);
+          } else {
+            this.currentIsChecked.push(this.text);
+          }
+          this.$emit('onChange', this.currentIsChecked);
+        } else {
+          this.$emit('onChange', !this.isChecked);
+        }
       },
     },
+
     mounted() {
-      this.currentIsChecked = this.isChecked;
+      this.$nextTick(() => {
+        this.currentIsChecked = this.isChecked;
+      });
     },
   };
 </script>
 
 <style lang="scss">
-  // .checkbox {
-  //   &:hover {
-  //     .checkbox__text {
-  //       color: #000;
-  //     }
-  //     .checkbox__pseudo-flag {
-  //       // border-color: #000;
-  //     }
-  //     .checkbox__pseudo-flag-wrapper {
-  //       background: rgba(126, 141, 148, 0.2);
-  //     }
-  //   }
+  .checkbox {
+    &:hover {
+      .checkbox__text {
+        color: #000;
+      }
+      .checkbox__check-wrapper {
+        background: rgba(126, 141, 148, 0.2);
+      }
+      .checkbox__check-border {
+        border-color: #000;
+      }
+    }
 
-  //   &__label {
-  //     position: relative;
-  //     display: flex;
-  //     align-items: center;
-  //     cursor: pointer;
-  //   }
+    &__label {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
 
-  //   & input {
-  //     position: absolute;
-  //     z-index: -1;
-  //     opacity: 0;
+    &__content {
+      display: flex;
+      flex-direction: column;
+      @include mb(5px);
+    }
 
-  //     &:checked {
-  //       & ~ .checkbox__pseudo-flag-wrapper .checkbox__pseudo-flag {
-  //         border-color: #0077ff;
+    &__content--before {
+      margin-right: 10px;
+    }
+    &__content--after {
+      margin-left: 10px;
+    }
+    &__text {
+      font-family: Inter;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      text-overflow: ellipsis;
+      color: #292929;
+    }
+  }
 
-  //         & .checkbox__pseudo-flag-check-icon {
-  //           display: flex;
-  //         }
-  //       }
-  //     }
-  //   }
-  //   &__pseudo-flag-wrapper {
-  //     // padding: 10px;
-  //     // margin-right: 12px;
-  //     border-radius: 50%;
-  //   }
+  .checkbox {
+    & input {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
 
-  //   &__pseudo-flag {
-  //     flex: 0 0 20px;
-  //     position: relative;
-  //     width: 16px;
-  //     height: 16px;
-  //     // margin-right: 10px;
-  //     border: 2px solid #7e8d94;
-  //     border-radius: 4px;
-  //     // background: $bg-color;
-  //   }
-  //   &__pseudo-flag-check-icon {
-  //     display: none;
-  //     justify-content: center;
-  //     align-items: center;
-  //     width: 100%;
-  //     height: 100%;
-  //   }
+      &:checked {
+        & ~ .checkbox__check-wrapper .checkbox__check-border {
+          border-color: #0077ff;
 
-  //   // &__icon {
-  //   //   display: none;
-  //   //   justify-content: center;
-  //   //   align-items: center;
-  //   //   width: 100%;
-  //   //   height: 100%;
-  //   //   svg {
-  //   //     width: 12px;
-  //   //     height: 8px;
-  //   //     fill: transparent;
-  //   //     stroke: #eee;
-  //   //   }
-  //   // }
-  //   &__content {
-  //     display: flex;
-  //     flex-direction: column;
-  //     @include mb(5px);
-  //   }
-  //   &__text {
-  //     font-family: Inter;
-  //     font-size: 12px;
-  //     font-weight: 500;
-  //     line-height: 20px;
-  //     text-overflow: ellipsis;
-  //     color: #292929;
-  //   }
-  // }
+          & .checkbox__check-mark {
+            display: flex;
+          }
+        }
+      }
+    }
+
+    &__check-wrapper {
+      // padding: 10px;
+      // margin-right: 12px;
+      // border-radius: 50%;
+    }
+
+    &__check-border {
+      flex: 0 0 20px;
+      position: relative;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #7e8d94;
+      border-radius: 4px;
+    }
+    &__check-mark {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .checkbox {
+    & input {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+
+      &:checked {
+        & ~ .checkbox__toggle-wrapper .checkbox__toggle-border {
+          border-color: #0077ff;
+          background-color: #0077ff;
+          justify-content: end;
+
+          & .checkbox__toggle-mark {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    &__toggle-wrapper {
+      margin-left: auto;
+    }
+    &__toggle-border {
+      display: flex;
+      width: 48px;
+      height: 24px;
+      border: 2px solid #7e8d94;
+      border-radius: 12px;
+      border-color: #c2c9d2;
+      background: #c2c9d2;
+      transition: all 0.3s ease 0s;
+    }
+    &__toggle-mark {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.7;
+      box-shadow: (0px 3px 1px rgba(0, 0, 0, 0.06));
+    }
+  }
 </style>
