@@ -79,7 +79,7 @@ v-else
       >
       </textarea>
       <input
-        v-if="opts.type === 'text' || opts.type === 'email' || opts.type === 'password'"
+        v-if="opts.type === 'text' || opts.type === 'email' || opts.type === 'password' || opts.type === 'number'"
         class="input__input"
         :pattern="opts.pattern"
         :type="opts.type"
@@ -291,6 +291,13 @@ v-else
     textarea::-webkit-scrollbar {
       display: none;
       /* for Chrome and Safari */
+    }
+    //for input[type="number"]
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+      /* display: none; <- Crashes Chrome on hover */
+      -webkit-appearance: none;
+      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
     }
   }
 </style>

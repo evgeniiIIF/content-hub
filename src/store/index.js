@@ -20,6 +20,10 @@ import marketsItems from './markets/marketsItems.js';
 import nomenclatureItems from './nomenclature/nomenclatureItems.js';
 // </nomenclature>
 
+// <product-cards>
+import productCardsItems from './product-cards/productCardsItems.js';
+// </product-cards>
+
 export default createStore({
   modules: {
     // <categories>
@@ -41,6 +45,10 @@ export default createStore({
     // <nomenclature>
     nomenclatureItems,
     // </nomenclature>
+
+    // <product-cards>
+    productCardsItems,
+    // </product-cards>
   },
   strict: process.env.NODE_ENV !== 'production',
 });

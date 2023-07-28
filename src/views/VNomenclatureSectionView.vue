@@ -378,6 +378,7 @@
     &__tag-list {
       display: flex;
       .tag-list {
+        gap: 4px;
         margin-right: 4px;
       }
     }

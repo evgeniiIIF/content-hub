@@ -14,6 +14,7 @@ const goToAnchor = {
 
         if (anchor) {
           const scrollTop = anchor.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+          console.log(scrollTop);
 
           window.scrollTo({ top: scrollTop, behavior: 'smooth' });
         }

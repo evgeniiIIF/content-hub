@@ -182,7 +182,7 @@
       </div>
     </div>
     <div class="markets__table">
-      <VNomenclatureTable />
+      <VProductCardsTable />
     </div>
     <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
@@ -198,14 +198,14 @@
   import VButton from '@/components/UI/VButton.vue';
   import VInput from '@/components/UI/VInput.vue';
   import VCardAddMarket from '@/components/cards/VCardAddMarket.vue';
-  import VNomenclatureTable from '@/components/modules/VNomenclatureTable.vue';
+  import VProductCardsTable from '@/components/modules/VProductCardsTable.vue';
   import VSelect from '@/components/UI/VSelect.vue';
   import VCheckbox from '@/components/UI/VCheckbox.vue';
   import VTagList from '@/components/UI/VTagList.vue';
 
   export default {
     name: 'VMarketsSectionView',
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VProductCardsTable, VSelect, VCheckbox, VTagList },
     data() {
       return {
         isOpenSlidingBlock: false,
@@ -268,8 +268,7 @@
       padding: 24px 0 16px 0;
     }
   }
-  .container {
-  }
+
   .top {
     &__row {
     }
@@ -378,6 +377,7 @@
     &__tag-list {
       display: flex;
       .tag-list {
+        gap: 4px;
         margin-right: 4px;
       }
     }

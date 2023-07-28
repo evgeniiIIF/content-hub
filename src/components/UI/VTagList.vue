@@ -81,8 +81,6 @@ prefix="Бренд :"
     // @include mr(4px);
     gap: 8px;
 
-    width: 100%;
-
     &__item {
       display: flex;
       align-items: center;

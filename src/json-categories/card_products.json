@@ -1,0 +1,139 @@
+{
+  "success": {
+    "value": true
+  },
+  "response": {
+    "cardProducts": {
+      "data": [
+        {
+          "id": 1,
+          "portal_nomenclature_id": 417,
+          "category": { "id": 2, "name": "\u0424\u0438\u043b\u044c\u0442\u0440 \u043c\u0430\u0441\u043b\u044f\u043d\u044b\u0439" },
+          "brand_name": "FEBI",
+          "article": "26704",
+          "price": 782.32,
+          "old_price": null,
+          "markets": [],
+          "creator": { "name": "Echo Zakhar", "email": "echo.zahar@gmail.com" },
+          "editor": null,
+          "created_at": "20.07.2023",
+          "last_updated": "25.07.2023"
+        },
+        {
+          "id": 2,
+          "portal_nomenclature_id": 419,
+          "category": { "id": 3, "name": "\u0424\u0438\u043b\u044c\u0442\u0440 \u0442\u043e\u043f\u043b\u0438\u0432\u043d\u044b\u0439" },
+          "brand_name": "FEBI",
+          "article": "27155",
+          "price": 348.5,
+          "old_price": null,
+          "markets": [],
+          "creator": { "name": "Echo Zakhar", "email": "echo.zahar@gmail.com" },
+          "editor": null,
+          "created_at": "22.07.2023",
+          "last_updated": "22.07.2023"
+        },
+        {
+          "id": 3,
+          "portal_nomenclature_id": 420,
+          "category": { "id": 3, "name": "\u0424\u0438\u043b\u044c\u0442\u0440 \u0442\u043e\u043f\u043b\u0438\u0432\u043d\u044b\u0439" },
+          "brand_name": "FEBI",
+          "article": "24661",
+          "price": 347.94,
+          "old_price": null,
+          "markets": [],
+          "creator": { "name": "Echo Zakhar", "email": "echo.zahar@gmail.com" },
+          "editor": null,
+          "created_at": "22.07.2023",
+          "last_updated": "22.07.2023"
+        },
+        {
+          "id": 4,
+          "portal_nomenclature_id": 430,
+          "category": { "id": 3, "name": "\u0424\u0438\u043b\u044c\u0442\u0440 \u0442\u043e\u043f\u043b\u0438\u0432\u043d\u044b\u0439" },
+          "brand_name": "FEBI",
+          "article": "24538",
+          "price": 1079.36,
+          "old_price": null,
+          "markets": [],
+          "creator": { "name": "Echo Zakhar", "email": "echo.zahar@gmail.com" },
+          "editor": null,
+          "created_at": "22.07.2023",
+          "last_updated": "22.07.2023"
+        },
+        {
+          "id": 5,
+          "portal_nomenclature_id": 979,
+          "category": { "id": 3, "name": "\u0424\u0438\u043b\u044c\u0442\u0440 \u0442\u043e\u043f\u043b\u0438\u0432\u043d\u044b\u0439" },
+          "brand_name": "BOSCH",
+          "article": "0451203154",
+          "price": 429,
+          "old_price": null,
+          "markets": [],
+          "creator": { "name": "Echo Zakhar", "email": "echo.zahar@gmail.com" },
+          "editor": null,
+          "created_at": "22.07.2023",
+          "last_updated": "22.07.2023"
+        },
+        {
+          "id": 6,
+          "portal_nomenclature_id": 994,
+          "category": { "id": 3, "name": "\u0424\u0438\u043b\u044c\u0442\u0440 \u0442\u043e\u043f\u043b\u0438\u0432\u043d\u044b\u0439" },
+          "brand_name": "MANN-FILTER",
+          "article": "W71221",
+          "price": 512.4,
+          "old_price": null,
+          "markets": [],
+          "creator": { "name": "Echo Zakhar", "email": "echo.zahar@gmail.com" },
+          "editor": null,
+          "created_at": "22.07.2023",
+          "last_updated": "22.07.2023"
+        },
+        {
+          "id": 7,
+          "portal_nomenclature_id": 1009,
+          "category": { "id": 3, "name": "\u0424\u0438\u043b\u044c\u0442\u0440 \u0442\u043e\u043f\u043b\u0438\u0432\u043d\u044b\u0439" },
+          "brand_name": "KNECHT",
+          "article": "OX138D",
+          "price": 155,
+          "old_price": null,
+          "markets": [],
+          "creator": { "name": "Echo Zakhar", "email": "echo.zahar@gmail.com" },
+          "editor": null,
+          "created_at": "22.07.2023",
+          "last_updated": "22.07.2023"
+        }
+      ],
+      "links": { "first": "http://apihub.localhost/api/v1/cardProducts?page=1", "last": "http://apihub.localhost/api/v1/cardProducts?page=1", "prev": null, "next": null },
+      "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+          { "url": null, "label": "&laquo; Previous", "active": false },
+          { "url": "http://apihub.localhost/api/v1/cardProducts?page=1", "label": "1", "active": true },
+          { "url": null, "label": "Next &raquo;", "active": false }
+        ],
+        "path": "http://apihub.localhost/api/v1/cardProducts",
+        "per_page": 200,
+        "to": 7,
+        "total": 7
+      }
+    },
+    "brands": [{ "name": "FEBI" }, { "name": "BOSCH" }, { "name": "MANN-FILTER" }, { "name": "KNECHT" }],
+    "statuses": [
+      { "name": "\u043d\u043e\u0432\u044b\u0439", "value": 0 },
+      { "name": "\u0432 \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435", "value": 1 },
+      { "name": "\u0433\u043e\u0442\u043e\u0432", "value": 2 },
+      { "name": "\u043e\u0448\u0438\u0431\u043a\u0438", "value": 3 },
+      { "name": "\u0440\u0430\u0437\u043c\u0435\u0449\u0435\u043d \u0441 \u043e\u0448\u0438\u0431\u043a\u0430\u043c\u0438", "value": 4 },
+      { "name": "\u0440\u0430\u0437\u043c\u0435\u0449\u0435\u043d", "value": 5 },
+      { "name": "\u043f\u043e\u0432\u0442\u043e\u0440\u043d\u043e \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c", "value": 6 },
+      { "name": "\u0443\u0434\u0430\u043b\u0435\u043d \u0441 \u043f\u043b\u043e\u0449\u0430\u0434\u043a\u0438", "value": 7 },
+      { "name": "\u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u0443\u0435\u0442\u0441\u044f", "value": 8 }
+    ]
+  },
+  "message": {
+    "text": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e {count()} \u0437\u0430\u043f\u0438\u0441\u0435\u0439"
+  }
+}
