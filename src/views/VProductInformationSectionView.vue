@@ -38,6 +38,18 @@
           >
             <VDimensionsWeight />
           </div>
+          <div
+            class="product-information__warranty-documents"
+            id="warranty-documents"
+          >
+            <VWarrantyDocuments />
+          </div>
+          <div
+            class="product-information__warranty-documents"
+            id="markdown"
+          >
+            <VMarkdownBlock />
+          </div>
         </div>
         <div class="product-information__nav nav-product-information">
           <div class="nav-product-information__body">
@@ -51,11 +63,6 @@
         </div>
       </div>
     </div>
-    <div
-      class="nono"
-      id="nono"
-      style="height: 500px; background: red"
-    ></div>
   </section>
 </template>
 
@@ -73,6 +80,8 @@
   import VRadioButtonList from '@/components/UI/VRadioButtonList.vue';
   import VInfoProductBlock from '@/components/modules/VInfoProductBlock.vue';
   import VDimensionsWeight from '@/components/modules/VDimensionsWeight.vue';
+  import VWarrantyDocuments from '@/components/modules/VWarrantyDocuments.vue';
+  import VMarkdownBlock from '@/components/modules/VMarkdownBlock.vue';
 
   import goToAnchorMix from '@/mixins/goToAnchor';
 
@@ -80,7 +89,7 @@
     name: 'VProductInformationSectionView',
     mixins: [goToAnchorMix],
 
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VTextEditorQuillPlugin, VNavVertical, VRadioButtonList, VInfoProductBlock, VDimensionsWeight },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VTextEditorQuillPlugin, VNavVertical, VRadioButtonList, VInfoProductBlock, VDimensionsWeight, VWarrantyDocuments, VMarkdownBlock },
     data() {
       return {};
     },
@@ -224,7 +233,7 @@
   .item-info-product {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     padding: 16px;
     border-bottom: 1px solid #ebedf1;
 

@@ -5,7 +5,7 @@ const goToAnchor = {
   methods: {
     goToAnchor(anchorId) {
       let computedHeaderHeight = parseInt(this.getComputedHeaderHeight());
-      computedHeaderHeight = computedHeaderHeight - 2;
+      computedHeaderHeight = computedHeaderHeight + 16;
 
       scrollToAnchor(anchorId, computedHeaderHeight);
 

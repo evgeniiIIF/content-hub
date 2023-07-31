@@ -1,15 +1,15 @@
 <!-- <VHeader v-if="$route.meta.showHeader !== false"/> -->
 
 <template>
-  <div class="wrapper">
-    <VHeader v-if="isVisibleVHeader" />
+  <!-- <div class="wrapper"> -->
+  <VHeader v-if="isVisibleVHeader" />
 
-    <VMain>
-      <RouterView />
-    </VMain>
+  <VMain>
+    <RouterView />
+  </VMain>
 
-    <VFooter v-if="isVisibleVFooter" />
-    <!-- <Transition name="fade">
+  <VFooter v-if="isVisibleVFooter" />
+  <!-- <Transition name="fade">
       <VModalWindowUIFC
         v-if="showDialog"
         :showDialog="showDialog"
@@ -36,7 +36,7 @@
         <VCardDialogPrivacy @onHideDialog="onHideDialog" />
       </VModalWindowUIFC>
     </Transition> -->
-  </div>
+  <!-- </div> -->
 </template>
 <script>
   import { mapGetters, mapActions } from 'vuex';
@@ -74,6 +74,7 @@
 <style lang="scss">
   #app {
     height: 100%;
+    min-height: 100%;
   }
 
   .fade-enter-active {

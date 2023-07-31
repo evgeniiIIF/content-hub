@@ -11,22 +11,20 @@
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M12 10C11.4477 10 11 10.4477 11 11C11 11.5523 11.4477 12 12 12H16C16.5523 12 17 11.5523 17 11C17 10.4477 16.5523 10 16 10H12Z"
-              fill="#0077FF"
-            />
-            <path
-              d="M11 8C11 7.44772 11.4477 7 12 7H16C16.5523 7 17 7.44772 17 8C17 8.55228 16.5523 9 16 9H12C11.4477 9 11 8.55228 11 8Z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M11.1222 11.8606L12.0037 12.7421C12.3799 13.1183 12.7715 13.3744 13.1784 13.5106C13.5876 13.6489 13.9948 13.6647 14.4 13.5577C14.8075 13.453 15.1897 13.2222 15.5467 12.8652C15.8865 12.5254 16.1146 12.1503 16.2312 11.74C16.3477 11.3296 16.3442 10.9124 16.2206 10.4885C16.0992 10.0667 15.8471 9.6644 15.4642 9.28154L13.5811 7.39841L10.9848 9.99473L10.3103 9.32027L9.44611 10.1845L10.1206 10.8589L9.81772 11.1618L9.14326 10.4873L8.27905 11.3515L8.95351 12.026L8.20379 12.7757L9.20546 13.7774L9.95518 13.0277L11.0203 14.0928L11.8845 13.2286L10.8194 12.1634L11.1222 11.8606ZM11.9864 10.9964L12.8445 11.8545C13.0515 12.0615 13.252 12.1905 13.4458 12.2415C13.6418 12.2948 13.8305 12.2865 14.0117 12.2165C14.1954 12.1442 14.3685 12.0267 14.531 11.8642C14.691 11.7042 14.8075 11.5276 14.8803 11.3346C14.9579 11.1413 14.976 10.9428 14.9349 10.7391C14.8984 10.5352 14.7866 10.3398 14.5997 10.1528L13.7149 9.26798L11.9864 10.9964Z"
               fill="#0077FF"
             />
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
-              d="M5 3C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H5ZM7 5H5V19H7L7 5ZM9 19L9 5H19V19H9Z"
+              d="M21.0959 11.7559L20.9973 2.97464L12.216 2.87598L2.5467 12.5452C1.75657 13.3354 1.75657 14.6164 2.5467 15.4066L8.56533 21.4252C9.35546 22.2153 10.6365 22.2153 11.4266 21.4252L21.0959 11.7559ZM18.9964 4.97554L19.0632 10.9273L9.99599 19.9945L3.97736 13.9759L13.0446 4.90867L18.9964 4.97554Z"
               fill="#0077FF"
             />
           </svg>
         </span>
-        <h3 class="head-info-product__title-text">Информация о товаре</h3>
+        <h3 class="head-info-product__title-text">Уценка</h3>
       </div>
       <div class="head-info-product__checkbox">
         <VCheckbox
@@ -68,7 +66,6 @@
             v-if="item.toolOpts.select === true"
             :opts="item.toolOpts"
           />
-          <VTextEditorQuillPlugin v-else-if="item.toolOpts.textEditor === true" />
           <VRadioButtonList
             v-else-if="item.toolOpts.radio === true"
             :items="item.toolOpts.radioButtonsItems"
@@ -119,7 +116,7 @@
   import VRadioButtonList from '@/components/UI/VRadioButtonList.vue';
 
   export default {
-    name: 'VInfoProductBlock',
+    name: 'VMarkdownBlock',
     components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VTextEditorQuillPlugin, VNavVertical, VRadioButtonList },
     data() {
       return {
@@ -127,83 +124,32 @@
 
         infoProductItems: [
           {
-            name: 'Артикул товара',
-            toolOpts: {
-              type: 'text',
-              name: 'product-article',
-              value: '',
-              placeholder: 'product-article',
-            },
-          },
-          {
-            name: 'Категория',
+            name: 'Тип уценки',
             toolOpts: {
               select: true,
               type: 'text',
-              icon: true,
-              name: 'product-category',
+              name: 'placeholder',
               value: '',
-              placeholder: 'product-category',
+              placeholder: 'placeholder',
             },
           },
           {
-            name: 'Название',
+            name: 'Внешний вид',
+            toolOpts: {
+              select: true,
+              type: 'text',
+              name: 'placeholder',
+              value: '',
+              placeholder: 'placeholder',
+            },
+          },
+          {
+            name: 'Описание состояния',
             toolOpts: {
               type: 'textarea',
-              // icon: true,
-              name: 'product-name',
+              name: 'placeholder',
               value: '',
-              placeholder: 'product-name',
-            },
-          },
-          {
-            name: 'Штрихкод',
-            toolOpts: {
-              type: 'text',
-              name: 'product-name',
-              value: '',
-              placeholder: 'product-name',
-            },
-          },
-          {
-            name: 'НДС',
-            toolOpts: {
-              radio: true,
-
-              radioButtonsItems: ['10%', '20%', 'Не облагается'],
-            },
-          },
-          {
-            name: 'Cрок годности, сроки службы, гарантийные сроки',
-            toolOpts: {
-              type: 'text',
-              name: 'product-expiration-dates',
-              value: '',
-              placeholder: 'product-expiration-dates',
-            },
-          },
-          {
-            name: 'Наименование бренда',
-            toolOpts: {
-              type: 'text',
-              name: 'brand-name',
-              value: '',
-              placeholder: 'brand-name',
-            },
-          },
-          {
-            name: 'Наименование бренда',
-            toolOpts: {
-              tagList: true,
-              tagListItems: ['ABSEL', 'Petronas', 'LiquiMoly', 'BOSCH', 'Varta'],
-            },
-          },
-
-          {
-            name: 'Аннотация',
-            column: true,
-            toolOpts: {
-              textEditor: true,
+              placeholder: 'placeholder',
             },
           },
         ],

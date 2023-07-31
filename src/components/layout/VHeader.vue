@@ -94,6 +94,8 @@
 </template>
 
 <script>
+  import mixSetMarginTopOfHeaderHeight from '@/mixins/mixSetMarginTopOfHeaderHeight';
+
   import { mapGetters, mapActions } from 'vuex';
 
   // components
@@ -103,6 +105,7 @@
 
   export default {
     name: 'VHeader',
+    mixins: [mixSetMarginTopOfHeaderHeight],
 
     props: {},
     components: {
@@ -208,7 +211,7 @@
   $hov: #00a19c;
 
   .header {
-    position: sticky;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
