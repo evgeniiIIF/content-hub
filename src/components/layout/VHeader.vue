@@ -94,7 +94,7 @@
 </template>
 
 <script>
-  import mixSetMarginTopOfHeaderHeight from '@/mixins/mixSetMarginTopOfHeaderHeight';
+  // import mixSetMarginTopOfHeaderHeight from '@/mixins/mixSetMarginTopOfHeaderHeight';
 
   import { mapGetters, mapActions } from 'vuex';
 
@@ -105,7 +105,7 @@
 
   export default {
     name: 'VHeader',
-    mixins: [mixSetMarginTopOfHeaderHeight],
+    // mixins: [mixSetMarginTopOfHeaderHeight],
 
     props: {},
     components: {
