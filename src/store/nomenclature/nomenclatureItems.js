@@ -22,12 +22,11 @@ export default {
   },
   actions: {
     async GET_ITEMS_NOMENCLATURE(store) {
-      // const url = 'http://api.hub.absit.ru/api/v1/nomenclature';
-      const url = 'http://localhost:3000/data';
+      const url = 'http://api.hub.absit.ru/api/v1/nomenclature';
+      // const url = 'http://localhost:3000/data';
+      console.log(store.getters.getTokenFromLogin);
 
-      const data = {
-        paginate: 25,
-      };
+      const data = {};
 
       const config = {
         headers: {
@@ -39,9 +38,9 @@ export default {
 
       // console.log(store.getters.getTokenFromLogin + '  tockenfrom login');
 
-      await axios.get(url, data, config).then((response) => {
+      await axios.get(url, config).then((response) => {
         const data = response.data;
-        const items = data;
+        const items = data.response.nomenclature.data;
         // const items = data.data;
         store.commit('setItems', items);
         console.log(items);
