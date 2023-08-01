@@ -115,12 +115,11 @@
   import VCheckbox from '@/components/UI/VCheckbox.vue';
   import VTagList from '@/components/UI/VTagList.vue';
   import VTextEditorQuillPlugin from '@/components/UI-plugins/VTextEditorQuillPlugin.vue';
-  import VNavVertical from '@/components/UI/VNavVertical.vue';
   import VRadioButtonList from '@/components/UI/VRadioButtonList.vue';
 
   export default {
     name: 'VInfoProductBlock',
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VTextEditorQuillPlugin, VNavVertical, VRadioButtonList },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VTextEditorQuillPlugin, VRadioButtonList },
     data() {
       return {
         currentPicked: '10%',

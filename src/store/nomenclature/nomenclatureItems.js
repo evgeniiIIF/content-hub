@@ -22,11 +22,10 @@ export default {
   },
   actions: {
     async GET_ITEMS_NOMENCLATURE(store) {
-      const url = 'http://api.hub.absit.ru/api/v1/nomenclature';
+      let url = 'http://api.hub.absit.ru/api/v1/nomenclature';
+      url = url + '?paginate=25';
       // const url = 'http://localhost:3000/data';
       console.log(store.getters.getTokenFromLogin);
-
-      const data = {};
 
       const config = {
         headers: {

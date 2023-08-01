@@ -26,30 +26,19 @@
           </div>
         </div>
         <div class="product-information__content">
-          <div
-            class="product-information__info"
-            id="product-info"
-          >
-            <VInfoProductBlock />
+          <div class="top">
+            <div class="top__row">
+              <div
+                v-for="(value, key) in topButtons"
+                class="top__button"
+                :class="{ 'top__button--active': currentMarketName === key }"
+                @click="setCurrentMarketName(key)"
+              >
+                <VButton>{{ key }}</VButton>
+              </div>
+            </div>
           </div>
-          <div
-            class="product-information__dimension-weight"
-            id="dimensions-weight"
-          >
-            <VDimensionsWeight />
-          </div>
-          <div
-            class="product-information__warranty-documents"
-            id="warranty-documents"
-          >
-            <VWarrantyDocuments />
-          </div>
-          <div
-            class="product-information__warranty-documents"
-            id="markdown"
-          >
-            <VMarkdownBlock />
-          </div>
+          <component :is="currentMarketTab" />
         </div>
         <div class="product-information__nav nav-product-information">
           <div class="nav-product-information__body">
@@ -67,21 +56,9 @@
 </template>
 
 <script>
-  import VSlidingBlockSlotUIFC from '@/components/UI-FC/VSlidingBlockSlotUIFC.vue';
   import VButton from '@/components/UI/VButton.vue';
-  import VInput from '@/components/UI/VInput.vue';
-  import VCardAddMarket from '@/components/cards/VCardAddMarket.vue';
-  import VNomenclatureTable from '@/components/modules/VNomenclatureTable.vue';
-  import VSelect from '@/components/UI/VSelect.vue';
-  import VCheckbox from '@/components/UI/VCheckbox.vue';
-  import VTagList from '@/components/UI/VTagList.vue';
-  import VTextEditorQuillPlugin from '@/components/UI-plugins/VTextEditorQuillPlugin.vue';
   import VNavVertical from '@/components/UI/VNavVertical.vue';
-  import VRadioButtonList from '@/components/UI/VRadioButtonList.vue';
-  import VInfoProductBlock from '@/components/modules/VInfoProductBlock.vue';
-  import VDimensionsWeight from '@/components/modules/VDimensionsWeight.vue';
-  import VWarrantyDocuments from '@/components/modules/VWarrantyDocuments.vue';
-  import VMarkdownBlock from '@/components/modules/VMarkdownBlock.vue';
+  import VOzonInfoTab from '@/components/modules/VOzonInfoTab.vue';
 
   import goToAnchorMix from '@/mixins/goToAnchor';
 
@@ -89,13 +66,29 @@
     name: 'VProductInformationSectionView',
     mixins: [goToAnchorMix],
 
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VTextEditorQuillPlugin, VNavVertical, VRadioButtonList, VInfoProductBlock, VDimensionsWeight, VWarrantyDocuments, VMarkdownBlock },
+    components: { VButton, VNavVertical, VOzonInfoTab },
     data() {
-      return {};
+      return {
+        currentMarketName: 'Ozon',
+
+        topButtons: {
+          Ozon: 'VOzonInfoTab',
+          Aliexpress: 'VAliexpressInfoTab',
+          Яндекс: 'VYandexInfoTab',
+        },
+      };
     },
     methods: {
       onGoToAnchor(e) {
         this.goToAnchor(e);
+      },
+      setCurrentMarketName(key) {
+        this.currentMarketName = key;
+      },
+    },
+    computed: {
+      currentMarketTab() {
+        return this.topButtons[this.currentMarketName];
       },
     },
   };
@@ -103,12 +96,41 @@
 
 <style lang="scss">
   .product-information {
-    // .container {
-    //   max-width: none;
-    //   margin-left: 0;
-    //   margin-right: max(20px, (100% - 1880px)/2);
-    //   padding: 0;
-    // }
+    .top {
+      display: inline-block;
+      padding: 3px;
+      border-radius: 4px;
+      background: var(--white, #fff);
+
+      &__row {
+        display: flex;
+        justify-content: start;
+        margin-bottom: 0;
+        @include mr(2px);
+      }
+
+      &__button {
+        .button {
+          padding: 4px 16px;
+          /* Body_L */
+          font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px; /* 171.429% */
+
+          border-color: transparent;
+          background: transparent;
+          color: var(--black, #292929);
+        }
+      }
+      &__button--active {
+        .button {
+          background: var(--blue, #07f);
+          color: #fff;
+        }
+      }
+    }
 
     &__body {
       display: flex;
