@@ -1,4 +1,5 @@
 import axios from 'axios';
+import localCategoriesItems from './localCategoriesItems';
 
 export default {
   namespaced: true,
@@ -10,7 +11,10 @@ export default {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
       return rootGetters['login/getToken'];
     },
-    items(state) {
+    // getItems(state, getters, rootState, rootGetters) {
+    //   return rootGetters['localCategoriesItems/getOzonCategories'];
+    // },
+    getItems(state) {
       return state.items;
     },
   },
@@ -28,7 +32,6 @@ export default {
           Accept: 'application/json',
         },
       };
-
       await axios.get('http://api.hub.absit.ru/api/v1/categories/ozonCategories', config).then((response) => {
         const data = response.data;
         const items = data;

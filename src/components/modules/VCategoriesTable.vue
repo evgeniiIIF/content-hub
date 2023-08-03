@@ -47,6 +47,7 @@
           >
             <div class="item-category__icon">
               <svg
+                v-if="itemCategoryItemL1.children_count > 0"
                 class="item-category__icon-plus"
                 width="20"
                 height="20"
@@ -62,6 +63,7 @@
                 />
               </svg>
               <svg
+                v-if="itemCategoryItemL1.children_count > 0"
                 class="item-category__icon-minus"
                 width="20"
                 height="20"
@@ -119,7 +121,11 @@
                     </button>
                   </template>
                   <template #menu>
-                    <VItemCategotyDropdownList @showSlidingBlock="showSlidingBlock($event, itemCategoryIndexL1)" />
+                    <VItemCategotyDropdownList
+                      :childrenCount="itemCategoryItemL1.children_count"
+                      @onDeleteCategory="deleteCategory($event, itemCategoryItemL1)"
+                      @showSlidingBlock="showSlidingBlock($event, itemCategoryItemL1)"
+                    />
                   </template>
                 </VDropdovnSlots>
               </div>
@@ -363,7 +369,7 @@
                   value="Constantionpol"
                 />
               </div>
-              <div class="item-category__products">{{ itemL2.children_count }}</div>
+              <div class="item-category__products">{{ itemCategoryItemL2.card_products_count }}</div>
             </template>
             <div
               class="item-category__buttons"
@@ -383,7 +389,11 @@
                     </button>
                   </template>
                   <template #menu>
-                    <VItemCategotyDropdownList @showSlidingBlock="showSlidingBlock($event, itemL1, itemL2)" />
+                    <VItemCategotyDropdownList
+                      :childrenCount="itemCategoryItemL2.children_count"
+                      @showSlidingBlock="showSlidingBlock($event, itemL1, itemCategoryItemL2)"
+                      @onDeleteCategory="deleteCategory($event, itemCategoryItemL2)"
+                    />
                   </template>
                 </VDropdovnSlots>
               </div>
@@ -578,7 +588,7 @@
             </div>
             <div class="item-category__wildberries">-</div>
             <div class="item-category__yandex">-</div>
-            <div class="item-category__products">{{ itemCategoryItemL3.children_count }}</div>
+            <div class="item-category__products">{{ itemCategoryItemL3.card_products_count }}</div>
             <div
               class="item-category__buttons"
               @click.stop
@@ -723,10 +733,10 @@
         categoriesItems: 'items',
       }),
       ...mapGetters('categoriesOzon', {
-        ozonSelectItems: 'items',
+        ozonSelectItems: 'getItems',
       }),
       ...mapGetters('categoriesAli', {
-        AliSelectItems: 'items',
+        aliSelectItems: 'getItems',
       }),
       ...mapGetters('updateCategoryName', {
         itemCategoryName_PENDING: 'pending',
@@ -741,9 +751,9 @@
       },
       filteredSelectItemsAli() {
         if (this.filterValueSelect) {
-          return this.filterRecursively(this.AliSelectItems, this.filterValueSelect);
+          return this.filterRecursively(this.aliSelectItems, this.filterValueSelect);
         } else {
-          return this.AliSelectItems;
+          return this.aliSelectItems;
         }
       },
     },
@@ -758,7 +768,8 @@
 
       async deleteCategory(e, itemCategory) {
         // console.log('DELETE_CATEGORY', itemCategory);
-        this.DELETE_CATEGORY(itemCategory);
+        await this.DELETE_CATEGORY(itemCategory);
+        this.GET_ITEMS_CATEGORIES();
       },
 
       async onUpdateItemCategoryName(e, item) {
@@ -768,6 +779,8 @@
         };
         await this.UPDATE_CATEGORY_NAME(data);
         await this.GET_ITEMS_CATEGORIES();
+        // console.log('update market categories');
+
         this.RESET_PENDING();
       },
 
@@ -833,10 +846,10 @@
         } else {
           this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
         }
-        console.log(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3);
-        if (this.ozonSelectItems.length === 0) {
-          await this.GET_ITEMS_SELECT_OZON();
-        }
+        // console.log(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3);
+        // if (this.ozonSelectItems.length === 0) {
+        //   await this.GET_ITEMS_SELECT_OZON();
+        // }
       },
 
       async loadAliSelectItems(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3 = '') {
@@ -845,10 +858,10 @@
         } else {
           this.currentSelect = this.$refs[`${mapketplaceCategoryName}-index(${itemCategoryIndexL1}>${itemCategoryIndexL2})`];
         }
-        if (this.AliSelectItems.length === 0) {
-          await this.GET_ITEMS_SELECT_ALI();
-          // console.log(this.AliSelectItems);
-        }
+        // if (this.aliSelectItems.length === 0) {
+        //   await this.GET_ITEMS_SELECT_ALI();
+        //   // console.log(this.AliSelectItems);
+        // }
       },
 
       async onSelectMarketplaceCategory(mapketplaceCategoryName, itemMarketplace, itemCategory) {
@@ -878,6 +891,8 @@
           this.RESET_SUCCESS();
           this.RESET_MESSAGE();
         }, 3000);
+        console.log('select market categories');
+
         await this.GET_ITEMS_CATEGORIES();
 
         // console.log(data);
@@ -929,12 +944,15 @@
       showSlidingBlock(e, itemL1 = null, itemL2 = null) {
         const textButton = e.currentTarget.querySelector('.button__text').textContent;
         this.parentItemData.names = [];
+        // console.log(itemL1, itemL2);
 
         if (itemL1 !== null) {
           this.parentItemData.names.push(itemL1.name);
+          this.parentItemData.id = itemL1.id;
         }
         if (itemL2 !== null) {
           this.parentItemData.names.push(itemL2.name);
+          this.parentItemData.id = itemL2.id;
         }
 
         this.showVCardAddNestedCategory = textButton === 'Добавить субкатегорию';
@@ -957,7 +975,9 @@
     async mounted() {
       await this.GET_ITEMS_CATEGORIES();
       this.mixDropdownMenuFn();
-      // await this.GET_ITEMS_SELECT_OZON();
+
+      this.GET_ITEMS_SELECT_OZON();
+      this.GET_ITEMS_SELECT_ALI();
     },
   };
 </script>
@@ -1018,6 +1038,7 @@
     }
 
     &__body {
+      background: #fff;
     }
 
     &__item {
@@ -1047,7 +1068,8 @@
       }
       .dropdown__menu {
         left: auto;
-        right: 200%;
+        right: 120%;
+        top: 95%;
       }
       .checkbox-list__item {
         // padding: 12px 8px;

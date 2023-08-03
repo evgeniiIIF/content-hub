@@ -48,7 +48,7 @@
     </div>
     <div
       class="success success--add-category"
-      v-if="isAddCategorySuccess || isSelectMarketplaceCategirySuccess || isCategoryDeleteSuccess"
+      v-if="isAddCategorySuccess || isAddNestedCategorySuccess || isSelectMarketplaceCategirySuccess || isCategoryDeleteSuccess"
     >
       <div class="success__message">
         <span class="success__icon"
@@ -155,6 +155,10 @@
         isAddCategorySuccess: 'success',
         messageAddCategory: 'getMessage',
       }),
+      ...mapGetters('addNestedCategory', {
+        isAddNestedCategorySuccess: 'success',
+        messageAddNestedCategory: 'getMessage',
+      }),
       ...mapGetters('selectMarketplaceCategiry', {
         isSelectMarketplaceCategirySuccess: 'success',
         messageSelectMarketplaceCategiry: 'getMessage',
@@ -165,8 +169,8 @@
       }),
 
       currentMessage() {
-        console.log(this.messageSelectMarketplaceCategiry);
-        return this.messageSelectMarketplaceCategiry || this.messageAddCategory || this.messageCategoryDelete;
+        // console.log(this.messageSelectMarketplaceCategiry);
+        return this.messageSelectMarketplaceCategiry || this.messageAddCategory || this.messageAddNestedCategory || this.messageCategoryDelete;
       },
     },
 

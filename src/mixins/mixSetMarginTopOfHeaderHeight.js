@@ -9,14 +9,14 @@ const mixSetMarginTopOfHeaderHeight = {
       // Обработка изменений URL
       // console.log('from:', from.path);
       // console.log('to:', to.path);
-      console.log('set Unser');
+      // console.log('set Unser');
 
       if (to.path === '/login') {
         this.unsetMarginTop();
-        console.log('UNSsetMT');
+        // console.log('UNSsetMT');
       } else {
         this.setMarginTop();
-        console.log('setMT');
+        // console.log('setMT');
       }
     },
     // isMobile() {

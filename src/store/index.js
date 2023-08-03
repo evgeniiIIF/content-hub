@@ -3,6 +3,8 @@ import { createStore } from 'vuex';
 // <categories>
 import localCategoriesItems from './modules/localCategoriesItems.js';
 import addCategory from './modules/addCategory.js';
+import addNestedCategory from './modules/addNestedCategory.js';
+
 import categoriesOzon from './modules/categoriesOzon.js';
 import categoriesAli from './modules/categoriesAli.js';
 import login from './modules/login.js';
@@ -33,6 +35,7 @@ export default createStore({
     login,
     user,
     addCategory,
+    addNestedCategory,
     updateCategoryName,
     selectMarketplaceCategiry,
     deleteCategory,

@@ -8,6 +8,7 @@
   <component
     :class="classes"
     :is="tag"
+    :type="type"
   >
     <div
       v-if="pending"
@@ -23,6 +24,10 @@
   export default {
     props: {
       tag: {
+        type: String,
+        default: 'button',
+      },
+      type: {
         type: String,
         default: 'button',
       },

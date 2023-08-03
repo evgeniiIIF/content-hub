@@ -21,6 +21,23 @@
         <span class="button__text">Добавить субкатегорию</span>
       </VButton>
     </li>
+    <li
+      class="list__item"
+      v-if="showDeleteButton"
+    >
+      <div
+        class="list__link"
+        @click="$emit('onDeleteCategory')"
+      >
+        <img
+          class="list__image"
+          src="@/assets/img/static/buttons-icon/Trash_Empty_20px.svg"
+          alt="trash"
+        />
+        <span class="list__text">Удалить</span>
+      </div>
+    </li>
+
     <!-- <li class="list__item">
       <RouterLink to="/">
         <VButton>
@@ -62,9 +79,20 @@
   import VButton from '@/components/UI/VButton.vue';
   export default {
     name: 'VItemCategotyDropdownList',
-    emits: ['showSlidingBlock'],
+    props: {
+      childrenCount: {
+        type: Number,
+        default: 0,
+      },
+    },
+    emits: ['showSlidingBlock', 'onDeleteCategory'],
     components: {
       VButton,
+    },
+    computed: {
+      showDeleteButton() {
+        return this.childrenCount === 0;
+      },
     },
   };
 </script>

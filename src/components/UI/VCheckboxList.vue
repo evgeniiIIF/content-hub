@@ -79,11 +79,20 @@ import VCheckbox from './VCheckbox.vue';
     methods: {
       onChange(e) {
         this.currentIsChecked = e;
+        // localStorage.setItem('currentisCheckedSaved', JSON.stringify(this.currentIsChecked));
         this.$emit('onChange', this.currentIsChecked);
       },
     },
     mounted() {
-      this.currentIsChecked = this.isChecked;
+      // const savedIsChecked = JSON.parse(localStorage.getItem('currentisCheckedSaved'));
+
+      // if (savedIsChecked) {
+      //   this.currentIsChecked = savedIsChecked;
+      // } else {
+      //   this.currentIsChecked = this.isChecked;
+      // }
+
+      console.log(this.currentIsChecked);
     },
     components: { VCheckbox },
   };

@@ -13,6 +13,7 @@
       <h3 class="card-add-category__title">Добавить категорию</h3>
       <form
         class="card-add-category__body-content"
+        ref="jsAddCategoryForm"
         @submit.prevent="onSubmit"
       >
         <div class="card-add-category__inputs">
@@ -22,7 +23,7 @@
                 <ul class="card-add-category__list">
                   <li
                     class="card-add-category__item"
-                    v-for="(itemSelectMenu, index) in inputs[0].items"
+                    v-for="(itemSelectMenu, index) in categoriesItems"
                     :key="itemSelectMenu.name"
                     @click.stop="selectionItem(itemSelectMenu)"
                   >
@@ -85,10 +86,15 @@
         </div>
         <div class="card-add-category__buttons">
           <div class="card-add-category__button--bd">
-            <VButton>Отменить</VButton>
+            <VButton @click="formReset">Отменить</VButton>
           </div>
           <div class="card-add-category__button--bg">
-            <VButton :pending="isAddCategoryPending">Сохранить изменения</VButton>
+            <VButton
+              :pending="isAddCategoryPending"
+              type="submit"
+            >
+              Сохранить изменения
+            </VButton>
           </div>
         </div>
       </form>
@@ -162,7 +168,7 @@
           // },
           {
             type: 'textarea',
-            value: 'Розничный магазин автомобильных запчастей. Специализация – масла и технические жидкости и многое другое',
+            value: '',
             label: 'Описание /заметки',
             name: 'description',
             placeholder: 'Выберите категорию из списка',
@@ -178,27 +184,32 @@
         isAddCategoryPending: 'pending',
       }),
     },
-    watch: {
-      // selectMenuItems(oldValue, newValue) {
-      //   this.selectMenuItems = newValue;
-      //   console.log(newValue);
-      //   this.inputs[0].items = newValue;
-      // },
-    },
     methods: {
       ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
 
-      async onSubmit() {
-        // console.log(this.dataForCreateCategory);
-        await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
+      formReset() {
+        const form = this.$refs.jsAddCategoryForm;
+        const textarea = form.querySelector('textarea');
+
+        form.reset();
+        textarea.value = '';
+
+        this.dataForCreateCategory = {
+          id: 0,
+          name: '',
+          description: '',
+        };
+
+        this.inputs[0].value = '';
+        this.currentSelected = null;
         this.$emit('onCloseSlidingBlock');
-        await this.GET_ITEMS_CATEGORIES();
       },
 
       onInputName(e) {
         this.dataForCreateCategory.name = e.target.value;
       },
+
       onInputDescription(e) {
         this.dataForCreateCategory.description = e.target.value;
       },
@@ -207,14 +218,15 @@
         this.inputs[0].value = itemSelectMenu.name;
         this.currentSelected = itemSelectMenu.name;
 
-        // this.dataForCreateCategory.name = itemSelectMenu.name;
         this.dataForCreateCategory.id = itemSelectMenu.id;
       },
-    },
 
-    async created() {
-      await this.GET_ITEMS_CATEGORIES();
-      this.inputs[0].items = this.categoriesItems;
+      async onSubmit() {
+        await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
+        // this.$emit('onCloseSlidingBlock');
+        this.formReset();
+        await this.GET_ITEMS_CATEGORIES();
+      },
     },
   };
 </script>

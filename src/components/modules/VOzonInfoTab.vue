@@ -24,6 +24,12 @@
     >
       <VMarkdownBlock />
     </div>
+    <div
+      class="ozon-info-tab__upload-files"
+      id="upload-files"
+    >
+      <VUploadFilesProductBlock />
+    </div>
   </div>
 </template>
 <script>
@@ -31,10 +37,11 @@
   import VDimensionsWeight from '@/components/modules/VDimensionsWeight.vue';
   import VWarrantyDocuments from '@/components/modules/VWarrantyDocuments.vue';
   import VMarkdownBlock from '@/components/modules/VMarkdownBlock.vue';
+  import VUploadFilesProductBlock from './VUploadFilesProductBlock.vue';
 
   export default {
     name: 'VOzonInfoTab',
-    components: { VWarrantyDocuments, VDimensionsWeight, VInfoProductBlock, VMarkdownBlock },
+    components: { VWarrantyDocuments, VDimensionsWeight, VInfoProductBlock, VMarkdownBlock, VUploadFilesProductBlock },
     data() {
       return {};
     },

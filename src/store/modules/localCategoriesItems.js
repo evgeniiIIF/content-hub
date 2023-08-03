@@ -7,6 +7,8 @@ export default {
 
   state: {
     items: [],
+    ozonCategories: [],
+    aliCategories: [],
   },
   getters: {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
@@ -16,11 +18,23 @@ export default {
     items(state) {
       return state.items;
     },
+    // getOzonCategories(state) {
+    //   return state.ozonCategories;
+    // },
+    // getAliCategories(state) {
+    //   return state.aliCategories;
+    // },
   },
   mutations: {
     setItems(state, payload) {
       state.items = payload;
     },
+    // setOzonCategories(state, payload) {
+    //   state.ozonCategories = payload;
+    // },
+    // setAliCategories(state, payload) {
+    //   state.aliCategories = payload;
+    // },
   },
   actions: {
     async GET_ITEMS_CATEGORIES(store) {
@@ -34,11 +48,19 @@ export default {
       };
 
       const url = 'http://api.hub.absit.ru/api/v1/categories';
+
       await axios.get(url, config).then((response) => {
         const data = response.data;
-        const items = data.data;
-        store.commit('setItems', items);
-        // console.log(items);
+        // const data = response.data;
+        // const items = data.data;
+        const localCategories = data.response.localCategories;
+        // const ozonCategories = data.response.ozonCategories;
+        // const aliCategories = data.response.aliCategories;
+
+        store.commit('setItems', localCategories);
+        // store.commit('setOzonCategories', ozonCategories);
+        // store.commit('setAliCategories', aliCategories);
+        console.log(data);
       });
     },
   },
