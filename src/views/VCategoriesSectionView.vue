@@ -7,7 +7,10 @@
             <h2 class="top__title">Категории</h2>
             <div class="top__actions">
               <div class="top__input">
-                <VInput :opts="inputOpts">
+                <VInput
+                  :opts="inputOpts"
+                  @onInput="setFilterValueLocalCategories($event)"
+                >
                   <img
                     src="@/assets/img/static/search/Search_Magnifying_Glass_20px.svg"
                     alt="icon"
@@ -52,7 +55,7 @@
           </div>
         </div>
         <div class="categories__table">
-          <VCategoriesTable />
+          <VCategoriesTable :filterValueLocalCategories="filterValueLocalCategories" />
         </div>
       </div>
     </div>
@@ -77,6 +80,7 @@
     components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddCategory, VCategoriesTable },
     data() {
       return {
+        filterValueLocalCategories: '',
         isOpenSlidingBlock: false,
         inputOpts: {
           icon: true,
@@ -85,6 +89,11 @@
           placeholder: 'Поиск',
         },
       };
+    },
+    methods: {
+      setFilterValueLocalCategories($event) {
+        this.filterValueLocalCategories = $event.target.value;
+      },
     },
   };
 </script>
@@ -121,7 +130,7 @@
       margin-right: 24px;
 
       .input__input {
-        padding: 9px 16px 9px 45px;
+        padding: 9px 45px 9px 16px;
       }
     }
 

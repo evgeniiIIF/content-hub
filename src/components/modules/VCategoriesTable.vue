@@ -29,7 +29,7 @@
                 :isChecked="headCategories.slice(1)"
                 :checkboxTypeToggle="true"
                 textPosition="before"
-                @onChange="setShowHideNthChildRowTable($event)"
+                @onChange="setShowHideNthChildRowTableValue($event)"
               />
             </template>
           </VDropdovnSlots>
@@ -37,7 +37,7 @@
       </ul>
     </div>
     <div class="table__body js-dropdown-menu--root">
-      <VRecursiveList :items="categoriesItems">
+      <VRecursiveList :items="filteredLocalCategoriesItems">
         <template #slot1="{ itemL1, itemCategoryItemL1 = itemL1, indexL1, itemCategoryIndexL1 = indexL1 }">
           <div
             class="item-category row-table"
@@ -682,13 +682,22 @@
     mixins: [mixDropdownMenuFn],
     components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect, VInput },
 
+    props: {
+      filterValueLocalCategories: {
+        type: String,
+        default: '',
+      },
+    },
+
     data() {
       return {
         headCategories: ['Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
+        showHideNthChildRowTableValue: [],
 
         isOpenSlidingBlock: false,
         showVCardAddNestedCategory: false,
         showVCardInfoCategory: false,
+        // filterValueLocalCategories: '',
 
         // setShowHideNthChildRowTable
         prevNthChildren: [],
@@ -742,6 +751,14 @@
         itemCategoryName_PENDING: 'pending',
       }),
 
+      filteredLocalCategoriesItems() {
+        if (this.filterValueLocalCategories) {
+          return this.filterRecursivelyLocalCategories(this.categoriesItems, this.filterValueLocalCategories);
+        } else {
+          return this.categoriesItems;
+        }
+      },
+
       filteredSelectItemsOzon() {
         if (this.filterValueSelect) {
           return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
@@ -766,6 +783,10 @@
       ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY', 'RESET_SUCCESS', 'SET_SUCCESS', 'RESET_MESSAGE']),
       ...mapActions('deleteCategory', ['DELETE_CATEGORY']),
 
+      setShowHideNthChildRowTableValue(e) {
+        this.showHideNthChildRowTableValue = e;
+      },
+
       async deleteCategory(e, itemCategory) {
         // console.log('DELETE_CATEGORY', itemCategory);
         await this.DELETE_CATEGORY(itemCategory);
@@ -782,6 +803,63 @@
         // console.log('update market categories');
 
         this.RESET_PENDING();
+      },
+
+      filterRecursivelyLocalCategories(obj, filterValue) {
+        const copyObj = JSON.parse(JSON.stringify(obj));
+        // console.log(copyObj);
+
+        const filterFunc = (copyObj, filterValue) => {
+          if (filterValue) {
+            return copyObj.filter((item) => {
+              const corect =
+                item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+                (item.children &&
+                  item.children.some((childItem) => {
+                    return (
+                      childItem.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+                      (childItem.children &&
+                        childItem.children.some((childChildItem) => {
+                          return childChildItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
+                        }))
+                    );
+                  }));
+
+              if (item.children_count > 0 && !item.name.toLowerCase().startsWith(filterValue.toLowerCase())) {
+                item.children = filterFunc(item.children, filterValue);
+              }
+
+              if (corect) {
+                return true;
+              }
+            });
+          } else {
+            return obj;
+          }
+        };
+        let DropdownMenuRoot = document.querySelector('.js-dropdown-menu--root');
+        // const elements = document.querySelectorAll(`:contains("${this.filterValueLocalCategories}")`);
+
+        HTMLElement.prototype.getNodesByText = function (text) {
+          const expr = `.//*[text()[contains(
+    translate(.,
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
+      'abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+    ),
+    '${text.toLowerCase()}'
+  )]]`; /* коммент-костыль */
+          const nodeSet = document.evaluate(expr, this, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+          return Array.from({ length: nodeSet.snapshotLength }, (v, i) => nodeSet.snapshotItem(i));
+        };
+
+        // использование
+        DropdownMenuRoot.getNodesByText(`${this.filterValueLocalCategories}`).forEach((el) => console.log(el));
+        // let dropdownMenuButtonAll = DropdownMenuRoot.querySelectorAll('.js-dropdown-menu__button');
+
+        // liAll.forEach((li) => {
+        //   console.log(li);
+        // });
+        return filterFunc(copyObj, filterValue);
       },
 
       filterRecursively(obj, filterValue) {
@@ -899,6 +977,7 @@
       },
 
       setShowHideNthChildRowTable(isChecked) {
+        console.log('showhide');
         let hidenNthChieldIndexs = [];
 
         if (this.prevNthChildren.length > 0) {
@@ -963,6 +1042,11 @@
     },
 
     watch: {
+      showHideNthChildRowTableValue(newValue, oldValue) {
+        // console.log(newValue, oldValue);
+        this.setShowHideNthChildRowTable(this.showHideNthChildRowTableValue);
+      },
+
       currentSelect(newValue, oldValue) {
         if (oldValue !== null) {
           oldValue.$el.querySelector('.select-list__filter-input').value = '';
@@ -974,6 +1058,7 @@
 
     async mounted() {
       await this.GET_ITEMS_CATEGORIES();
+      this.setShowHideNthChildRowTable(this.showHideNthChildRowTableValue);
       this.mixDropdownMenuFn();
 
       this.GET_ITEMS_SELECT_OZON();

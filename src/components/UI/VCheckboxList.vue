@@ -10,7 +10,7 @@ import VCheckbox from './VCheckbox.vue';
         <label class="checkbox__label">
           <input
             type="checkbox"
-            v-model="currentIsChecked"
+            v-model="currentIsCheckedRender"
             :value="item"
             @change="onChange"
           />
@@ -39,8 +39,8 @@ import VCheckbox from './VCheckbox.vue';
       <VCheckbox
         :text="item"
         :textPosition="textPosition"
-        @onChange="onChange($event)"
-        :isChecked="currentIsChecked"
+        @onChange="onChange($event, item)"
+        :isChecked="ownIsChecked[item]"
         :checkboxTypeToggle="checkboxTypeToggle"
       />
     </li>
@@ -73,26 +73,40 @@ import VCheckbox from './VCheckbox.vue';
 
     data() {
       return {
-        currentIsChecked: [],
+        currentIsCheckedRender: [],
+        ownIsChecked: { Ozon: true, Aliexpress: true, Wildberries: true, Яндекс: true, Продукты: true },
       };
     },
     methods: {
-      onChange(e) {
-        this.currentIsChecked = e;
-        // localStorage.setItem('currentisCheckedSaved', JSON.stringify(this.currentIsChecked));
-        this.$emit('onChange', this.currentIsChecked);
+      onChange(e, item) {
+        this.ownIsChecked[item] = e;
+        this.setCurrentCheckedForRender();
+        // console.log(e, item, this.currentIsCheckedRender);
+
+        localStorage.setItem('ownIsChecked', JSON.stringify(this.ownIsChecked));
+
+        this.$emit('onChange', this.currentIsCheckedRender);
+      },
+
+      setCurrentCheckedForRender() {
+        this.currentIsCheckedRender = [];
+        for (let key in this.ownIsChecked) {
+          let value = this.ownIsChecked[key];
+          if (value) {
+            this.currentIsCheckedRender.push(key);
+          }
+        }
       },
     },
     mounted() {
-      // const savedIsChecked = JSON.parse(localStorage.getItem('currentisCheckedSaved'));
+      const savedIsChecked = JSON.parse(localStorage.getItem('ownIsChecked'));
 
-      // if (savedIsChecked) {
-      //   this.currentIsChecked = savedIsChecked;
-      // } else {
-      //   this.currentIsChecked = this.isChecked;
-      // }
+      if (savedIsChecked) {
+        this.ownIsChecked = savedIsChecked;
+      }
 
-      console.log(this.currentIsChecked);
+      this.setCurrentCheckedForRender();
+      this.$emit('onChange', this.currentIsCheckedRender);
     },
     components: { VCheckbox },
   };
