@@ -42,7 +42,7 @@
             </div>
             <div class="login__buttons">
               <div class="login__button--bg">
-                <VButton>
+                <VButton type="submit">
                   {{ loginFormItems.buttons.signin }}
                 </VButton>
               </div>
