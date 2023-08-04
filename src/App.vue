@@ -44,8 +44,10 @@
   import VHeader from './components/layout/VHeader.vue';
   import VMain from './components/layout/VMain.vue';
   import VFooter from './components/layout/VFooter.vue';
+  import extendsProtorype from './mixins/extendsProtorype';
 
   export default {
+    mixins: [extendsProtorype],
     components: {
       VHeader,
       VMain,

@@ -693,6 +693,7 @@
       return {
         headCategories: ['Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
         showHideNthChildRowTableValue: [],
+        currentAcriveDropdownItemsForFilterCategories: [],
 
         isOpenSlidingBlock: false,
         showVCardAddNestedCategory: false,
@@ -840,20 +841,35 @@
         let DropdownMenuRoot = document.querySelector('.js-dropdown-menu--root');
         // const elements = document.querySelectorAll(`:contains("${this.filterValueLocalCategories}")`);
 
-        HTMLElement.prototype.getNodesByText = function (text) {
-          const expr = `.//*[text()[contains(
-    translate(.,
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
-      'abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя'
-    ),
-    '${text.toLowerCase()}'
-  )]]`; /* коммент-костыль */
-          const nodeSet = document.evaluate(expr, this, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-          return Array.from({ length: nodeSet.snapshotLength }, (v, i) => nodeSet.snapshotItem(i));
-        };
+        //       HTMLElement.prototype.getNodesByText = function (text) {
+        //         const expr = `.//*[text()[contains(
+        //   translate(.,
+        //     'ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
+        //     'abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+        //   ),
+        //   '${text.toLowerCase()}'
+        // )]]`; /* коммент-костыль */
+        //         const nodeSet = document.evaluate(expr, this, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+        //         return Array.from({ length: nodeSet.snapshotLength }, (v, i) => nodeSet.snapshotItem(i));
+        //       };
 
         // использование
-        DropdownMenuRoot.getNodesByText(`${this.filterValueLocalCategories}`).forEach((el) => console.log(el));
+        DropdownMenuRoot.getNodesByText(`${this.filterValueLocalCategories}`).forEach((el) => {
+          let parents = [];
+          let currentParent = el.parentNode.closest('.list__item');
+          // console.log(currentParent);
+
+          while (currentParent) {
+            if (currentParent.classList.contains('.js-dropdown-menu--root')) {
+              break;
+            }
+            parents.push(currentParent);
+            currentParent = currentParent.parentNode.closest('.list__item');
+          }
+
+          parents.forEach((item) => item.classList.add('js-dropdown-menu__item--active'));
+          this.currentAcriveDropdownItemsForFilterCategories = parents;
+        });
         // let dropdownMenuButtonAll = DropdownMenuRoot.querySelectorAll('.js-dropdown-menu__button');
 
         // liAll.forEach((li) => {
@@ -1042,6 +1058,14 @@
     },
 
     watch: {
+      filterValueLocalCategories(newValue, oldValue) {
+        if (newValue === '') {
+          this.currentAcriveDropdownItemsForFilterCategories.forEach((item) => {
+            item.classList.remove('js-dropdown-menu__item--active');
+          });
+        }
+      },
+
       showHideNthChildRowTableValue(newValue, oldValue) {
         // console.log(newValue, oldValue);
         this.setShowHideNthChildRowTable(this.showHideNthChildRowTableValue);
