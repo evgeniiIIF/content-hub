@@ -32,6 +32,7 @@ const routes = [
     component: VCategoriesSectionView,
     meta: {
       requiresAuth: true, // Указывает, что компонент требует авторизации
+      showFooter: false,
     },
   },
 

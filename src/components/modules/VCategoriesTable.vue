@@ -809,12 +809,6 @@
         this.RESET_PENDING();
       },
 
-      getShowStatusLocalCategories(item) {
-        const activeStatus = !!item.ozonCategory || !!item.aliCategory;
-        console.log(activeStatus, item);
-        return activeStatus;
-      },
-
       filterRecursivelyLocalCategories() {
         const filterValue = this.filterValueLocalCategories;
         let copyObj = JSON.parse(JSON.stringify(this.categoriesItems));
@@ -858,8 +852,6 @@
                 (!Boolean(item.aliCategory) &&
                   !!item.children &&
                   item.children.some((childItem) => {
-                    console.log('1');
-
                     return (
                       !Boolean(childItem.ozonCategory) ||
                       !Boolean(childItem.aliCategory) ||
