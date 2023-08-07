@@ -687,13 +687,16 @@
         type: String,
         default: '',
       },
+      showStatusLocalCategories: {
+        type: String,
+        default: 'all',
+      },
     },
 
     data() {
       return {
         headCategories: ['Наименование', 'Ozon', 'Aliexpress', 'Wildberries', 'Яндекс', 'Продукты'],
         showHideNthChildRowTableValue: [],
-        currentAcriveDropdownItemsForFilterCategories: [],
 
         isOpenSlidingBlock: false,
         showVCardAddNestedCategory: false,
@@ -753,11 +756,11 @@
       }),
 
       filteredLocalCategoriesItems() {
-        if (this.filterValueLocalCategories) {
-          return this.filterRecursivelyLocalCategories(this.categoriesItems, this.filterValueLocalCategories);
-        } else {
-          return this.categoriesItems;
-        }
+        return this.filterRecursivelyLocalCategories();
+        // if (this.filterValueLocalCategories) {
+        // } else {
+        //   return this.categoriesItems;
+        // }
       },
 
       filteredSelectItemsOzon() {
@@ -806,22 +809,93 @@
         this.RESET_PENDING();
       },
 
-      filterRecursivelyLocalCategories(obj, filterValue) {
-        const copyObj = JSON.parse(JSON.stringify(obj));
-        // console.log(copyObj);
+      getShowStatusLocalCategories(item) {
+        const activeStatus = !!item.ozonCategory || !!item.aliCategory;
+        console.log(activeStatus, item);
+        return activeStatus;
+      },
+
+      filterRecursivelyLocalCategories() {
+        const filterValue = this.filterValueLocalCategories;
+        let copyObj = JSON.parse(JSON.stringify(this.categoriesItems));
+
+        const filterFuncShowStatus = (obj) => {
+          if (this.showStatusLocalCategories === 'all') {
+            console.log(copyObj);
+            return copyObj;
+          }
+          if (this.showStatusLocalCategories === 'active') {
+            return obj.filter((item) => {
+              const corect =
+                Boolean(item.ozonCategory) ||
+                Boolean(item.aliCategory) ||
+                (!!item.children &&
+                  item.children.some((childItem) => {
+                    return (
+                      !!childItem.ozonCategory ||
+                      !!childItem.aliCategory ||
+                      (!!childItem.children &&
+                        childItem.children.some((childChildItem) => {
+                          return !!childChildItem.ozonCategory || !!childChildItem.aliCategory;
+                        }))
+                    );
+                  }));
+
+              if (item.children_count > 0) {
+                item.children = filterFuncShowStatus(item.children);
+              }
+
+              if (corect) {
+                return true;
+              }
+            });
+          }
+          if (this.showStatusLocalCategories === 'inactive') {
+            return obj.filter((item) => {
+              // console.log(Boolean(item.ozonCategory) || Boolean(item.aliCategory));
+              const corect =
+                !Boolean(item.ozonCategory) ||
+                (!Boolean(item.aliCategory) &&
+                  !!item.children &&
+                  item.children.some((childItem) => {
+                    console.log('1');
+
+                    return (
+                      !Boolean(childItem.ozonCategory) ||
+                      !Boolean(childItem.aliCategory) ||
+                      (!!childItem.children &&
+                        childItem.children.some((childChildItem) => {
+                          console.log('last');
+                          return !Boolean(childItem.ozonCategory) || !Boolean(childItem.aliCategory);
+                        }))
+                    );
+                  }));
+
+              if (item.children_count > 0) {
+                item.children = filterFuncShowStatus(item.children);
+              }
+
+              if (corect) {
+                return true;
+              }
+            });
+          }
+          console.log(obj, this.showStatusLocalCategories);
+        };
 
         const filterFunc = (copyObj, filterValue) => {
           if (filterValue) {
             return copyObj.filter((item) => {
+              // console.log(filterValue, item.name.toLowerCase().startsWith(filterValue.toLowerCase()), item.name);
               const corect =
-                item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+                (filterValue && item.name.toLowerCase().startsWith(filterValue.toLowerCase())) ||
                 (item.children &&
                   item.children.some((childItem) => {
                     return (
-                      childItem.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+                      (filterValue && childItem.name.toLowerCase().startsWith(filterValue.toLowerCase())) ||
                       (childItem.children &&
                         childItem.children.some((childChildItem) => {
-                          return childChildItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
+                          return filterValue && childChildItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
                         }))
                     );
                   }));
@@ -833,54 +907,42 @@
               if (corect) {
                 return true;
               }
+
+              if (filterValue) {
+                let DropdownMenuRoot = document.querySelector('.js-dropdown-menu--root');
+
+                DropdownMenuRoot.getNodesByText(`${this.filterValueLocalCategories}`).forEach((el) => {
+                  let parents = [];
+                  let currentParent = el.parentNode.closest('.list__item');
+
+                  while (currentParent) {
+                    if (currentParent.classList.contains('.js-dropdown-menu--root')) {
+                      break;
+                    }
+                    parents.push(currentParent);
+                    currentParent = currentParent.parentNode.closest('.list__item');
+                  }
+
+                  parents.forEach((item) => item.classList.add('js-dropdown-menu__item--active'));
+                  this.currentAcriveDropdownItemsForFilterCategories = parents;
+                });
+              }
             });
-          } else {
-            return obj;
           }
         };
-        let DropdownMenuRoot = document.querySelector('.js-dropdown-menu--root');
-        // const elements = document.querySelectorAll(`:contains("${this.filterValueLocalCategories}")`);
 
-        //       HTMLElement.prototype.getNodesByText = function (text) {
-        //         const expr = `.//*[text()[contains(
-        //   translate(.,
-        //     'ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
-        //     'abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя'
-        //   ),
-        //   '${text.toLowerCase()}'
-        // )]]`; /* коммент-костыль */
-        //         const nodeSet = document.evaluate(expr, this, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-        //         return Array.from({ length: nodeSet.snapshotLength }, (v, i) => nodeSet.snapshotItem(i));
-        //       };
+        copyObj = filterFuncShowStatus(copyObj);
 
-        // использование
-        DropdownMenuRoot.getNodesByText(`${this.filterValueLocalCategories}`).forEach((el) => {
-          let parents = [];
-          let currentParent = el.parentNode.closest('.list__item');
-          // console.log(currentParent);
+        if (filterValue != '') {
+          copyObj = filterFunc(copyObj, filterValue);
+        }
+        console.log(copyObj);
 
-          while (currentParent) {
-            if (currentParent.classList.contains('.js-dropdown-menu--root')) {
-              break;
-            }
-            parents.push(currentParent);
-            currentParent = currentParent.parentNode.closest('.list__item');
-          }
-
-          parents.forEach((item) => item.classList.add('js-dropdown-menu__item--active'));
-          this.currentAcriveDropdownItemsForFilterCategories = parents;
-        });
-        // let dropdownMenuButtonAll = DropdownMenuRoot.querySelectorAll('.js-dropdown-menu__button');
-
-        // liAll.forEach((li) => {
-        //   console.log(li);
-        // });
-        return filterFunc(copyObj, filterValue);
+        return copyObj;
       },
 
       filterRecursively(obj, filterValue) {
         const copyObj = JSON.parse(JSON.stringify(obj));
-        // console.log(copyObj);
 
         const filterFunc = (copyObj, filterValue) => {
           if (filterValue) {
@@ -891,6 +953,7 @@
                   item.children.some((childItem) => {
                     return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
                   }));
+
               if (item.children_count > 0) {
                 item.children = filterFunc(item.children, filterValue);
               }
@@ -1058,9 +1121,15 @@
     },
 
     watch: {
+      showStatusLocalCategories(newValue, oldValue) {
+        // this.filterRecursivelyLocalCategories(this.filteredLocalCategoriesItems, this.filterValueLocalCategories);
+      },
+
       filterValueLocalCategories(newValue, oldValue) {
         if (newValue === '') {
-          this.currentAcriveDropdownItemsForFilterCategories.forEach((item) => {
+          const currentAcriveDropdownItemsForFilterCategories = document.querySelectorAll('.js-dropdown-menu__item--active');
+
+          currentAcriveDropdownItemsForFilterCategories.forEach((item) => {
             item.classList.remove('js-dropdown-menu__item--active');
           });
         }

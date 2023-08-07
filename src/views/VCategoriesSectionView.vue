@@ -37,25 +37,35 @@
             <button
               type="button"
               class="show-hide-categories__button show-hide-categories__button--all"
+              @click="setShowStatusLocalCategories('all')"
+              :style="{ background: showStatusLocalCategories === 'all' ? '#07f' : '', color: showStatusLocalCategories === 'all' ? '#fff' : '' }"
             >
               все
             </button>
             <button
               type="button"
               class="show-hide-categories__button show-hide-categories__button--active"
+              @click="setShowStatusLocalCategories('active')"
+              :style="{ background: showStatusLocalCategories === 'active' ? '#07f' : '', color: showStatusLocalCategories === 'active' ? '#fff' : '' }"
             >
               активные
             </button>
             <button
               type="button"
               class="show-hide-categories__button show-hide-categories__button--inactive"
+              @click="setShowStatusLocalCategories('inactive')"
+              :style="{ background: showStatusLocalCategories === 'inactive' ? '#07f' : '', color: showStatusLocalCategories === 'inactive' ? '#fff' : '' }"
             >
               неактивные
             </button>
           </div>
         </div>
         <div class="categories__table">
-          <VCategoriesTable :filterValueLocalCategories="filterValueLocalCategories" />
+          <VCategoriesTable
+            :filterValueLocalCategories="filterValueLocalCategories"
+            :showStatusLocalCategories="showStatusLocalCategories"
+            ref="categoriesTable"
+          />
         </div>
       </div>
     </div>
@@ -81,6 +91,8 @@
     data() {
       return {
         filterValueLocalCategories: '',
+        showStatusLocalCategories: 'all',
+
         isOpenSlidingBlock: false,
         inputOpts: {
           icon: true,
@@ -93,6 +105,15 @@
     methods: {
       setFilterValueLocalCategories($event) {
         this.filterValueLocalCategories = $event.target.value;
+      },
+
+      setShowStatusLocalCategories(statusValue) {
+        const categoriesTableBlock = this.$refs.categoriesTable;
+
+        this.showStatusLocalCategories = statusValue;
+        this.$nextTick(() => {
+          categoriesTableBlock.filterRecursivelyLocalCategories();
+        });
       },
     },
   };
@@ -160,8 +181,8 @@
     }
 
     &__button--all {
-      color: $white-color;
-      background: #07f;
+      // color: $white-color;
+      // background: #07f;
     }
 
     &__button--inactive {
