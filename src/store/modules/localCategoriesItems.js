@@ -37,15 +37,42 @@ export default {
     // },
   },
   actions: {
-    async GET_ITEMS_CATEGORIES(store) {
+    async GET_ITEMS_CATEGORIES(store, data) {
       // console.log(store.getters.getTokenFromLogin + '  tockenfrom login');
-      const config = {
-        headers: {
-          Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Accept: 'application/json',
-        },
-      };
+      let config;
+
+      if (data) {
+        let dataFor = {};
+
+        if (data.name) {
+          dataFor.name = data.name;
+        }
+
+        if (data.is_active === 1 || data.is_active === 0) {
+          dataFor.is_active = data.is_active;
+        }
+
+        console.log(dataFor);
+
+        config = {
+          headers: {
+            Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Accept: 'application/json',
+          },
+          params: dataFor,
+        };
+      } else {
+        config = {
+          headers: {
+            Authorization: `Bearer ${store.getters.getTokenFromLogin}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Accept: 'application/json',
+          },
+        };
+      }
+
+      // console.log(`Bearer ${store.getters.getTokenFromLogin}`);
 
       const url = 'http://api.hub.absit.ru/api/v1/categories';
 

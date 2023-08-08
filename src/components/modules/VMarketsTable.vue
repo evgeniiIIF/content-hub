@@ -73,7 +73,11 @@
       <div class="table__body js-dropdown-menu--root">
         <VRecursiveList :items="marketsItems">
           <template #slot1="{ itemL1, itemMarketL1 = itemL1, indexL1, itemMarketIndexL1 = indexL1 }">
-            <div class="item-shops row-table">
+            <div
+              class="item-shops row-table"
+              :ref="`itemMarket(index-${itemMarketIndexL1})`"
+              @mouseleave="closeOwnDropdown($event, itemMarketIndexL1)"
+            >
               <div class="item-shops__name">{{ itemMarketL1.name }}</div>
               <div class="item-shops__warehouse">-</div>
               <div class="item-shops__status">-</div>
@@ -83,10 +87,7 @@
                 @click.stop
               >
                 <div class="item-shops__button--more">
-                  <VDropdovnSlots
-                    ref="dropdown"
-                    @click="closeOwnDropdown($event)"
-                  >
+                  <VDropdovnSlots :ref="`VDropdovnSlots(index-${itemMarketIndexL1})`">
                     <template #button>
                       <button
                         class="button"
@@ -101,7 +102,7 @@
                     <template #menu>
                       <ul class="list">
                         <li class="list__item">
-                          <VButton>
+                          <VButton @click="openSlidingBlock(itemMarketL1)">
                             <span class="button__image">
                               <svg
                                 width="20"
@@ -152,21 +153,15 @@
         </VRecursiveList>
       </div>
     </div>
-    <!-- <VSlidingBlockSlotUIFC
+    <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
-      :element="$refs.cardAddCategory"
       @onCloseSlidingBlock="isOpenSlidingBlock = false"
     >
-      <VCardAddNestedMarket
+      <VCardEditMarket
         @onCloseSlidingBlock="isOpenSlidingBlock = false"
         :parentItemData="parentItemData"
       />
-      <VCardInfoCategory
-        v-if="showVCardInfoCategory"
-        @onCloseSlidingBlock="isOpenSlidingBlock = false"
-        :parentItemData="parentItemData"
-      />
-    </VSlidingBlockSlotUIFC> -->
+    </VSlidingBlockSlotUIFC>
   </div>
 </template>
 
@@ -183,21 +178,22 @@
   import VInput from '../UI/VInput.vue';
   import VButton from '../UI/VButton.vue';
 
-  import VCardAddNestedMarket from '../cards/VCardAddNestedMarket.vue';
+  import VCardEditMarket from '../cards/VCardEditMarket.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
   import VItemCategotyDropdownList from './VItemCategotyDropdownList.vue';
 
   export default {
     name: 'VCategoriesTable',
     mixins: [mixDropdownMenuFn],
-    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedMarket, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect, VInput, VButton },
+    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardEditMarket, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect, VInput, VButton },
 
     data() {
       return {
+        isOpenSlidingBlock: false,
         headCategories: ['Имя магазина', 'Подключенные склады', 'Статусы КТ', 'Принадлежность к МП'],
 
         parentItemData: {
-          names: [],
+          name: '',
           id: null,
         },
 
@@ -216,16 +212,20 @@
     methods: {
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
 
-      closeOwnDropdown(e) {
-        // const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
-        //   if (this.currentSelect) {
-        //     this.currentSelect.menuIsOpen = false;
-        //   }
-        //   if (currentItemCategoryDropdownSlots.menuIsOpen) {
-        //     currentItemCategoryDropdownSlots.menuIsOpen = false;
-        //     document.removeEventListener('click', currentItemCategoryDropdownSlots.closeMenu, true);
-        //   }
-        console.log(e);
+      closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
+        const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
+        if (this.currentSelect) {
+          this.currentSelect.menuIsOpen = false;
+        }
+        if (currentItemCategoryDropdownSlots.menuIsOpen) {
+          currentItemCategoryDropdownSlots.menuIsOpen = false;
+          document.removeEventListener('click', currentItemCategoryDropdownSlots.closeMenu, true);
+        }
+      },
+
+      openSlidingBlock(item) {
+        console.log(item);
+        this.isOpenSlidingBlock = true;
       },
     },
 
@@ -233,6 +233,7 @@
       await this.GET_ITEMS_MARKETS();
       this.mixDropdownMenuFn();
       // await this.GET_ITEMS_SELECT_OZON();
+      // console.log(this.marketsItems);
     },
   };
 </script>

@@ -37,7 +37,7 @@
       </ul>
     </div>
     <div class="table__body js-dropdown-menu--root">
-      <VRecursiveList :items="filteredLocalCategoriesItems">
+      <VRecursiveList :items="categoriesItems">
         <template #slot1="{ itemL1, itemCategoryItemL1 = itemL1, indexL1, itemCategoryIndexL1 = indexL1 }">
           <div
             class="item-category row-table"
@@ -755,13 +755,15 @@
         itemCategoryName_PENDING: 'pending',
       }),
 
-      filteredLocalCategoriesItems() {
-        return this.filterRecursivelyLocalCategories();
-        // if (this.filterValueLocalCategories) {
-        // } else {
-        //   return this.categoriesItems;
-        // }
-      },
+      // categoriesItems() {
+      //   // return this.filterRecursivelyLocalCategories();
+      //   // if (this.filterValueLocalCategories) {
+      //   //   return this.categoriesItems;
+      //   // } else {
+      //   //   return this.categoriesItems;
+      //   // }
+      //   return this.categoriesItems;
+      // },
 
       filteredSelectItemsOzon() {
         if (this.filterValueSelect) {
@@ -787,6 +789,27 @@
       ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY', 'RESET_SUCCESS', 'SET_SUCCESS', 'RESET_MESSAGE']),
       ...mapActions('deleteCategory', ['DELETE_CATEGORY']),
 
+      closeAllOpenedItemCategories() {
+        const currentAcriveDropdownItemsForFilterCategories = document.querySelectorAll('.js-dropdown-menu__item--active');
+
+        currentAcriveDropdownItemsForFilterCategories.forEach((item) => {
+          item.classList.remove('js-dropdown-menu__item--active');
+        });
+      },
+
+      async getFilteredCategoriesItems(data) {
+        // const data = {
+        //   name: filterValueLocalCategories,
+        // };
+        // if (data.name !== '') {
+        await this.GET_ITEMS_CATEGORIES(data);
+        this.closeAllOpenedItemCategories();
+        console.log('getFiltered');
+        // }
+
+        // console.log(filterValueLocalCategories);
+      },
+
       setShowHideNthChildRowTableValue(e) {
         this.showHideNthChildRowTableValue = e;
       },
@@ -809,158 +832,34 @@
         this.RESET_PENDING();
       },
 
-      filterRecursivelyLocalCategories() {
-        const filterValue = this.filterValueLocalCategories;
-        let copyObj = JSON.parse(JSON.stringify(this.categoriesItems));
+      // filterRecursively(obj, filterValue) {
+      //   const copyObj = JSON.parse(JSON.stringify(obj));
 
-        const filterFuncShowStatus = (obj) => {
-          if (this.showStatusLocalCategories === 'all') {
-            console.log(copyObj);
-            return copyObj;
-          }
-          if (this.showStatusLocalCategories === 'active') {
-            return obj.filter((item) => {
-              const corect =
-                Boolean(item.ozonCategory) ||
-                Boolean(item.aliCategory) ||
-                (!!item.children &&
-                  item.children.some((childItem) => {
-                    return (
-                      !!childItem.ozonCategory ||
-                      !!childItem.aliCategory ||
-                      (!!childItem.children &&
-                        childItem.children.some((childChildItem) => {
-                          return !!childChildItem.ozonCategory || !!childChildItem.aliCategory;
-                        }))
-                    );
-                  }));
+      //   const filterFunc = (copyObj, filterValue) => {
+      //     if (filterValue) {
+      //       return copyObj.filter((item) => {
+      //         const corect =
+      //           item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+      //           (item.children &&
+      //             item.children.some((childItem) => {
+      //               return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
+      //             }));
 
-              if (item.children_count > 0) {
-                item.children = filterFuncShowStatus(item.children);
-              }
+      //         if (item.children_count > 0) {
+      //           item.children = filterFunc(item.children, filterValue);
+      //         }
 
-              if (corect) {
-                return true;
-              }
-            });
-          }
-          if (this.showStatusLocalCategories === 'inactive') {
-            return obj.filter((item) => {
-              // console.log(Boolean(item.ozonCategory) || Boolean(item.aliCategory));
-              const corect =
-                !Boolean(item.ozonCategory) ||
-                (!Boolean(item.aliCategory) &&
-                  !!item.children &&
-                  item.children.some((childItem) => {
-                    return (
-                      !Boolean(childItem.ozonCategory) ||
-                      !Boolean(childItem.aliCategory) ||
-                      (!!childItem.children &&
-                        childItem.children.some((childChildItem) => {
-                          console.log('last');
-                          return !Boolean(childItem.ozonCategory) || !Boolean(childItem.aliCategory);
-                        }))
-                    );
-                  }));
+      //         if (corect) {
+      //           return true;
+      //         }
+      //       });
+      //     } else {
+      //       return obj;
+      //     }
+      //   };
 
-              if (item.children_count > 0) {
-                item.children = filterFuncShowStatus(item.children);
-              }
-
-              if (corect) {
-                return true;
-              }
-            });
-          }
-          console.log(obj, this.showStatusLocalCategories);
-        };
-
-        const filterFunc = (copyObj, filterValue) => {
-          if (filterValue) {
-            return copyObj.filter((item) => {
-              // console.log(filterValue, item.name.toLowerCase().startsWith(filterValue.toLowerCase()), item.name);
-              const corect =
-                (filterValue && item.name.toLowerCase().startsWith(filterValue.toLowerCase())) ||
-                (item.children &&
-                  item.children.some((childItem) => {
-                    return (
-                      (filterValue && childItem.name.toLowerCase().startsWith(filterValue.toLowerCase())) ||
-                      (childItem.children &&
-                        childItem.children.some((childChildItem) => {
-                          return filterValue && childChildItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
-                        }))
-                    );
-                  }));
-
-              if (item.children_count > 0 && !item.name.toLowerCase().startsWith(filterValue.toLowerCase())) {
-                item.children = filterFunc(item.children, filterValue);
-              }
-
-              if (corect) {
-                return true;
-              }
-
-              if (filterValue) {
-                let DropdownMenuRoot = document.querySelector('.js-dropdown-menu--root');
-
-                DropdownMenuRoot.getNodesByText(`${this.filterValueLocalCategories}`).forEach((el) => {
-                  let parents = [];
-                  let currentParent = el.parentNode.closest('.list__item');
-
-                  while (currentParent) {
-                    if (currentParent.classList.contains('.js-dropdown-menu--root')) {
-                      break;
-                    }
-                    parents.push(currentParent);
-                    currentParent = currentParent.parentNode.closest('.list__item');
-                  }
-
-                  parents.forEach((item) => item.classList.add('js-dropdown-menu__item--active'));
-                  this.currentAcriveDropdownItemsForFilterCategories = parents;
-                });
-              }
-            });
-          }
-        };
-
-        copyObj = filterFuncShowStatus(copyObj);
-
-        if (filterValue != '') {
-          copyObj = filterFunc(copyObj, filterValue);
-        }
-        console.log(copyObj);
-
-        return copyObj;
-      },
-
-      filterRecursively(obj, filterValue) {
-        const copyObj = JSON.parse(JSON.stringify(obj));
-
-        const filterFunc = (copyObj, filterValue) => {
-          if (filterValue) {
-            return copyObj.filter((item) => {
-              const corect =
-                item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
-                (item.children &&
-                  item.children.some((childItem) => {
-                    return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
-                  }));
-
-              if (item.children_count > 0) {
-                item.children = filterFunc(item.children, filterValue);
-              }
-
-              if (corect) {
-                return true;
-              }
-            });
-          } else {
-            return obj;
-          }
-        };
-
-        return filterFunc(copyObj, filterValue);
-      },
+      //   return filterFunc(copyObj, filterValue);
+      // },
 
       onInputFilter(e) {
         this.filterValueSelect = e.target.value;
@@ -1114,16 +1013,14 @@
 
     watch: {
       showStatusLocalCategories(newValue, oldValue) {
-        // this.filterRecursivelyLocalCategories(this.filteredLocalCategoriesItems, this.filterValueLocalCategories);
+        // this.filterRecursivelyLocalCategories(this.categoriesItems, this.filterValueLocalCategories);
       },
 
-      filterValueLocalCategories(newValue, oldValue) {
+      async filterValueLocalCategories(newValue, oldValue) {
         if (newValue === '') {
-          const currentAcriveDropdownItemsForFilterCategories = document.querySelectorAll('.js-dropdown-menu__item--active');
-
-          currentAcriveDropdownItemsForFilterCategories.forEach((item) => {
-            item.classList.remove('js-dropdown-menu__item--active');
-          });
+          await this.GET_ITEMS_CATEGORIES();
+          this.closeAllOpenedItemCategories();
+          console.log('watch');
         }
       },
 
@@ -1143,6 +1040,8 @@
 
     async mounted() {
       await this.GET_ITEMS_CATEGORIES();
+      console.log('mount');
+
       this.setShowHideNthChildRowTable(this.showHideNthChildRowTableValue);
       this.mixDropdownMenuFn();
 

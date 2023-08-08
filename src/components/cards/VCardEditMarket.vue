@@ -10,7 +10,7 @@
       />
     </button>
     <div class="card-add-category__body">
-      <h3 class="card-add-category__title">Добавить магазин</h3>
+      <h3 class="card-add-category__title">Редактировать магазин</h3>
       <form
         class="card-add-category__body-content"
         @submit.prevent="onSubmit"
@@ -21,48 +21,60 @@
             v-for="opts in inputs"
           >
             <VSelect
-              v-if="opts.selectMP"
+              v-if="opts.select"
               :opts="opts"
             >
               <template #menu>
                 <ul class="card-add-category__list">
                   <li
                     class="card-add-category__item"
-                    v-for="(itemSelectMenu, index) in inputs[2].items"
+                    v-for="(itemSelectMenu, index) in inputs[0].items"
                     :key="itemSelectMenu.name"
-                    @click.stop="setSelectedMarketplace(itemSelectMenu)"
+                    @click.stop="selectionItem(itemSelectMenu)"
                   >
                     <span
                       class="card-add-category__name"
                       :class="{ 'card-add-category__item--active': itemSelectMenu.name === currentSelected }"
-                      >{{ itemSelectMenu.name }}
-                    </span>
+                      >{{ itemSelectMenu.name }}</span
+                    >
+                    <ul
+                      v-if="itemSelectMenu.children_count"
+                      class="card-add-category__list"
+                    >
+                      <li
+                        class="card-add-category__item"
+                        v-for="(itemSelectMenu2, index2) in itemSelectMenu.children"
+                        :key="itemSelectMenu2.name"
+                        @click.stop="selectionItem(itemSelectMenu2)"
+                      >
+                        <span
+                          class="card-add-category__name"
+                          :class="{ 'card-add-category__item--active': itemSelectMenu2.name === currentSelected }"
+                          >{{ itemSelectMenu2.name }}</span
+                        >
+                        <!-- <ul
+													v-if="itemSelectMenu2.children_count"
+													class="card-add-category__list"
+												>
+													<li
+														class="card-add-category__item"
+														v-for="(itemSelectMenu3, index3) in itemSelectMenu2.children"
+														:key="itemSelectMenu3.name"
+														@click.stop="selectionItem(itemSelectMenu3)"
+													>
+														<span
+															class="card-add-category__name"
+															:class="{ 'card-add-category__item--active': itemSelectMenu3.name === currentSelected }"
+															>{{ itemSelectMenu3.name }}</span
+														>
+													</li>
+												</ul> -->
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </template>
             </VSelect>
-            <VMultiSelect
-              v-else-if="opts.multiSelectWh"
-              :opts="opts"
-              :selectedItems="selectedWarehouseItems"
-            >
-              <template #menu>
-                <ul class="card-add-category__list">
-                  <li
-                    class="card-add-category__item"
-                    v-for="(itemSelectMenu, index) in inputs[3].items"
-                    :key="itemSelectMenu.name"
-                    @click.stop="setWarehouseSelectedItems(itemSelectMenu)"
-                  >
-                    <span
-                      class="card-add-category__name"
-                      :class="{ 'card-add-category__item--active': itemSelectMenu.name === currentSelected }"
-                      >{{ itemSelectMenu.name }}
-                    </span>
-                  </li>
-                </ul>
-              </template>
-            </VMultiSelect>
             <VInput
               v-else
               :opts="opts"
@@ -96,40 +108,21 @@
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
   import VSelect from '../UI/VSelect.vue';
-  import VMultiSelect from '../UI/VMultiSelect.vue';
 
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
-    name: 'VCardAddMarket',
+    name: 'VCardEditMarket',
 
     emits: ['onCloseSlidingBlock'],
 
-    components: { VInput, VButton, VSelect, VMultiSelect },
+    components: { VInput, VButton, VSelect },
     data() {
       return {
-        selectedWarehouseItems: {},
-
-        dataCreateMarket: {
-          marketplace_id: null,
+        dataForCreateCategory: {
+          id: 0,
           name: '',
-          min_stock_quantiy: null,
-          portalWarehouses: [],
-          credentials: [
-            {
-              token: '',
-            },
-            {
-              'Client-Id': null,
-              'Api-Key': '',
-            },
-          ],
-          contacts: [
-            {
-              phone: '',
-              email: '',
-            },
-          ],
+          description: '',
         },
 
         currentSelected: null,
@@ -150,7 +143,7 @@
             placeholder: 'Введите число (или диапазон чисел)',
           },
           {
-            selectMP: true,
+            select: true,
             icon: true,
             value: '',
             type: 'text',
@@ -160,7 +153,7 @@
             items: {},
           },
           {
-            multiSelectWh: true,
+            select: true,
             icon: true,
             value: '',
             type: 'text',
@@ -201,16 +194,15 @@
       };
     },
     computed: {
+      ...mapGetters('marketsItems', {
+        marketplacesItems: 'getMarketplacesItems',
+      }),
       // ...mapGetters('localCategoriesItems', {
       //   categoriesItems: 'items',
       // }),
       // ...mapGetters('addCategory', {
       //   isAddCategoryPending: 'pending',
       // }),
-      ...mapGetters('marketsItems', {
-        marketplacesItems: 'getMarketplacesItems',
-        warehousesItems: 'getPortalWarehousesItems',
-      }),
     },
     watch: {
       // selectMenuItems(oldValue, newValue) {
@@ -220,51 +212,35 @@
       // },
     },
     methods: {
-      ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
       // ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       // ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
 
       async onSubmit() {
         // console.log(this.dataForCreateCategory);
-        // await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
-        // this.$emit('onCloseSlidingBlock');
-        // await this.GET_ITEMS_CATEGORIES();
+        await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
+        this.$emit('onCloseSlidingBlock');
+        await this.GET_ITEMS_CATEGORIES();
       },
 
       onInputName(e) {
-        this.dataCreateMarket.name = e.target.value;
+        this.dataForCreateCategory.name = e.target.value;
       },
       onInputDescription(e) {
-        this.dataCreateMarket.description = e.target.value;
+        this.dataForCreateCategory.description = e.target.value;
       },
 
-      // selectionItem(itemSelectMenu) {
-      //   this.inputs[0].value = itemSelectMenu.name;
-      //   this.currentSelected = itemSelectMenu.name;
+      selectionItem(itemSelectMenu) {
+        this.inputs[0].value = itemSelectMenu.name;
+        this.currentSelected = itemSelectMenu.name;
 
-      //   // this.dataForCreateCategory.name = itemSelectMenu.name;
-      //   this.dataForCreateCategory.id = itemSelectMenu.id;
-      // },
-      setSelectedMarketplace(itemSelectMenu) {
-        this.inputs[2].value = itemSelectMenu.name;
-
-        this.dataCreateMarket.marketplace_id = itemSelectMenu.id;
-        console.log(itemSelectMenu);
-      },
-
-      setWarehouseSelectedItems(itemSelectMenu) {
-        if (this.selectedWarehouseItems[itemSelectMenu.id]) {
-          delete this.selectedWarehouseItems[itemSelectMenu.id];
-        } else {
-          this.selectedWarehouseItems[itemSelectMenu.id] = itemSelectMenu.name;
-        }
+        // this.dataForCreateCategory.name = itemSelectMenu.name;
+        this.dataForCreateCategory.id = itemSelectMenu.id;
       },
     },
 
-    async mounted() {
-      await this.GET_ITEMS_MARKETS();
-      this.inputs[2].items = this.marketplacesItems;
-      this.inputs[3].items = this.warehousesItems;
+    async created() {
+      // await this.GET_ITEMS_CATEGORIES();
+      // console.log(this.inputs[2].items);
     },
   };
 </script>

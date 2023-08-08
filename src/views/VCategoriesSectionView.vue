@@ -100,20 +100,43 @@
           name: 'search',
           placeholder: 'Поиск',
         },
+        dataFilterCategoriesItems: {},
       };
     },
     methods: {
       setFilterValueLocalCategories($event) {
         this.filterValueLocalCategories = $event.target.value;
+        this.dataFilterCategoriesItems.name = this.filterValueLocalCategories;
+        this.$refs.categoriesTable.getFilteredCategoriesItems(this.dataFilterCategoriesItems);
       },
 
       setShowStatusLocalCategories(statusValue) {
         const categoriesTableBlock = this.$refs.categoriesTable;
 
         this.showStatusLocalCategories = statusValue;
-        this.$nextTick(() => {
-          categoriesTableBlock.filterRecursivelyLocalCategories();
-        });
+        if (this.showStatusLocalCategories === 'all') {
+          delete this.dataFilterCategoriesItems.is_active;
+
+          // console.log(this.showStatusLocalCategories);
+        }
+        if (this.showStatusLocalCategories === 'inactive') {
+          this.dataFilterCategoriesItems.is_active = 0;
+          // delete this.dataFilterCategoriesItems.is_active;
+
+          // console.log(this.showStatusLocalCategories);
+        }
+
+        if (this.showStatusLocalCategories === 'active') {
+          this.dataFilterCategoriesItems.is_active = 1;
+
+          // console.log(this.showStatusLocalCategories);
+        }
+
+        this.$refs.categoriesTable.getFilteredCategoriesItems(this.dataFilterCategoriesItems);
+
+        // this.$nextTick(() => {
+        //   categoriesTableBlock.filterRecursivelyLocalCategories();
+        // });
       },
     },
   };
