@@ -16,6 +16,7 @@ import deleteCategory from './modules/deleteCategory.js';
 
 // <markets>
 import marketsItems from './markets/marketsItems.js';
+import addMarket from './markets/addMarket.js';
 // </markets>
 
 // <nomenclature>
@@ -43,6 +44,7 @@ export default createStore({
 
     // <markets>
     marketsItems,
+    addMarket,
     // </markets>
 
     // <nomenclature>

@@ -83,6 +83,12 @@
           document.removeEventListener('click', this.closeMenu, true);
         }
       },
+
+      closeMenuFromOuter(e) {
+        // if (this.menuIsOpen && !e.target.closest('.select')) {
+        this.menuIsOpen = false;
+        document.removeEventListener('click', this.closeMenu, true);
+      },
       // selectItem(e, item) {
       //   this.selected = item;
       //   const input = e.target.closest('.select').querySelector('.select__input');

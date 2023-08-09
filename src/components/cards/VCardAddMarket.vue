@@ -23,6 +23,7 @@
             <VSelect
               v-if="opts.selectMP"
               :opts="opts"
+              ref="selectMarketplace"
             >
               <template #menu>
                 <ul class="list">
@@ -30,7 +31,6 @@
                     class="list__item"
                     v-for="(itemSelectMenu, index) in inputs[2].items"
                     :key="itemSelectMenu.name"
-                    @click.stop="setSelectedMarketplace(itemSelectMenu)"
                   >
                     <span
                       class="list__name"
@@ -40,7 +40,7 @@
                         :variant="itemSelectMenu.name"
                         name="marketplace"
                         :currentPicked="this.pickedMarketplace"
-                        @changePicked="onChangePickedMarketplace($event)"
+                        @changePicked="setSelectedMarketplace($event, itemSelectMenu)"
                       />
                     </span>
                   </li>
@@ -54,25 +54,6 @@
               @onRemoveSelectedItem="removeWarehouseSelectedItems($event)"
             >
               <template #menu>
-                <!-- <ul class="list">
-                  <li
-                    class="list__item"
-                    v-for="(itemSelectMenu, index) in inputs[3].items"
-                    :key="itemSelectMenu.name"
-                  >
-                    <span
-                      class="list__name"
-                      :class="{ 'list__item--active': itemSelectMenu.name === currentSelected }"
-                    >
-                      <VCheckbox
-                        :text="itemSelectMenu.name"
-                        @onChange="setWarehouseSelectedItems($event, itemSelectMenu)"
-                        :isChecked="isCheckedWaresouseItem"
-                      />
-                    </span>
-                  </li>
-                </ul> -->
-
                 <VCheckboxListObj
                   :items="inputs[3].items"
                   :currentIsCheckedItems="selectedWarehouseItems"
@@ -81,9 +62,19 @@
               </template>
             </VMultiSelect>
             <VInput
-              v-else
+              v-else-if="opts.inputAli && pickedMarketplace === 'Aliexpress'"
               :opts="opts"
-              @onInput="onInputName"
+              @onInput="onInput($event, opts)"
+            />
+            <VInput
+              v-else-if="opts.inputOzon && pickedMarketplace === 'Ozon'"
+              :opts="opts"
+              @onInput="onInput($event, opts)"
+            />
+            <VInput
+              v-else-if="opts.name === 'name' || opts.name === 'min_stock_quantity'"
+              :opts="opts"
+              @onInput="onInput($event, opts)"
             />
           </div>
         </div>
@@ -92,7 +83,7 @@
             <VButton>Отменить</VButton>
           </div>
           <div class="card-add-market__button--bg">
-            <VButton>Сохранить изменения</VButton>
+            <VButton type="submit">Сохранить изменения</VButton>
             <!-- <VButton :pending="isAddCategoryPending">Сохранить изменения</VButton> -->
           </div>
         </div>
@@ -134,17 +125,9 @@
         dataCreateMarket: {
           marketplace_id: null,
           name: '',
-          min_stock_quantiy: null,
+          min_stock_quantity: null,
           portalWarehouses: [],
-          credentials: [
-            {
-              token: '',
-            },
-            {
-              'Client-Id': null,
-              'Api-Key': '',
-            },
-          ],
+          credentials: [],
           contacts: [
             {
               phone: '',
@@ -165,9 +148,9 @@
           },
           {
             value: '',
-            type: 'text',
+            type: 'number',
             label: 'Мин. кол-во остатка',
-            name: 'min',
+            name: 'min_stock_quantity',
             placeholder: 'Введите число (или диапазон чисел)',
           },
           {
@@ -191,31 +174,28 @@
             items: {},
           },
           {
-            value: '',
+            inputAli: true,
+            value:
+              'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWxsZXJfaWQiOjEwNTYwMzE1MjUsInRva2VuX2lkIjoxNTY3fQ.hleh6hIOckMdVvVclRmDjZspMovJKCZbF91RfrOZtJsiUE_RZuFBzNrSNQUDQpwO97OpJDCXhS60UkuCu-xwRP2wha5d65FVAiEJxTeMxGoHzW8q3OLOn3zlwxNenpAczYlM_Zb2_E_xV1U-cNfrKydXPieuO19_eCPMP7m0UjHgkkYZUfdrcVUVK2pncU846aypypfMotDHzvguyyCF_kNNVvD7RSf-J-YkYoYTC0qoZC7lv7sfFbUk88-91sz0B-4U9n24xkK1K42HzxqgddSTug1LRmmErEU9gPFxfFZ1gVPHEIRhnl5GQ-oHwCb-0eqHe39rcfTzgi5kHxP8p647zFxcl-fRZQxV34elWzaWf-LtAbjC_qZyjONqBS2YhkRAinbfcLS-1SVVhLk8rQbxe5aLuho2la2pZNoRTgIwu3R1i7i-nz2-xrUmUXdHKz8OexCfJFStw341oP3PUONpg1nYsEAKW3n1VqMRgdLodPwYw_CuXWsJjbC7H2958TYweo2ucsRa49dXWcYS4ZYnoE_86YEwiszCEQkUgWvl538_qHedmskJjVgI-WiM-0KD_KrQYeQ9XR9zR0IkwZj5lrq-inTAGn38-BZxAUUH_m-tnmFNE4Saawm7x6-G4DzUIdlZ4xriYRRSSeM0TLnntDeN3KhVOBuHkIHN7c8',
             type: 'text',
-            label: 'Ozon token',
-            name: 'Ozon token',
+            label: 'Ali token',
+            name: 'token',
             placeholder: 'token',
           },
           {
-            value: '',
-            type: 'text',
-            label: 'Ozon token',
-            name: 'Ozon token enter',
-            placeholder: 'Введите token Ozon',
-          },
-          {
+            inputOzon: true,
             value: '',
             type: 'text',
             label: 'Ozon client-ID',
-            name: 'Ozon client-ID enter',
+            name: 'Client-Id',
             placeholder: 'Введите client-ID',
           },
           {
+            inputOzon: true,
             value: '',
             type: 'text',
             label: 'Ozon API key',
-            name: 'Ozon API key enter',
+            name: 'Api-Key',
             placeholder: 'Введите API key',
           },
         ],
@@ -246,25 +226,37 @@
     },
     methods: {
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
+      ...mapActions('addMarket', ['SEND_MARKET_DATA']),
+
       // ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       // ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
-      onChangePickedMarketplace($event) {
-        console.log($event);
-        this.pickedMarketplace = $event;
-      },
 
       async onSubmit() {
-        // console.log(this.dataForCreateCategory);
+        // console.log(this.dataCreateMarket);
+        await this.SEND_MARKET_DATA(this.dataCreateMarket);
         // await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
         // this.$emit('onCloseSlidingBlock');
         // await this.GET_ITEMS_CATEGORIES();
       },
 
-      onInputName(e) {
-        this.dataCreateMarket.name = e.target.value;
-      },
-      onInputDescription(e) {
-        this.dataCreateMarket.description = e.target.value;
+      onInput(e, opts) {
+        if (opts.name === 'name') {
+          this.dataCreateMarket.name = e.target.value;
+        }
+        if (opts.name === 'min_stock_quantity') {
+          this.dataCreateMarket.min_stock_quantity = e.target.value;
+        }
+        if (opts.name === 'token') {
+          this.dataCreateMarket.credentials[0].token = e.target.value;
+        }
+        if (opts.name === 'Client-Id') {
+          this.dataCreateMarket.credentials[1]['Client-Id'] = e.target.value;
+        }
+        if (opts.name === 'Api-Key') {
+          this.dataCreateMarket.credentials[1]['Api-Key'] = e.target.value;
+        }
+
+        // console.log(this.dataCreateMarket);
       },
 
       // selectionItem(itemSelectMenu) {
@@ -274,11 +266,48 @@
       //   // this.dataForCreateCategory.name = itemSelectMenu.name;
       //   this.dataForCreateCategory.id = itemSelectMenu.id;
       // },
-      setSelectedMarketplace(itemSelectMenu) {
-        this.inputs[2].value = itemSelectMenu.name;
+      // setSelectedMarketplace(marketplaceItem) {
+      //   // this.inputs[2].value = marketplaceItem.name;
+      //   // this.dataCreateMarket.marketplace_id = marketplaceItem.id;
+      //   // if (marketplaceItem.name === 'Aliexpress') {
+      //   //   this.dataCreateMarket.credentials = [
+      //   //     {
+      //   //       token: '',
+      //   //     },
+      //   //   ];
+      //   // }
+      //   // if (marketplaceItem.name === 'Ozon') {
+      //   //   this.dataCreateMarket.credentials = [
+      //   //     {
+      //   //       'Client-Id': null,
+      //   //       'Api-Key': '',
+      //   //     },
+      //   //   ];
+      //   // }
+      // },
 
-        this.dataCreateMarket.marketplace_id = itemSelectMenu.id;
-        console.log(itemSelectMenu);
+      setSelectedMarketplace($event, marketplaceItem) {
+        this.pickedMarketplace = $event;
+        this.inputs[2].value = marketplaceItem.name;
+        this.dataCreateMarket.marketplace_id = marketplaceItem.id;
+
+        if (marketplaceItem.name === 'Aliexpress') {
+          this.dataCreateMarket.credentials = [
+            {
+              token: '',
+            },
+          ];
+        }
+        if (marketplaceItem.name === 'Ozon') {
+          this.dataCreateMarket.credentials = [
+            {
+              'Client-Id': null,
+              'Api-Key': '',
+            },
+          ];
+        }
+
+        console.log(this.$refs.selectMarketplace[0].closeMenuFromOuter());
       },
 
       setWarehouseSelectedItems(emitData) {
@@ -287,6 +316,8 @@
         } else {
           this.selectedWarehouseItems[emitData.item.id] = emitData.item;
         }
+        this.dataCreateMarket.portalWarehouses = Object.keys(this.selectedWarehouseItems);
+        console.log(this.dataCreateMarket);
       },
 
       removeWarehouseSelectedItems(item) {
@@ -386,9 +417,12 @@
       .radio-button.radio-button--active {
         box-shadow: none;
       }
+      .checkbox-list__item {
+        padding: 0;
+      }
       .checkbox__label {
         display: flex;
-        // padding: 12px 8px;
+        padding: 12px 8px;
         align-items: center;
       }
     }

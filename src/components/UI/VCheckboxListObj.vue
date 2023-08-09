@@ -52,34 +52,6 @@
 
         this.$emit('onChange', { isCheckedBoolean: isCheckedBoolean, item: item });
       },
-
-      setCurrentCheckedForRender() {
-        // this.currentIsCheckedRender = [];
-        // for (let key in this.ownIsChecked) {
-        //   let value = this.ownIsChecked[key];
-        //   if (value) {
-        //     this.currentIsCheckedRender.push(key);
-        //   }
-        // }
-      },
-    },
-    mounted() {
-      // const savedIsChecked = JSON.parse(localStorage.getItem('ownIsChecked'));
-      // if (savedIsChecked) {
-      //   this.ownIsChecked = savedIsChecked;
-      // }
-      // this.setCurrentCheckedForRender();
-      // this.$emit('onChange', this.currentIsCheckedRender);
-    },
-
-    watch: {
-      currentIsCheckedItems: {
-        handler: (newValue, oldValue) => {
-          console.log(newValue);
-          // console.log(this.cic);
-        },
-        deep: true,
-      },
     },
   };
 </script>
