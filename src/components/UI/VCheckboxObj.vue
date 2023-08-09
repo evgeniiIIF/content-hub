@@ -3,7 +3,7 @@
     <label class="checkbox__label">
       <input
         type="checkbox"
-        :checked="currentIsChecked"
+        :checked="isChecked"
         :value="text"
         @change="onChange"
       />
@@ -63,7 +63,7 @@
     name: 'VCheckbox',
     props: {
       isChecked: {
-        type: [Boolean, Array],
+        type: Boolean,
         default: false,
       },
       text: {
@@ -78,33 +78,10 @@
         default: false,
       },
     },
-    data() {
-      return {
-        currentIsChecked: false,
-      };
-    },
     methods: {
       onChange() {
-        if (Array.isArray(this.currentIsChecked)) {
-          const index = this.currentIsChecked.indexOf(this.text);
-
-          if (index !== -1) {
-            this.currentIsChecked.splice(index, 1);
-          } else {
-            this.currentIsChecked.push(this.text);
-          }
-          this.$emit('onChange', this.currentIsChecked);
-        } else {
-          this.$emit('onChange', !this.isChecked);
-          // console.log(console.log(this.isChecked));
-        }
+        this.$emit('onChange', !this.isChecked);
       },
-    },
-
-    mounted() {
-      this.$nextTick(() => {
-        this.currentIsChecked = this.isChecked;
-      });
     },
   };
 </script>

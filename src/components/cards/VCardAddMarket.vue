@@ -1,7 +1,7 @@
 <template>
-  <div class="card-add-category">
+  <div class="card-add-market">
     <button
-      class="card-add-category__close"
+      class="card-add-market__close"
       @click="$emit('onCloseSlidingBlock')"
     >
       <img
@@ -9,15 +9,15 @@
         alt="close"
       />
     </button>
-    <div class="card-add-category__body">
-      <h3 class="card-add-category__title">Добавить магазин</h3>
+    <div class="card-add-market__body">
+      <h3 class="card-add-market__title">Добавить магазин</h3>
       <form
-        class="card-add-category__body-content"
+        class="card-add-market__body-content"
         @submit.prevent="onSubmit"
       >
-        <div class="card-add-category__inputs">
+        <div class="card-add-market__inputs">
           <div
-            class="card-add-category__input"
+            class="card-add-market__input"
             v-for="opts in inputs"
           >
             <VSelect
@@ -25,17 +25,23 @@
               :opts="opts"
             >
               <template #menu>
-                <ul class="card-add-category__list">
+                <ul class="list">
                   <li
-                    class="card-add-category__item"
+                    class="list__item"
                     v-for="(itemSelectMenu, index) in inputs[2].items"
                     :key="itemSelectMenu.name"
                     @click.stop="setSelectedMarketplace(itemSelectMenu)"
                   >
                     <span
-                      class="card-add-category__name"
-                      :class="{ 'card-add-category__item--active': itemSelectMenu.name === currentSelected }"
-                      >{{ itemSelectMenu.name }}
+                      class="list__name"
+                      :class="{ 'list__item--active': itemSelectMenu.name === currentSelected }"
+                    >
+                      <VRadioButton
+                        :variant="itemSelectMenu.name"
+                        name="marketplace"
+                        :currentPicked="this.pickedMarketplace"
+                        @changePicked="onChangePickedMarketplace($event)"
+                      />
                     </span>
                   </li>
                 </ul>
@@ -45,22 +51,33 @@
               v-else-if="opts.multiSelectWh"
               :opts="opts"
               :selectedItems="selectedWarehouseItems"
+              @onRemoveSelectedItem="removeWarehouseSelectedItems($event)"
             >
               <template #menu>
-                <ul class="card-add-category__list">
+                <!-- <ul class="list">
                   <li
-                    class="card-add-category__item"
+                    class="list__item"
                     v-for="(itemSelectMenu, index) in inputs[3].items"
                     :key="itemSelectMenu.name"
-                    @click.stop="setWarehouseSelectedItems(itemSelectMenu)"
                   >
                     <span
-                      class="card-add-category__name"
-                      :class="{ 'card-add-category__item--active': itemSelectMenu.name === currentSelected }"
-                      >{{ itemSelectMenu.name }}
+                      class="list__name"
+                      :class="{ 'list__item--active': itemSelectMenu.name === currentSelected }"
+                    >
+                      <VCheckbox
+                        :text="itemSelectMenu.name"
+                        @onChange="setWarehouseSelectedItems($event, itemSelectMenu)"
+                        :isChecked="isCheckedWaresouseItem"
+                      />
                     </span>
                   </li>
-                </ul>
+                </ul> -->
+
+                <VCheckboxListObj
+                  :items="inputs[3].items"
+                  :currentIsCheckedItems="selectedWarehouseItems"
+                  @onChange="setWarehouseSelectedItems($event)"
+                />
               </template>
             </VMultiSelect>
             <VInput
@@ -70,22 +87,22 @@
             />
           </div>
         </div>
-        <div class="card-add-category__buttons">
-          <div class="card-add-category__button--bd">
+        <div class="card-add-market__buttons">
+          <div class="card-add-market__button--bd">
             <VButton>Отменить</VButton>
           </div>
-          <div class="card-add-category__button--bg">
+          <div class="card-add-market__button--bg">
             <VButton>Сохранить изменения</VButton>
             <!-- <VButton :pending="isAddCategoryPending">Сохранить изменения</VButton> -->
           </div>
         </div>
       </form>
     </div>
-    <!-- <div class="card-add-category__bottom">
-      <div class="card-add-category__info info-card-add-category">
-        <div class="info-card-add-category__item">
-          <div class="info-card-add-category__name">Автор</div>
-          <div class="info-card-add-category__value">Захар</div>
+    <!-- <div class="card-add-market__bottom">
+      <div class="card-add-market__info info-card-add-market">
+        <div class="info-card-add-market__item">
+          <div class="info-card-add-market__name">Автор</div>
+          <div class="info-card-add-market__value">Захар</div>
         </div>
       </div>
     </div> -->
@@ -99,16 +116,20 @@
   import VMultiSelect from '../UI/VMultiSelect.vue';
 
   import { mapGetters, mapActions } from 'vuex';
+  import VRadioButton from '../UI/VRadioButton.vue';
+  import VCheckboxListObj from '../UI/VCheckboxListObj.vue';
 
   export default {
     name: 'VCardAddMarket',
 
     emits: ['onCloseSlidingBlock'],
 
-    components: { VInput, VButton, VSelect, VMultiSelect },
+    components: { VInput, VButton, VSelect, VMultiSelect, VRadioButton, VCheckboxListObj },
     data() {
       return {
+        pickedMarketplace: '',
         selectedWarehouseItems: {},
+        currentSelectedWarehouseItem: {},
 
         dataCreateMarket: {
           marketplace_id: null,
@@ -211,6 +232,10 @@
         marketplacesItems: 'getMarketplacesItems',
         warehousesItems: 'getPortalWarehousesItems',
       }),
+      // isCheckedWaresouseItem() {
+      //   console.log(Boolean(this.selectedWarehouseItems[this.currentSelectedWarehouseItem.id]));
+      //   return Boolean(this.selectedWarehouseItems[this.currentSelectedWarehouseItem.id]);
+      // },
     },
     watch: {
       // selectMenuItems(oldValue, newValue) {
@@ -223,6 +248,10 @@
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
       // ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       // ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
+      onChangePickedMarketplace($event) {
+        console.log($event);
+        this.pickedMarketplace = $event;
+      },
 
       async onSubmit() {
         // console.log(this.dataForCreateCategory);
@@ -252,12 +281,16 @@
         console.log(itemSelectMenu);
       },
 
-      setWarehouseSelectedItems(itemSelectMenu) {
-        if (this.selectedWarehouseItems[itemSelectMenu.id]) {
-          delete this.selectedWarehouseItems[itemSelectMenu.id];
+      setWarehouseSelectedItems(emitData) {
+        if (this.selectedWarehouseItems[emitData.item.id]) {
+          delete this.selectedWarehouseItems[emitData.item.id];
         } else {
-          this.selectedWarehouseItems[itemSelectMenu.id] = itemSelectMenu.name;
+          this.selectedWarehouseItems[emitData.item.id] = emitData.item;
         }
+      },
+
+      removeWarehouseSelectedItems(item) {
+        delete this.selectedWarehouseItems[item.id];
       },
     },
 
@@ -270,83 +303,8 @@
 </script>
 
 <style lang="scss">
-  .card-add-category {
+  .card-add-market {
     position: relative;
-    &__close {
-      background: transparent;
-      border: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      border-radius: 50%;
-      &:hover {
-        background: #eee;
-      }
-    }
-    &__list {
-      .card-add-category__list {
-        background: #fff;
-
-        .card-add-category__item {
-          background: #fff;
-          font-weight: 400;
-
-          color: $dark-color;
-        }
-
-        .card-add-category__item--active {
-          background: green;
-        }
-
-        .card-add-category__name {
-          padding-left: 10px;
-          color: $dark-color;
-
-          &:hover {
-            font-weight: 700;
-          }
-        }
-        .card-add-category__list {
-          .card-add-category__name {
-            padding-left: 20px;
-          }
-          .card-add-category__item--active {
-            background: green;
-          }
-        }
-      }
-    }
-
-    &__item {
-      font-weight: 700;
-      background: $blue-color;
-      color: #fff;
-    }
-
-    &__item--active {
-      background: green;
-    }
-
-    &__name {
-      display: block;
-      padding: 4px;
-      font-family: 'Inter';
-      font-style: normal;
-      font-size: 14px;
-      line-height: 24px;
-
-      &:hover {
-        background: #eee;
-        color: $dark-color;
-      }
-    }
-  }
-
-  .card-add-category {
     display: flex;
     flex-direction: column;
     width: 760px;
@@ -375,9 +333,63 @@
       @include mb(20px);
     }
 
+    &__close {
+      background: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      border-radius: 50%;
+      &:hover {
+        background: #eee;
+      }
+    }
+
+    &__item {
+      font-weight: 700;
+      background: $blue-color;
+      color: #fff;
+    }
+
+    &__item--active {
+      background: green;
+    }
+
+    &__name {
+      display: block;
+      padding: 4px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-size: 14px;
+      line-height: 24px;
+
+      &:hover {
+        background: #eee;
+        color: $dark-color;
+      }
+    }
+  }
+
+  .card-add-market {
     &__input {
       .input__input {
         border-color: $border-light2;
+      }
+      .radio-button {
+        justify-content: start;
+        border: none;
+      }
+      .radio-button.radio-button--active {
+        box-shadow: none;
+      }
+      .checkbox__label {
+        display: flex;
+        // padding: 12px 8px;
+        align-items: center;
       }
     }
 
@@ -406,7 +418,8 @@
     &__info {
     }
   }
-  .info-card-add-category {
+
+  .info-card-add-market {
     &__item {
     }
 

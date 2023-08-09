@@ -44,7 +44,7 @@
     // emits: ['changePicked'],
     methods: {
       changePicked() {
-        console.log(this.variant);
+        // console.log(this.variant);
         this.$emit('changePicked', this.variant);
       },
     },
