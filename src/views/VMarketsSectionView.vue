@@ -95,4 +95,54 @@
   };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .markets {
+    &__top {
+    }
+
+    &__top-body {
+    }
+
+    &__table {
+      padding-bottom: 100px;
+    }
+  }
+  .container {
+  }
+  .top {
+    &__row {
+    }
+
+    &__title {
+    }
+
+    &__actions {
+    }
+
+    &__button {
+    }
+
+    &__show-hide {
+    }
+  }
+  .button {
+    &__image {
+    }
+
+    &__text {
+    }
+  }
+  .show-hide-categories {
+    &__button {
+    }
+
+    &__button--all {
+    }
+
+    &__button--active {
+    }
+
+    &__button--inactive {
+    }
+  }
+</style>

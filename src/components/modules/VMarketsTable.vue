@@ -46,47 +46,43 @@
               </svg>
             </span>
           </li>
-          <!-- <li class="head-table__buttons">
-          <VDropdovnSlots>
-            <template #button>
-              <button
-                class="head-table__button"
-                type="button"
-              >
-                <img
-                  src="@/assets/img/static/decorative-icon/Settings_Future_20px.svg"
-                  alt=""
-                />
-              </button>
-            </template>
-            <template #menu>
-              <VCheckboxList
-                :items="headCategories.slice(1)"
-                :isChecked="headCategories.slice(1)"
-                @onChange="setShowHideNthChildRowTable($event)"
-              />
-            </template>
-          </VDropdovnSlots>
-        </li> -->
         </ul>
       </div>
       <div class="table__body js-dropdown-menu--root">
         <VRecursiveList :items="marketsItems">
           <template #slot1="{ itemL1, itemMarketL1 = itemL1, indexL1, itemMarketIndexL1 = indexL1 }">
             <div
-              class="item-shops row-table"
+              class="item-market row-table"
               :ref="`itemMarket(index-${itemMarketIndexL1})`"
               @mouseleave="closeOwnDropdown($event, itemMarketIndexL1)"
             >
-              <div class="item-shops__name">{{ itemMarketL1.name }}</div>
-              <div class="item-shops__warehouse">-</div>
-              <div class="item-shops__status">-</div>
-              <div class="item-shops__belonging">{{ itemMarketL1.marketplace.name }}</div>
+              <div class="item-market__name">{{ itemMarketL1.name }}</div>
+              <div class="item-market__warehouse warehouse-item-market">
+                <ul
+                  v-if="itemMarketL1.portalWarehouses.length"
+                  class="warehouse-item-market__list"
+                >
+                  <li
+                    class="warehouse-item-market__list-item"
+                    v-for="itemPortalWarehouses in itemMarketL1.portalWarehouses"
+                  >
+                    {{ itemPortalWarehouses.name }}
+                  </li>
+                </ul>
+                <span
+                  v-else
+                  class="warehouse-item-market__empty"
+                >
+                  -
+                </span>
+              </div>
+              <div class="item-market__status">-</div>
+              <div class="item-market__belonging">{{ itemMarketL1.marketplace.name }}</div>
               <div
-                class="item-shops__buttons"
+                class="item-market__buttons"
                 @click.stop
               >
-                <div class="item-shops__button--more">
+                <div class="item-market__button--more">
                   <VDropdovnSlots :ref="`VDropdovnSlots(index-${itemMarketIndexL1})`">
                     <template #button>
                       <button
@@ -123,7 +119,7 @@
                           </VButton>
                         </li>
                         <li class="list__item">
-                          <VButton>
+                          <VButton @click="removeMarket(itemMarketL1)">
                             <span class="button__image">
                               <svg
                                 width="20"
@@ -211,6 +207,12 @@
 
     methods: {
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
+      ...mapActions('deleteMarket', ['DELETE_MARKET']),
+
+      removeMarket(itemMarketL1) {
+        // console.log(itemMarketL1);
+        this.DELETE_MARKET(itemMarketL1);
+      },
 
       closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
         const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];
@@ -233,7 +235,7 @@
       await this.GET_ITEMS_MARKETS();
       this.mixDropdownMenuFn();
       // await this.GET_ITEMS_SELECT_OZON();
-      // console.log(this.marketsItems);
+      console.log(this.marketsItems);
     },
   };
 </script>
@@ -291,13 +293,13 @@
     }
   }
 
-  .item-shops {
+  .item-market {
     padding: 18px 16px;
 
     &:hover {
       background: #f4f6f7;
 
-      .item-shops__button--more {
+      .item-market__button--more {
         opacity: 1;
       }
     }
@@ -428,6 +430,31 @@
           margin-right: 0;
         }
       }
+    }
+  }
+
+  .warehouse-item-market {
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    &__list-item {
+      padding: 4px 8px;
+      border-radius: 4px;
+      /* Body_S */
+      font-family: Inter;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; /* 166.667% */
+
+      color: var(--black, #292929);
+      background: var(--gray-3, #f4f6f7);
+    }
+
+    &__empty {
     }
   }
 </style>

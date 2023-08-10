@@ -832,34 +832,34 @@
         this.RESET_PENDING();
       },
 
-      // filterRecursively(obj, filterValue) {
-      //   const copyObj = JSON.parse(JSON.stringify(obj));
+      filterRecursively(obj, filterValue) {
+        const copyObj = JSON.parse(JSON.stringify(obj));
 
-      //   const filterFunc = (copyObj, filterValue) => {
-      //     if (filterValue) {
-      //       return copyObj.filter((item) => {
-      //         const corect =
-      //           item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
-      //           (item.children &&
-      //             item.children.some((childItem) => {
-      //               return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
-      //             }));
+        const filterFunc = (copyObj, filterValue) => {
+          if (filterValue) {
+            return copyObj.filter((item) => {
+              const corect =
+                item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+                (item.children &&
+                  item.children.some((childItem) => {
+                    return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
+                  }));
 
-      //         if (item.children_count > 0) {
-      //           item.children = filterFunc(item.children, filterValue);
-      //         }
+              if (item.children_count > 0) {
+                item.children = filterFunc(item.children, filterValue);
+              }
 
-      //         if (corect) {
-      //           return true;
-      //         }
-      //       });
-      //     } else {
-      //       return obj;
-      //     }
-      //   };
+              if (corect) {
+                return true;
+              }
+            });
+          } else {
+            return obj;
+          }
+        };
 
-      //   return filterFunc(copyObj, filterValue);
-      // },
+        return filterFunc(copyObj, filterValue);
+      },
 
       onInputFilter(e) {
         this.filterValueSelect = e.target.value;

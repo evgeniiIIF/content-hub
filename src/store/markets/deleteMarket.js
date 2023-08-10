@@ -43,12 +43,15 @@ export default {
     },
   },
   actions: {
-    async SEND_MARKET_DATA(store, data) {
+    async DELETE_MARKET(store, data) {
       console.log(data);
+      const url = `http://api.hub.absit.ru/api/v1/markets/${data.id}`;
 
-      const dataFor = data;
-
-      console.log(dataFor);
+      // const dataFor = {
+      //   parent_id: data.id,
+      //   name: data.name,
+      //   description: data.description,
+      // };
 
       const config = {
         headers: {
@@ -60,9 +63,8 @@ export default {
 
       store.commit('setPending');
       await axios
-        .post('http://api.hub.absit.ru/api/v1/markets/store', dataFor, config)
+        .delete(url, config)
         .then((response) => {
-          // console.log('su');
           console.log(response.data);
 
           store.commit('setSuccess');

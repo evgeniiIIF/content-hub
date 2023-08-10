@@ -1,7 +1,7 @@
 <template>
-  <div class="card-add-category">
+  <div class="card-add-market">
     <button
-      class="card-add-category__close"
+      class="card-add-market__close"
       @click="$emit('onCloseSlidingBlock')"
     >
       <img
@@ -9,95 +9,91 @@
         alt="close"
       />
     </button>
-    <div class="card-add-category__body">
-      <h3 class="card-add-category__title">Редактировать магазин</h3>
+    <div class="card-add-market__body">
+      <h3 class="card-add-market__title">Редактировать магазин</h3>
       <form
-        class="card-add-category__body-content"
+        class="card-add-market__body-content"
         @submit.prevent="onSubmit"
       >
-        <div class="card-add-category__inputs">
+        <div class="card-add-market__inputs">
           <div
-            class="card-add-category__input"
-            v-for="opts in inputs"
+            class="card-add-market__input"
+            v-for="(opts, index) in inputs"
           >
             <VSelect
-              v-if="opts.select"
+              v-if="opts.selectMP"
               :opts="opts"
+              ref="selectMarketplace"
             >
               <template #menu>
-                <ul class="card-add-category__list">
+                <ul class="list">
                   <li
-                    class="card-add-category__item"
-                    v-for="(itemSelectMenu, index) in inputs[0].items"
+                    class="list__item"
+                    v-for="(itemSelectMenu, index) in inputs[2].items"
                     :key="itemSelectMenu.name"
-                    @click.stop="selectionItem(itemSelectMenu)"
                   >
                     <span
-                      class="card-add-category__name"
-                      :class="{ 'card-add-category__item--active': itemSelectMenu.name === currentSelected }"
-                      >{{ itemSelectMenu.name }}</span
+                      class="list__name"
+                      :class="{ 'list__item--active': itemSelectMenu.name === currentSelected }"
                     >
-                    <ul
-                      v-if="itemSelectMenu.children_count"
-                      class="card-add-category__list"
-                    >
-                      <li
-                        class="card-add-category__item"
-                        v-for="(itemSelectMenu2, index2) in itemSelectMenu.children"
-                        :key="itemSelectMenu2.name"
-                        @click.stop="selectionItem(itemSelectMenu2)"
-                      >
-                        <span
-                          class="card-add-category__name"
-                          :class="{ 'card-add-category__item--active': itemSelectMenu2.name === currentSelected }"
-                          >{{ itemSelectMenu2.name }}</span
-                        >
-                        <!-- <ul
-													v-if="itemSelectMenu2.children_count"
-													class="card-add-category__list"
-												>
-													<li
-														class="card-add-category__item"
-														v-for="(itemSelectMenu3, index3) in itemSelectMenu2.children"
-														:key="itemSelectMenu3.name"
-														@click.stop="selectionItem(itemSelectMenu3)"
-													>
-														<span
-															class="card-add-category__name"
-															:class="{ 'card-add-category__item--active': itemSelectMenu3.name === currentSelected }"
-															>{{ itemSelectMenu3.name }}</span
-														>
-													</li>
-												</ul> -->
-                      </li>
-                    </ul>
+                      <VRadioButton
+                        :variant="itemSelectMenu.name"
+                        name="marketplace"
+                        :currentPicked="pickedMarketplace"
+                        @changePicked="setSelectedMarketplace($event, itemSelectMenu)"
+                      />
+                    </span>
                   </li>
                 </ul>
               </template>
             </VSelect>
-            <VInput
-              v-else
+            <VMultiSelect
+              v-else-if="opts.multiSelectWh"
               :opts="opts"
-              @onInput="onInputName"
+              :selectedItems="selectedWarehouseItems"
+              @onRemoveSelectedItem="removeWarehouseSelectedItems($event, index)"
+            >
+              <template #menu>
+                <VCheckboxListObj
+                  :items="inputs[3].items"
+                  :currentIsCheckedItems="selectedWarehouseItems"
+                  @onChange="setWarehouseSelectedItems($event, index)"
+                />
+              </template>
+            </VMultiSelect>
+            <VInput
+              v-else-if="opts.inputAli && pickedMarketplace === 'Aliexpress'"
+              :opts="opts"
+              @onInput="onInput($event, index, opts)"
+            />
+            <VInput
+              v-else-if="opts.inputOzon && pickedMarketplace === 'Ozon'"
+              :opts="opts"
+              @onInput="onInput($event, index, opts)"
+            />
+            <VInput
+              v-else-if="opts.name === 'name' || opts.name === 'min_stock_quantity'"
+              :opts="opts"
+              @onInput="onInput($event, index, opts)"
             />
           </div>
         </div>
-        <div class="card-add-category__buttons">
-          <div class="card-add-category__button--bd">
+        <div class="card-add-market__buttons">
+          <div class="card-add-market__button--bd">
             <VButton>Отменить</VButton>
           </div>
-          <div class="card-add-category__button--bg">
-            <VButton>Сохранить изменения</VButton>
+          <div class="card-add-market__button--bg">
+            <VButton type="submit">Сохранить изменения</VButton>
             <!-- <VButton :pending="isAddCategoryPending">Сохранить изменения</VButton> -->
           </div>
         </div>
       </form>
     </div>
-    <!-- <div class="card-add-category__bottom">
-      <div class="card-add-category__info info-card-add-category">
-        <div class="info-card-add-category__item">
-          <div class="info-card-add-category__name">Автор</div>
-          <div class="info-card-add-category__value">Захар</div>
+    <!-- <div class="card-add-market__bottom">
+      <div class="card-add-market__info info-card-add-market">
+        <div class="info-card-add-market__item">
+          <div class="info-card-add-market__name">Автор</div>
+          <div class="info-card-add-market__value">Захар</div>
         </div>
       </div>
     </div> -->
@@ -108,21 +104,41 @@
   import VButton from '../UI/VButton.vue';
   import VInput from '../UI/VInput.vue';
   import VSelect from '../UI/VSelect.vue';
+  import VMultiSelect from '../UI/VMultiSelect.vue';
 
   import { mapGetters, mapActions } from 'vuex';
+  import VRadioButton from '../UI/VRadioButton.vue';
+  import VCheckboxListObj from '../UI/VCheckboxListObj.vue';
 
   export default {
-    name: 'VCardEditMarket',
+    name: 'VCardAddMarket',
 
     emits: ['onCloseSlidingBlock'],
+    props: {
+      marketData: {
+        type: Object,
+      },
+    },
 
-    components: { VInput, VButton, VSelect },
+    components: { VInput, VButton, VSelect, VMultiSelect, VRadioButton, VCheckboxListObj },
     data() {
       return {
-        dataForCreateCategory: {
-          id: 0,
+        pickedMarketplace: '',
+        selectedWarehouseItems: {},
+        currentSelectedWarehouseItem: {},
+
+        dataCreateMarket: {
+          marketplace_id: null,
           name: '',
-          description: '',
+          min_stock_quantity: null,
+          portalWarehouses: [],
+          credentials: [],
+          contacts: [
+            {
+              phone: '',
+              email: '',
+            },
+          ],
         },
 
         currentSelected: null,
@@ -137,15 +153,16 @@
           },
           {
             value: '',
-            type: 'text',
+            type: 'number',
             label: 'Мин. кол-во остатка',
-            name: 'min',
+            name: 'min_stock_quantity',
             placeholder: 'Введите число (или диапазон чисел)',
           },
           {
-            select: true,
+            selectMP: true,
             icon: true,
             value: '',
+            marketplace_id: null,
             type: 'text',
             label: 'Принадлежность к МП',
             name: 'belonging',
@@ -153,9 +170,9 @@
             items: {},
           },
           {
-            select: true,
+            multiSelectWh: true,
             icon: true,
-            value: '',
+            value: [],
             type: 'text',
             label: 'Подключить склад(ы)',
             name: 'warehouse',
@@ -163,46 +180,48 @@
             items: {},
           },
           {
-            value: '',
+            inputAli: true,
+            value:
+              'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWxsZXJfaWQiOjEwNTYwMzE1MjUsInRva2VuX2lkIjoxNTY3fQ.hleh6hIOckMdVvVclRmDjZspMovJKCZbF91RfrOZtJsiUE_RZuFBzNrSNQUDQpwO97OpJDCXhS60UkuCu-xwRP2wha5d65FVAiEJxTeMxGoHzW8q3OLOn3zlwxNenpAczYlM_Zb2_E_xV1U-cNfrKydXPieuO19_eCPMP7m0UjHgkkYZUfdrcVUVK2pncU846aypypfMotDHzvguyyCF_kNNVvD7RSf-J-YkYoYTC0qoZC7lv7sfFbUk88-91sz0B-4U9n24xkK1K42HzxqgddSTug1LRmmErEU9gPFxfFZ1gVPHEIRhnl5GQ-oHwCb-0eqHe39rcfTzgi5kHxP8p647zFxcl-fRZQxV34elWzaWf-LtAbjC_qZyjONqBS2YhkRAinbfcLS-1SVVhLk8rQbxe5aLuho2la2pZNoRTgIwu3R1i7i-nz2-xrUmUXdHKz8OexCfJFStw341oP3PUONpg1nYsEAKW3n1VqMRgdLodPwYw_CuXWsJjbC7H2958TYweo2ucsRa49dXWcYS4ZYnoE_86YEwiszCEQkUgWvl538_qHedmskJjVgI-WiM-0KD_KrQYeQ9XR9zR0IkwZj5lrq-inTAGn38-BZxAUUH_m-tnmFNE4Saawm7x6-G4DzUIdlZ4xriYRRSSeM0TLnntDeN3KhVOBuHkIHN7c8',
             type: 'text',
-            label: 'Ozon token',
-            name: 'Ozon token',
+            label: 'Ali token',
+            name: 'token',
             placeholder: 'token',
           },
           {
-            value: '',
-            type: 'text',
-            label: 'Ozon token',
-            name: 'Ozon token enter',
-            placeholder: 'Введите token Ozon',
-          },
-          {
-            value: '',
+            inputOzon: true,
+            value: '108371',
             type: 'text',
             label: 'Ozon client-ID',
-            name: 'Ozon client-ID enter',
+            name: 'Client-Id',
             placeholder: 'Введите client-ID',
           },
           {
-            value: '',
+            inputOzon: true,
+            value: '3e9b5868-4a46-4094-bba4-69a3f015d5ad',
             type: 'text',
             label: 'Ozon API key',
-            name: 'Ozon API key enter',
+            name: 'Api-Key',
             placeholder: 'Введите API key',
           },
         ],
       };
     },
     computed: {
-      ...mapGetters('marketsItems', {
-        marketplacesItems: 'getMarketplacesItems',
-      }),
       // ...mapGetters('localCategoriesItems', {
       //   categoriesItems: 'items',
       // }),
       // ...mapGetters('addCategory', {
       //   isAddCategoryPending: 'pending',
       // }),
+      ...mapGetters('marketsItems', {
+        marketplacesItems: 'getMarketplacesItems',
+        warehousesItems: 'getPortalWarehousesItems',
+      }),
+      // isCheckedWaresouseItem() {
+      //   console.log(Boolean(this.selectedWarehouseItems[this.currentSelectedWarehouseItem.id]));
+      //   return Boolean(this.selectedWarehouseItems[this.currentSelectedWarehouseItem.id]);
+      // },
     },
     watch: {
       // selectMenuItems(oldValue, newValue) {
@@ -212,117 +231,127 @@
       // },
     },
     methods: {
+      ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
+      ...mapActions('addMarket', ['SEND_MARKET_DATA']),
+
       // ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       // ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
 
       async onSubmit() {
-        // console.log(this.dataForCreateCategory);
-        await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
+        this.inputs.forEach((opts) => {
+          if (opts.name === 'name') {
+            this.dataCreateMarket.name = opts.value;
+          }
+          if (opts.name === 'min_stock_quantity') {
+            this.dataCreateMarket.min_stock_quantity = opts.value;
+          }
+          if (opts.name === 'token' && this.dataCreateMarket.credentials[0].hasOwnProperty('token')) {
+            this.dataCreateMarket.credentials[0].token = opts.value;
+          }
+          if (opts.name === 'Client-Id' && this.dataCreateMarket.credentials[0].hasOwnProperty('Client-Id')) {
+            this.dataCreateMarket.credentials[0]['Client-Id'] = opts.value;
+          }
+          if (opts.name === 'Api-Key' && this.dataCreateMarket.credentials[0].hasOwnProperty('Api-Key')) {
+            this.dataCreateMarket.credentials[0]['Api-Key'] = opts.value;
+          }
+          if (opts.name === 'warehouse') {
+            this.dataCreateMarket.portalWarehouses = opts.value;
+          }
+          if (opts.name === 'belonging') {
+            this.dataCreateMarket.marketplace_id = opts.marketplace_id;
+          }
+        });
+        console.log(this.dataCreateMarket);
+        await this.SEND_MARKET_DATA(this.dataCreateMarket);
+        await this.GET_ITEMS_MARKETS();
         this.$emit('onCloseSlidingBlock');
-        await this.GET_ITEMS_CATEGORIES();
       },
 
-      onInputName(e) {
-        this.dataForCreateCategory.name = e.target.value;
-      },
-      onInputDescription(e) {
-        this.dataForCreateCategory.description = e.target.value;
+      onInput(e, index, opts) {
+        this.inputs[index].value = e.target.value;
       },
 
-      selectionItem(itemSelectMenu) {
-        this.inputs[0].value = itemSelectMenu.name;
-        this.currentSelected = itemSelectMenu.name;
+      // selectionItem(itemSelectMenu) {
+      //   this.inputs[0].value = itemSelectMenu.name;
+      //   this.currentSelected = itemSelectMenu.name;
 
-        // this.dataForCreateCategory.name = itemSelectMenu.name;
-        this.dataForCreateCategory.id = itemSelectMenu.id;
+      //   // this.dataForCreateCategory.name = itemSelectMenu.name;
+      //   this.dataForCreateCategory.id = itemSelectMenu.id;
+      // },
+      // setSelectedMarketplace(marketplaceItem) {
+      //   // this.inputs[2].value = marketplaceItem.name;
+      //   // this.dataCreateMarket.marketplace_id = marketplaceItem.id;
+      //   // if (marketplaceItem.name === 'Aliexpress') {
+      //   //   this.dataCreateMarket.credentials = [
+      //   //     {
+      //   //       token: '',
+      //   //     },
+      //   //   ];
+      //   // }
+      //   // if (marketplaceItem.name === 'Ozon') {
+      //   //   this.dataCreateMarket.credentials = [
+      //   //     {
+      //   //       'Client-Id': null,
+      //   //       'Api-Key': '',
+      //   //     },
+      //   //   ];
+      //   // }
+      // },
+
+      setSelectedMarketplace($event, marketplaceRadioItem) {
+        this.pickedMarketplace = $event;
+
+        this.inputs[2].value = marketplaceRadioItem.name;
+
+        this.inputs[2].marketplace_id = marketplaceRadioItem.id;
+
+        if (marketplaceRadioItem.name === 'Aliexpress') {
+          this.dataCreateMarket.credentials = [
+            {
+              token: '',
+            },
+          ];
+        }
+        if (marketplaceRadioItem.name === 'Ozon') {
+          this.dataCreateMarket.credentials = [
+            {
+              'Client-Id': null,
+              'Api-Key': '',
+            },
+          ];
+        }
+        this.$refs.selectMarketplace[0].closeMenuFromOuter();
+      },
+
+      setWarehouseSelectedItems(emitData, index) {
+        if (this.selectedWarehouseItems[emitData.item.id]) {
+          delete this.selectedWarehouseItems[emitData.item.id];
+        } else {
+          this.selectedWarehouseItems[emitData.item.id] = emitData.item;
+        }
+        // this.dataCreateMarket.portalWarehouses = Object.keys(this.selectedWarehouseItems);
+        this.inputs[index].value = Object.keys(this.selectedWarehouseItems);
+        console.log(this.inputs);
+      },
+
+      removeWarehouseSelectedItems(item, index) {
+        delete this.selectedWarehouseItems[item.id];
+        this.inputs[index].value = Object.keys(this.selectedWarehouseItems);
+        console.log(this.inputs);
       },
     },
 
-    async created() {
-      // await this.GET_ITEMS_CATEGORIES();
-      // console.log(this.inputs[2].items);
+    async mounted() {
+      await this.GET_ITEMS_MARKETS();
+      this.inputs[2].items = this.marketplacesItems;
+      this.inputs[3].items = this.warehousesItems;
     },
   };
 </script>
 
 <style lang="scss">
-  .card-add-category {
+  .card-add-market {
     position: relative;
-    &__close {
-      background: transparent;
-      border: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      border-radius: 50%;
-      &:hover {
-        background: #eee;
-      }
-    }
-    &__list {
-      .card-add-category__list {
-        background: #fff;
-
-        .card-add-category__item {
-          background: #fff;
-          font-weight: 400;
-
-          color: $dark-color;
-        }
-
-        .card-add-category__item--active {
-          background: green;
-        }
-
-        .card-add-category__name {
-          padding-left: 10px;
-          color: $dark-color;
-
-          &:hover {
-            font-weight: 700;
-          }
-        }
-        .card-add-category__list {
-          .card-add-category__name {
-            padding-left: 20px;
-          }
-          .card-add-category__item--active {
-            background: green;
-          }
-        }
-      }
-    }
-
-    &__item {
-      font-weight: 700;
-      background: $blue-color;
-      color: #fff;
-    }
-
-    &__item--active {
-      background: green;
-    }
-
-    &__name {
-      display: block;
-      padding: 4px;
-      font-family: 'Inter';
-      font-style: normal;
-      font-size: 14px;
-      line-height: 24px;
-
-      &:hover {
-        background: #eee;
-        color: $dark-color;
-      }
-    }
-  }
-
-  .card-add-category {
     display: flex;
     flex-direction: column;
     width: 760px;
@@ -351,9 +380,66 @@
       @include mb(20px);
     }
 
+    &__close {
+      background: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      border-radius: 50%;
+      &:hover {
+        background: #eee;
+      }
+    }
+
+    &__item {
+      font-weight: 700;
+      background: $blue-color;
+      color: #fff;
+    }
+
+    &__item--active {
+      background: green;
+    }
+
+    &__name {
+      display: block;
+      padding: 4px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-size: 14px;
+      line-height: 24px;
+
+      &:hover {
+        background: #eee;
+        color: $dark-color;
+      }
+    }
+  }
+
+  .card-add-market {
     &__input {
       .input__input {
         border-color: $border-light2;
+      }
+      .radio-button {
+        justify-content: start;
+        border: none;
+      }
+      .radio-button.radio-button--active {
+        box-shadow: none;
+      }
+      .checkbox-list__item {
+        padding: 0;
+      }
+      .checkbox__label {
+        display: flex;
+        padding: 12px 8px;
+        align-items: center;
       }
     }
 
@@ -382,7 +468,8 @@
     &__info {
     }
   }
-  .info-card-add-category {
+
+  .info-card-add-market {
     &__item {
     }
 

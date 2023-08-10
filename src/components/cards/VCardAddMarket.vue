@@ -18,7 +18,7 @@
         <div class="card-add-market__inputs">
           <div
             class="card-add-market__input"
-            v-for="opts in inputs"
+            v-for="(opts, index) in inputs"
           >
             <VSelect
               v-if="opts.selectMP"
@@ -39,7 +39,7 @@
                       <VRadioButton
                         :variant="itemSelectMenu.name"
                         name="marketplace"
-                        :currentPicked="this.pickedMarketplace"
+                        :currentPicked="pickedMarketplace"
                         @changePicked="setSelectedMarketplace($event, itemSelectMenu)"
                       />
                     </span>
@@ -51,30 +51,30 @@
               v-else-if="opts.multiSelectWh"
               :opts="opts"
               :selectedItems="selectedWarehouseItems"
-              @onRemoveSelectedItem="removeWarehouseSelectedItems($event)"
+              @onRemoveSelectedItem="removeWarehouseSelectedItems($event, index)"
             >
               <template #menu>
                 <VCheckboxListObj
                   :items="inputs[3].items"
                   :currentIsCheckedItems="selectedWarehouseItems"
-                  @onChange="setWarehouseSelectedItems($event)"
+                  @onChange="setWarehouseSelectedItems($event, index)"
                 />
               </template>
             </VMultiSelect>
             <VInput
               v-else-if="opts.inputAli && pickedMarketplace === 'Aliexpress'"
               :opts="opts"
-              @onInput="onInput($event, opts)"
+              @onInput="onInput($event, index, opts)"
             />
             <VInput
               v-else-if="opts.inputOzon && pickedMarketplace === 'Ozon'"
               :opts="opts"
-              @onInput="onInput($event, opts)"
+              @onInput="onInput($event, index, opts)"
             />
             <VInput
               v-else-if="opts.name === 'name' || opts.name === 'min_stock_quantity'"
               :opts="opts"
-              @onInput="onInput($event, opts)"
+              @onInput="onInput($event, index, opts)"
             />
           </div>
         </div>
@@ -157,6 +157,7 @@
             selectMP: true,
             icon: true,
             value: '',
+            marketplace_id: null,
             type: 'text',
             label: 'Принадлежность к МП',
             name: 'belonging',
@@ -166,7 +167,7 @@
           {
             multiSelectWh: true,
             icon: true,
-            value: '',
+            value: [],
             type: 'text',
             label: 'Подключить склад(ы)',
             name: 'warehouse',
@@ -184,7 +185,7 @@
           },
           {
             inputOzon: true,
-            value: '',
+            value: '108371',
             type: 'text',
             label: 'Ozon client-ID',
             name: 'Client-Id',
@@ -192,7 +193,7 @@
           },
           {
             inputOzon: true,
-            value: '',
+            value: '3e9b5868-4a46-4094-bba4-69a3f015d5ad',
             type: 'text',
             label: 'Ozon API key',
             name: 'Api-Key',
@@ -232,31 +233,37 @@
       // ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
 
       async onSubmit() {
-        // console.log(this.dataCreateMarket);
+        this.inputs.forEach((opts) => {
+          if (opts.name === 'name') {
+            this.dataCreateMarket.name = opts.value;
+          }
+          if (opts.name === 'min_stock_quantity') {
+            this.dataCreateMarket.min_stock_quantity = opts.value;
+          }
+          if (opts.name === 'token' && this.dataCreateMarket.credentials[0].hasOwnProperty('token')) {
+            this.dataCreateMarket.credentials[0].token = opts.value;
+          }
+          if (opts.name === 'Client-Id' && this.dataCreateMarket.credentials[0].hasOwnProperty('Client-Id')) {
+            this.dataCreateMarket.credentials[0]['Client-Id'] = opts.value;
+          }
+          if (opts.name === 'Api-Key' && this.dataCreateMarket.credentials[0].hasOwnProperty('Api-Key')) {
+            this.dataCreateMarket.credentials[0]['Api-Key'] = opts.value;
+          }
+          if (opts.name === 'warehouse') {
+            this.dataCreateMarket.portalWarehouses = opts.value;
+          }
+          if (opts.name === 'belonging') {
+            this.dataCreateMarket.marketplace_id = opts.marketplace_id;
+          }
+        });
+        console.log(this.dataCreateMarket);
         await this.SEND_MARKET_DATA(this.dataCreateMarket);
-        // await this.SEND_CATEGORY_DATA(this.dataForCreateCategory);
-        // this.$emit('onCloseSlidingBlock');
-        // await this.GET_ITEMS_CATEGORIES();
+        await this.GET_ITEMS_MARKETS();
+        this.$emit('onCloseSlidingBlock');
       },
 
-      onInput(e, opts) {
-        if (opts.name === 'name') {
-          this.dataCreateMarket.name = e.target.value;
-        }
-        if (opts.name === 'min_stock_quantity') {
-          this.dataCreateMarket.min_stock_quantity = e.target.value;
-        }
-        if (opts.name === 'token') {
-          this.dataCreateMarket.credentials[0].token = e.target.value;
-        }
-        if (opts.name === 'Client-Id') {
-          this.dataCreateMarket.credentials[1]['Client-Id'] = e.target.value;
-        }
-        if (opts.name === 'Api-Key') {
-          this.dataCreateMarket.credentials[1]['Api-Key'] = e.target.value;
-        }
-
-        // console.log(this.dataCreateMarket);
+      onInput(e, index, opts) {
+        this.inputs[index].value = e.target.value;
       },
 
       // selectionItem(itemSelectMenu) {
@@ -286,19 +293,21 @@
       //   // }
       // },
 
-      setSelectedMarketplace($event, marketplaceItem) {
+      setSelectedMarketplace($event, marketplaceRadioItem) {
         this.pickedMarketplace = $event;
-        this.inputs[2].value = marketplaceItem.name;
-        this.dataCreateMarket.marketplace_id = marketplaceItem.id;
 
-        if (marketplaceItem.name === 'Aliexpress') {
+        this.inputs[2].value = marketplaceRadioItem.name;
+
+        this.inputs[2].marketplace_id = marketplaceRadioItem.id;
+
+        if (marketplaceRadioItem.name === 'Aliexpress') {
           this.dataCreateMarket.credentials = [
             {
               token: '',
             },
           ];
         }
-        if (marketplaceItem.name === 'Ozon') {
+        if (marketplaceRadioItem.name === 'Ozon') {
           this.dataCreateMarket.credentials = [
             {
               'Client-Id': null,
@@ -306,22 +315,24 @@
             },
           ];
         }
-
-        console.log(this.$refs.selectMarketplace[0].closeMenuFromOuter());
+        this.$refs.selectMarketplace[0].closeMenuFromOuter();
       },
 
-      setWarehouseSelectedItems(emitData) {
+      setWarehouseSelectedItems(emitData, index) {
         if (this.selectedWarehouseItems[emitData.item.id]) {
           delete this.selectedWarehouseItems[emitData.item.id];
         } else {
           this.selectedWarehouseItems[emitData.item.id] = emitData.item;
         }
-        this.dataCreateMarket.portalWarehouses = Object.keys(this.selectedWarehouseItems);
-        console.log(this.dataCreateMarket);
+        // this.dataCreateMarket.portalWarehouses = Object.keys(this.selectedWarehouseItems);
+        this.inputs[index].value = Object.keys(this.selectedWarehouseItems);
+        console.log(this.inputs);
       },
 
-      removeWarehouseSelectedItems(item) {
+      removeWarehouseSelectedItems(item, index) {
         delete this.selectedWarehouseItems[item.id];
+        this.inputs[index].value = Object.keys(this.selectedWarehouseItems);
+        console.log(this.inputs);
       },
     },
 
