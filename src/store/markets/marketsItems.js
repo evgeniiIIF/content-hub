@@ -35,7 +35,7 @@ export default {
     },
   },
   actions: {
-    async GET_ITEMS_MARKETS(store) {
+    async GET_ITEMS_MARKETS(store, marketplaceId) {
       const url = 'http://api.hub.absit.ru/api/v1/markets';
 
       const config = {
@@ -46,6 +46,11 @@ export default {
         },
       };
 
+      if (marketplaceId) {
+        config.params = {
+          marketplace_id: marketplaceId,
+        };
+      }
       // console.log(store.getters.getTokenFromLogin + '  tockenfrom login');
 
       await axios.get(url, config).then((response) => {

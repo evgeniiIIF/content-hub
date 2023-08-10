@@ -115,7 +115,7 @@
 
     emits: ['onCloseSlidingBlock'],
     props: {
-      marketData: {
+      initMarketData: {
         type: Object,
       },
     },
@@ -127,7 +127,7 @@
         selectedWarehouseItems: {},
         currentSelectedWarehouseItem: {},
 
-        dataCreateMarket: {
+        dataForUpdateMarket: {
           marketplace_id: null,
           name: '',
           min_stock_quantity: null,
@@ -181,8 +181,7 @@
           },
           {
             inputAli: true,
-            value:
-              'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWxsZXJfaWQiOjEwNTYwMzE1MjUsInRva2VuX2lkIjoxNTY3fQ.hleh6hIOckMdVvVclRmDjZspMovJKCZbF91RfrOZtJsiUE_RZuFBzNrSNQUDQpwO97OpJDCXhS60UkuCu-xwRP2wha5d65FVAiEJxTeMxGoHzW8q3OLOn3zlwxNenpAczYlM_Zb2_E_xV1U-cNfrKydXPieuO19_eCPMP7m0UjHgkkYZUfdrcVUVK2pncU846aypypfMotDHzvguyyCF_kNNVvD7RSf-J-YkYoYTC0qoZC7lv7sfFbUk88-91sz0B-4U9n24xkK1K42HzxqgddSTug1LRmmErEU9gPFxfFZ1gVPHEIRhnl5GQ-oHwCb-0eqHe39rcfTzgi5kHxP8p647zFxcl-fRZQxV34elWzaWf-LtAbjC_qZyjONqBS2YhkRAinbfcLS-1SVVhLk8rQbxe5aLuho2la2pZNoRTgIwu3R1i7i-nz2-xrUmUXdHKz8OexCfJFStw341oP3PUONpg1nYsEAKW3n1VqMRgdLodPwYw_CuXWsJjbC7H2958TYweo2ucsRa49dXWcYS4ZYnoE_86YEwiszCEQkUgWvl538_qHedmskJjVgI-WiM-0KD_KrQYeQ9XR9zR0IkwZj5lrq-inTAGn38-BZxAUUH_m-tnmFNE4Saawm7x6-G4DzUIdlZ4xriYRRSSeM0TLnntDeN3KhVOBuHkIHN7c8',
+            value: '',
             type: 'text',
             label: 'Ali token',
             name: 'token',
@@ -190,7 +189,7 @@
           },
           {
             inputOzon: true,
-            value: '108371',
+            value: '',
             type: 'text',
             label: 'Ozon client-ID',
             name: 'Client-Id',
@@ -198,7 +197,7 @@
           },
           {
             inputOzon: true,
-            value: '3e9b5868-4a46-4094-bba4-69a3f015d5ad',
+            value: '',
             type: 'text',
             label: 'Ozon API key',
             name: 'Api-Key',
@@ -232,37 +231,112 @@
     },
     methods: {
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
-      ...mapActions('addMarket', ['SEND_MARKET_DATA']),
+      ...mapActions('editMarket', ['SEND_MARKET_DATA_FOR_UPDATE']),
 
       // ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       // ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
 
+      resetData() {
+        this.inputs.forEach((opts) => {
+          opts.value = null;
+          if (opts.marketplace_id) {
+            opts.marketplace_id = null;
+          }
+        });
+
+        this.selectedWarehouseItems = {};
+      },
+
+      setInitData() {
+        this.$nextTick(() => {
+          // console.log(this.initMarketData);
+          this.inputs.forEach((opts) => {
+            switch (opts.name) {
+              case 'name':
+                opts.value = this.initMarketData.name;
+                break;
+              case 'min_stock_quantity':
+                opts.value = this.initMarketData.min_stock_quantity;
+                break;
+              case 'belonging':
+                opts.value = this.initMarketData.marketplace.name;
+                opts.marketplace_id = this.initMarketData.marketplace.id;
+                this.pickedMarketplace = this.initMarketData.marketplace.name;
+
+                if (this.initMarketData.marketplace.name === 'Aliexpress') {
+                  this.dataForUpdateMarket.credentials = [
+                    {
+                      token: '',
+                    },
+                  ];
+                }
+                if (this.initMarketData.marketplace.name === 'Ozon') {
+                  this.dataForUpdateMarket.credentials = [
+                    {
+                      'Client-Id': null,
+                      'Api-Key': '',
+                    },
+                  ];
+                }
+                break;
+              case 'warehouse':
+                if (this.initMarketData.portalWarehouses.length) {
+                  this.initMarketData.portalWarehouses.forEach((itemWarehouse) => {
+                    this.selectedWarehouseItems[itemWarehouse.id] = itemWarehouse;
+                  });
+                  opts.value = Object.keys(this.selectedWarehouseItems);
+                } else {
+                  this.selectedWarehouseItems = {};
+                  opts.value = '';
+                }
+                break;
+              case 'token':
+                opts.value = this.initMarketData.credentials[0].token;
+                // console.log(this.initMarketData, this.inputs);
+                break;
+              case 'Api-Key':
+                opts.value = this.initMarketData.credentials[0]['Api-Key'];
+                // console.log(this.initMarketData, this.inputs);
+                break;
+              case 'Client-Id':
+                opts.value = this.initMarketData.credentials[0]['Client-Id'];
+                console.log(this.initMarketData, this.inputs, this.dataForUpdateMarket);
+                break;
+            }
+          });
+        });
+      },
+
       async onSubmit() {
         this.inputs.forEach((opts) => {
           if (opts.name === 'name') {
-            this.dataCreateMarket.name = opts.value;
+            this.dataForUpdateMarket.name = opts.value;
           }
           if (opts.name === 'min_stock_quantity') {
-            this.dataCreateMarket.min_stock_quantity = opts.value;
+            this.dataForUpdateMarket.min_stock_quantity = opts.value;
           }
-          if (opts.name === 'token' && this.dataCreateMarket.credentials[0].hasOwnProperty('token')) {
-            this.dataCreateMarket.credentials[0].token = opts.value;
+          if (opts.name === 'token' && this.dataForUpdateMarket.credentials[0].hasOwnProperty('token')) {
+            this.dataForUpdateMarket.credentials[0].token = opts.value;
           }
-          if (opts.name === 'Client-Id' && this.dataCreateMarket.credentials[0].hasOwnProperty('Client-Id')) {
-            this.dataCreateMarket.credentials[0]['Client-Id'] = opts.value;
+          if (opts.name === 'Client-Id' && this.dataForUpdateMarket.credentials[0].hasOwnProperty('Client-Id')) {
+            this.dataForUpdateMarket.credentials[0]['Client-Id'] = opts.value;
           }
-          if (opts.name === 'Api-Key' && this.dataCreateMarket.credentials[0].hasOwnProperty('Api-Key')) {
-            this.dataCreateMarket.credentials[0]['Api-Key'] = opts.value;
+          if (opts.name === 'Api-Key' && this.dataForUpdateMarket.credentials[0].hasOwnProperty('Api-Key')) {
+            this.dataForUpdateMarket.credentials[0]['Api-Key'] = opts.value;
           }
           if (opts.name === 'warehouse') {
-            this.dataCreateMarket.portalWarehouses = opts.value;
+            this.dataForUpdateMarket.portalWarehouses = opts.value;
           }
           if (opts.name === 'belonging') {
-            this.dataCreateMarket.marketplace_id = opts.marketplace_id;
+            this.dataForUpdateMarket.marketplace_id = opts.marketplace_id;
           }
         });
-        console.log(this.dataCreateMarket);
-        await this.SEND_MARKET_DATA(this.dataCreateMarket);
+        const data = {
+          dataForUpdateMarket: this.dataForUpdateMarket,
+          marketId: this.initMarketData.id,
+        };
+
+        await this.SEND_MARKET_DATA_FOR_UPDATE(data);
         await this.GET_ITEMS_MARKETS();
         this.$emit('onCloseSlidingBlock');
       },
@@ -280,16 +354,16 @@
       // },
       // setSelectedMarketplace(marketplaceItem) {
       //   // this.inputs[2].value = marketplaceItem.name;
-      //   // this.dataCreateMarket.marketplace_id = marketplaceItem.id;
+      //   // this.dataForUpdateMarket.marketplace_id = marketplaceItem.id;
       //   // if (marketplaceItem.name === 'Aliexpress') {
-      //   //   this.dataCreateMarket.credentials = [
+      //   //   this.dataForUpdateMarket.credentials = [
       //   //     {
       //   //       token: '',
       //   //     },
       //   //   ];
       //   // }
       //   // if (marketplaceItem.name === 'Ozon') {
-      //   //   this.dataCreateMarket.credentials = [
+      //   //   this.dataForUpdateMarket.credentials = [
       //   //     {
       //   //       'Client-Id': null,
       //   //       'Api-Key': '',
@@ -306,14 +380,14 @@
         this.inputs[2].marketplace_id = marketplaceRadioItem.id;
 
         if (marketplaceRadioItem.name === 'Aliexpress') {
-          this.dataCreateMarket.credentials = [
+          this.dataForUpdateMarket.credentials = [
             {
               token: '',
             },
           ];
         }
         if (marketplaceRadioItem.name === 'Ozon') {
-          this.dataCreateMarket.credentials = [
+          this.dataForUpdateMarket.credentials = [
             {
               'Client-Id': null,
               'Api-Key': '',
@@ -329,7 +403,7 @@
         } else {
           this.selectedWarehouseItems[emitData.item.id] = emitData.item;
         }
-        // this.dataCreateMarket.portalWarehouses = Object.keys(this.selectedWarehouseItems);
+        // this.dataForUpdateMarket.portalWarehouses = Object.keys(this.selectedWarehouseItems);
         this.inputs[index].value = Object.keys(this.selectedWarehouseItems);
         console.log(this.inputs);
       },

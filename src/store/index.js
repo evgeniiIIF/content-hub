@@ -18,6 +18,7 @@ import deleteCategory from './modules/deleteCategory.js';
 import marketsItems from './markets/marketsItems.js';
 import addMarket from './markets/addMarket.js';
 import deleteMarket from './markets/deleteMarket.js';
+import editMarket from './markets/editMarket.js';
 
 // </markets>
 
@@ -48,6 +49,7 @@ export default createStore({
     marketsItems,
     addMarket,
     deleteMarket,
+    editMarket,
     // </markets>
 
     // <nomenclature>

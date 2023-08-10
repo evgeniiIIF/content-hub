@@ -151,11 +151,12 @@
     </div>
     <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
-      @onCloseSlidingBlock="isOpenSlidingBlock = false"
+      @onCloseSlidingBlock="onCloseSlidingBlock"
     >
       <VCardEditMarket
-        @onCloseSlidingBlock="isOpenSlidingBlock = false"
-        :parentItemData="parentItemData"
+        @onCloseSlidingBlock="onCloseSlidingBlock"
+        :initMarketData="marketDataForEdit"
+        ref="cardEditMarket"
       />
     </VSlidingBlockSlotUIFC>
   </div>
@@ -185,6 +186,7 @@
 
     data() {
       return {
+        marketDataForEdit: {},
         isOpenSlidingBlock: false,
         headCategories: ['Имя магазина', 'Подключенные склады', 'Статусы КТ', 'Принадлежность к МП'],
 
@@ -209,6 +211,11 @@
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
       ...mapActions('deleteMarket', ['DELETE_MARKET']),
 
+      onCloseSlidingBlock() {
+        this.isOpenSlidingBlock = false;
+        this.$refs.cardEditMarket.resetData();
+      },
+
       removeMarket(itemMarketL1) {
         // console.log(itemMarketL1);
         this.DELETE_MARKET(itemMarketL1);
@@ -225,8 +232,10 @@
         }
       },
 
-      openSlidingBlock(item) {
-        console.log(item);
+      openSlidingBlock(itemMarketL1) {
+        // console.log(itemMarketL1);
+        this.marketDataForEdit = itemMarketL1;
+        this.$refs.cardEditMarket.setInitData();
         this.isOpenSlidingBlock = true;
       },
     },

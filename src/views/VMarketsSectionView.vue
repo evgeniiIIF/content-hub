@@ -46,12 +46,14 @@
             <button
               type="button"
               class="show-hide-categories__button show-hide-categories__button--inactive"
+              @click="filterMarketplace(1)"
             >
               Aliexpress
             </button>
             <button
               type="button"
               class="show-hide-categories__button show-hide-categories__button--inactive"
+              @click="filterMarketplace(2)"
             >
               Wildberries
             </button>
@@ -64,14 +66,19 @@
     </div>
     <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
-      @onCloseSlidingBlock="isOpenSlidingBlock = false"
+      @onCloseSlidingBlock="onCloseSlidingBlock"
     >
-      <VCardAddMarket @onCloseSlidingBlock="isOpenSlidingBlock = false" />
+      <VCardAddMarket
+        @onCloseSlidingBlock="onCloseSlidingBlock"
+        ref="cardAddMarket"
+      />
     </VSlidingBlockSlotUIFC>
   </section>
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   import VSlidingBlockSlotUIFC from '@/components/UI-FC/VSlidingBlockSlotUIFC.vue';
   import VButton from '@/components/UI/VButton.vue';
   import VInput from '@/components/UI/VInput.vue';
@@ -91,6 +98,17 @@
           placeholder: 'Поиск',
         },
       };
+    },
+    methods: {
+      ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
+
+      onCloseSlidingBlock() {
+        this.isOpenSlidingBlock = false;
+        this.$refs.cardAddMarket.resetData();
+      },
+      filterMarketplace(marketplaceId) {
+        this.GET_ITEMS_MARKETS(marketplaceId);
+      },
     },
   };
 </script>

@@ -232,6 +232,18 @@
       // ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       // ...mapActions('addCategory', ['SEND_CATEGORY_DATA']),
 
+      resetData() {
+        this.inputs.forEach((opts) => {
+          opts.value = null;
+
+          if (opts.marketplace_id) {
+            opts.marketplace_id = null;
+          }
+        });
+
+        this.selectedWarehouseItems = {};
+      },
+
       async onSubmit() {
         this.inputs.forEach((opts) => {
           if (opts.name === 'name') {
@@ -256,7 +268,8 @@
             this.dataCreateMarket.marketplace_id = opts.marketplace_id;
           }
         });
-        console.log(this.dataCreateMarket);
+        // console.log(this.dataCreateMarket);
+
         await this.SEND_MARKET_DATA(this.dataCreateMarket);
         await this.GET_ITEMS_MARKETS();
         this.$emit('onCloseSlidingBlock');
@@ -326,7 +339,7 @@
         }
         // this.dataCreateMarket.portalWarehouses = Object.keys(this.selectedWarehouseItems);
         this.inputs[index].value = Object.keys(this.selectedWarehouseItems);
-        console.log(this.inputs);
+        console.log(this.selectedWarehouseItems);
       },
 
       removeWarehouseSelectedItems(item, index) {
