@@ -25,7 +25,7 @@ export default {
       let url = 'http://api.hub.absit.ru/api/v1/nomenclature';
       url = url + '?paginate=25';
       // const url = 'http://localhost:3000/data';
-      console.log(store.getters.getTokenFromLogin);
+      // console.log(store.getters.getTokenFromLogin);
 
       const config = {
         headers: {

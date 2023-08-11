@@ -9,7 +9,7 @@
       />
 
       <div
-        v-if="textPosition === 'before'"
+        v-if="text && textPosition === 'before'"
         class="checkbox__content--before"
       >
         <span class="checkbox__text">{{ text }}</span>
@@ -49,7 +49,7 @@
       </div>
 
       <div
-        v-if="textPosition === 'after'"
+        v-if="text && textPosition === 'after'"
         class="checkbox__content--after"
       >
         <span class="checkbox__text">{{ text }}</span>

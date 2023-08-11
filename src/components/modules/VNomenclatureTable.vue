@@ -61,7 +61,7 @@
               </button>
             </template>
             <template #menu>
-              <VCheckboxList
+              <VCheckboxObjList
                 :items="headCategories.slice(1)"
                 :isChecked="headCategories.slice(1)"
                 @onChange="setShowHideNthChildRowTable($event)"
@@ -76,7 +76,10 @@
           <template #slot1="{ itemL1, itemNomenclatureL1 = itemL1, indexL1, itemNomenclatureIndexL1 = indexL1 }">
             <div class="item-nomenclature row-table">
               <div class="item-nomenclature__checkbox">
-                <VCheckbox />
+                <VCheckboxObj
+                  @onChange="setSelectedNomenclatureItems($event, itemNomenclatureL1)"
+                  :isChecked="Boolean(selectedNomenclatureItems[itemNomenclatureL1.id])"
+                />
               </div>
               <div class="item-nomenclature__brand">{{ itemNomenclatureL1.brand_name }}</div>
               <div class="item-nomenclature__article">{{ itemNomenclatureL1.article }}</div>
@@ -186,7 +189,7 @@
   import VSelect from '../UI/VSelect.vue';
   import VInput from '../UI/VInput.vue';
   import VButton from '../UI/VButton.vue';
-  import VCheckbox from '../UI/VCheckbox.vue';
+  import VCheckboxObj from '../UI/VCheckboxObj.vue';
 
   import VCardAddNestedMarket from '../cards/VCardAddNestedMarket.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
@@ -195,10 +198,16 @@
   export default {
     name: 'VCategoriesTable',
     mixins: [mixDropdownMenuFn],
-    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedMarket, VCardInfoCategory, VItemCategotyDropdownList, VCheckbox, VSelect, VInput, VButton },
-
+    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedMarket, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxObj, VSelect, VInput, VButton },
+    props: {
+      selectedNomenclatureItems: {
+        type: Object,
+      },
+    },
     data() {
       return {
+        // selectedNomenclatureItems: [],
+
         headCategories: ['Бренд', 'Артикул', 'Наименование', 'Склад'],
 
         parentItemData: {
@@ -220,6 +229,19 @@
 
     methods: {
       ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
+
+      setSelectedNomenclatureItems(isChecked, itemNomenclatureL1) {
+        // if (isChecked === true) {
+        //   this.selectedNomenclatureItems[itemNomenclatureL1.id] = itemNomenclatureL1;
+        // } else {
+        //   delete this.selectedNomenclatureItems[itemNomenclatureL1.id];
+        // }
+        // console.log(this.selectedNomenclatureItems.length, this.selectedNomenclatureItems);
+        this.$emit('onSetSelectedNomenclatureItems', {
+          isChecked,
+          itemNomenclatureL1,
+        });
+      },
 
       closeOwnDropdown(e) {
         // const currentItemCategoryDropdownSlots = this.$refs[`VDropdovnSlots(index-${indexL1}${indexL2 !== null ? '>' + indexL2 : ''}${indexL3 !== null ? '>' + indexL3 : ''})`];

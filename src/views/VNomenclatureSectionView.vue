@@ -1,5 +1,55 @@
 <template>
   <section class="nomenclature">
+    <div
+      class="nomenclature__associate associate-nomenclature"
+      v-if="selectedNomenclatureItemsLength"
+    >
+      <div class="container">
+        <div class="associate-nomenclature__body">
+          <div class="associate-nomenclature__checkbox">
+            <VCheckboxObj
+              :text="`Выбрано: ${selectedNomenclatureItemsLength}`"
+              :isChecked="Boolean(selectedNomenclatureItemsLength)"
+              @onChange="resetSelectedNomenclatureItems($event)"
+            />
+          </div>
+          <div class="associate-nomenclature__select">
+            <VSelect
+              :opts="{
+                select: true,
+                icon: true,
+                value: '',
+                type: 'text',
+                name: 'categories',
+                placeholder: 'Выберите категорию из списка',
+                items: {},
+              }"
+            />
+          </div>
+          <div class="associate-nomenclature__button">
+            <VButton>
+              <span class="button__image">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M14.7139 5.28562C13.7376 4.30931 12.1546 4.30931 11.1783 5.28562L9.99982 6.46413C9.67438 6.78957 9.14674 6.78957 8.82131 6.46413C8.49587 6.13869 8.49587 5.61106 8.82131 5.28562L9.99982 4.10711L10.5891 4.69636L9.99982 4.10711C11.627 2.47992 14.2652 2.47992 15.8924 4.10711C17.5196 5.73429 17.5196 8.37248 15.8924 9.99966L14.7139 11.1782C14.3884 11.5036 13.8608 11.5036 13.5354 11.1782C13.2099 10.8527 13.2099 10.3251 13.5354 9.99966L14.7139 8.82115C15.6902 7.84484 15.6902 6.26193 14.7139 5.28562ZM12.9463 7.05373C13.2717 7.37917 13.2717 7.9068 12.9463 8.23224L8.23224 12.9463C7.9068 13.2717 7.37917 13.2717 7.05373 12.9463C6.72829 12.6208 6.72829 12.0932 7.05373 11.7678L11.7678 7.05373C12.0932 6.72829 12.6208 6.72829 12.9463 7.05373ZM6.46413 8.82131C6.78957 9.14674 6.78957 9.67438 6.46413 9.99982L5.28562 11.1783C4.30931 12.1546 4.30931 13.7376 5.28562 14.7139C6.26193 15.6902 7.84484 15.6902 8.82115 14.7139L9.99966 13.5354C10.3251 13.2099 10.8527 13.2099 11.1782 13.5354C11.5036 13.8608 11.5036 14.3884 11.1782 14.7139L9.99966 15.8924C8.37248 17.5196 5.73429 17.5196 4.10711 15.8924C2.47992 14.2652 2.47992 11.627 4.10711 9.99982L4.69636 10.5891L4.10711 9.99982L5.28562 8.82131C5.61106 8.49587 6.13869 8.49587 6.46413 8.82131Z"
+                    fill="white"
+                  />
+                </svg>
+              </span>
+              <span class="button__text">Связать</span>
+            </VButton>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="nomenclature__top">
       <div class="container">
         <div class="nomenclature__top-body top">
@@ -182,7 +232,10 @@
       </div>
     </div>
     <div class="markets__table">
-      <VNomenclatureTable />
+      <VNomenclatureTable
+        @onSetSelectedNomenclatureItems="onSetSelectedNomenclatureItems($event)"
+        :selectedNomenclatureItems="selectedNomenclatureItems"
+      />
     </div>
     <VSlidingBlockSlotUIFC
       :isOpenSlidingBlock="isOpenSlidingBlock"
@@ -202,12 +255,16 @@
   import VSelect from '@/components/UI/VSelect.vue';
   import VCheckbox from '@/components/UI/VCheckbox.vue';
   import VTagList from '@/components/UI/VTagList.vue';
+  import VCheckboxObj from '@/components/UI/VCheckboxObj.vue';
 
   export default {
     name: 'VMarketsSectionView',
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj },
     data() {
       return {
+        selectedNomenclatureItems: {},
+        selectedNomenclatureItemsLength: 0,
+
         isOpenSlidingBlock: false,
         inputOpts: {
           icon: true,
@@ -218,6 +275,34 @@
         tagListItems: ['ABSEL', 'BOSCH', 'VARTA', 'ABS 123', 'ABS RND 92938', 'BOSCH'],
       };
     },
+    methods: {
+      onSetSelectedNomenclatureItems(emitData) {
+        if (emitData.isChecked === true) {
+          this.selectedNomenclatureItems[emitData.itemNomenclatureL1.id] = emitData.itemNomenclatureL1;
+        } else {
+          delete this.selectedNomenclatureItems[emitData.itemNomenclatureL1.id];
+        }
+        this.selectedNomenclatureItemsLength = Object.keys(this.selectedNomenclatureItems).length;
+      },
+
+      resetSelectedNomenclatureItems($event) {
+        this.selectedNomenclatureItems = {};
+        this.selectedNomenclatureItemsLength = Object.keys(this.selectedNomenclatureItems).length;
+      },
+    },
+    // computed: {
+    //   selectedNomenclatureItemsLength() {
+    //     return Object.keys(this.selectedNomenclatureItems).length;
+    //   },
+    // },
+    // watch: {
+    //   selectedNomenclatureItems: {
+    //     handler(newValue) {
+    //       this.onSetSelectedNomenclatureItems(newValue);
+    //     },
+    //     deep: true,
+    //   },
+    // },
   };
 </script>
 
@@ -267,9 +352,10 @@
     &__top-body {
       padding: 24px 0 16px 0;
     }
+    &__associate {
+    }
   }
-  .container {
-  }
+
   .top {
     &__row {
     }
@@ -434,6 +520,47 @@
       font-weight: 400;
       line-height: 24px; /* 171.429% */
       color: var(--blue, #07f);
+    }
+  }
+
+  .associate-nomenclature {
+    position: fixed;
+    left: 0;
+    top: 68.02px;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0px 8px 16px -4px rgba(41, 41, 41, 0.1);
+    background: #fff;
+
+    &__body {
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    &__checkbox {
+      margin-right: 80px;
+      .checkbox {
+        &__text {
+          display: inline-block;
+          min-width: 75px;
+        }
+      }
+    }
+
+    &__select {
+      margin-right: 24px;
+      width: 360px;
+    }
+
+    &__button {
+      .button {
+        &__image {
+        }
+
+        &__text {
+        }
+      }
     }
   }
 </style>
