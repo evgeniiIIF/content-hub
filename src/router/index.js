@@ -66,6 +66,7 @@ const routes = [
     meta: {
       requiresAuth: true, // Указывает, что компонент требует авторизации
     },
+    props: true,
   },
   // </VNomenclatureSectionView>
 

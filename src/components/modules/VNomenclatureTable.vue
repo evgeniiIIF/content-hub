@@ -203,6 +203,10 @@
       selectedNomenclatureItems: {
         type: Object,
       },
+
+      paginationNomenclatureItemsValue: {
+        type: String,
+      },
     },
     data() {
       return {
@@ -257,9 +261,10 @@
     },
 
     async mounted() {
-      await this.GET_ITEMS_NOMENCLATURE();
+      await this.GET_ITEMS_NOMENCLATURE(this.paginationNomenclatureItemsValue);
       this.mixDropdownMenuFn();
       // await this.GET_ITEMS_SELECT_OZON();
+      console.log(this.paginationNomenclatureItemsValue);
     },
   };
 </script>

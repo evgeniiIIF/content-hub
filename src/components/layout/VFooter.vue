@@ -53,8 +53,8 @@
         selectPaginationLimitOpts: {
           type: 'text',
           name: 'limit',
-          placeholder: '200',
-          value: '200',
+          placeholder: '25',
+          value: '25',
           icon: true,
           readonly: true,
         },
@@ -65,7 +65,11 @@
       setSelectPaginationLimitValue(e, item) {
         this.selectPaginationLimitOpts.value = item;
         this.$refs.selectPaginationLimin.menuIsOpen = false;
+        this.$emit('onSetPaginationNomenclatureItemsValue', item);
       },
+    },
+    mounted() {
+      this.$emit('onSetPaginationNomenclatureItemsValue', this.selectPaginationLimitOpts.value);
     },
   };
 </script>

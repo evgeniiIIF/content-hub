@@ -235,6 +235,7 @@
       <VNomenclatureTable
         @onSetSelectedNomenclatureItems="onSetSelectedNomenclatureItems($event)"
         :selectedNomenclatureItems="selectedNomenclatureItems"
+        :paginationNomenclatureItemsValue="paginationNomenclatureItemsValue"
       />
     </div>
     <VSlidingBlockSlotUIFC
@@ -260,6 +261,13 @@
   export default {
     name: 'VMarketsSectionView',
     components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj },
+
+    props: {
+      paginationNomenclatureItemsValue: {
+        type: String,
+      },
+    },
+
     data() {
       return {
         selectedNomenclatureItems: {},
@@ -288,6 +296,10 @@
       resetSelectedNomenclatureItems($event) {
         this.selectedNomenclatureItems = {};
         this.selectedNomenclatureItemsLength = Object.keys(this.selectedNomenclatureItems).length;
+      },
+
+      nomenclatureComponentMethod() {
+        console.log('nomenclatureComponent');
       },
     },
     // computed: {

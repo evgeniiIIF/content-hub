@@ -5,10 +5,16 @@
   <VHeader v-if="isVisibleVHeader" />
 
   <VMain>
-    <RouterView />
+    <RouterView
+      :paginationNomenclatureItemsValue="paginationNomenclatureItemsValue"
+      ref="nomenclatureComponent"
+    />
   </VMain>
 
-  <VFooter v-if="isVisibleVFooter" />
+  <VFooter
+    v-if="isVisibleVFooter"
+    @onSetPaginationNomenclatureItemsValue="onSetPaginationNomenclatureItemsValue($event)"
+  />
   <!-- <Transition name="fade">
       <VModalWindowUIFC
         v-if="showDialog"
@@ -54,9 +60,18 @@
       VFooter,
     },
     data() {
-      return {};
+      return {
+        paginationNomenclatureItemsValue: '',
+      };
     },
-    methods: {},
+    methods: {
+      ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
+
+      onSetPaginationNomenclatureItemsValue(paginationValue) {
+        this.paginationNomenclatureItemsValue = paginationValue;
+        this.GET_ITEMS_NOMENCLATURE(this.paginationNomenclatureItemsValue);
+      },
+    },
     computed: {
       ...mapGetters('login', {
         isAuthenticated: 'getAuthenticated',
@@ -66,6 +81,7 @@
         let visible = this.$route.meta.showHeader !== false && this.isAuthenticated;
         return visible;
       },
+
       isVisibleVFooter() {
         let visible = this.$route.meta.showFooter !== false && this.isAuthenticated;
         return visible;

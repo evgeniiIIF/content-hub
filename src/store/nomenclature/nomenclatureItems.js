@@ -21,9 +21,10 @@ export default {
     },
   },
   actions: {
-    async GET_ITEMS_NOMENCLATURE(store) {
+    async GET_ITEMS_NOMENCLATURE(store, paginationNomenclatureItemsValue) {
       let url = 'http://api.hub.absit.ru/api/v1/nomenclature';
-      url = url + '?paginate=25';
+      url = url + `?paginate=${paginationNomenclatureItemsValue}`;
+      console.log(paginationNomenclatureItemsValue);
       // const url = 'http://localhost:3000/data';
       // console.log(store.getters.getTokenFromLogin);
 
