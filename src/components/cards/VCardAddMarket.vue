@@ -180,7 +180,7 @@
               'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWxsZXJfaWQiOjEwNTYwMzE1MjUsInRva2VuX2lkIjoxNTY3fQ.hleh6hIOckMdVvVclRmDjZspMovJKCZbF91RfrOZtJsiUE_RZuFBzNrSNQUDQpwO97OpJDCXhS60UkuCu-xwRP2wha5d65FVAiEJxTeMxGoHzW8q3OLOn3zlwxNenpAczYlM_Zb2_E_xV1U-cNfrKydXPieuO19_eCPMP7m0UjHgkkYZUfdrcVUVK2pncU846aypypfMotDHzvguyyCF_kNNVvD7RSf-J-YkYoYTC0qoZC7lv7sfFbUk88-91sz0B-4U9n24xkK1K42HzxqgddSTug1LRmmErEU9gPFxfFZ1gVPHEIRhnl5GQ-oHwCb-0eqHe39rcfTzgi5kHxP8p647zFxcl-fRZQxV34elWzaWf-LtAbjC_qZyjONqBS2YhkRAinbfcLS-1SVVhLk8rQbxe5aLuho2la2pZNoRTgIwu3R1i7i-nz2-xrUmUXdHKz8OexCfJFStw341oP3PUONpg1nYsEAKW3n1VqMRgdLodPwYw_CuXWsJjbC7H2958TYweo2ucsRa49dXWcYS4ZYnoE_86YEwiszCEQkUgWvl538_qHedmskJjVgI-WiM-0KD_KrQYeQ9XR9zR0IkwZj5lrq-inTAGn38-BZxAUUH_m-tnmFNE4Saawm7x6-G4DzUIdlZ4xriYRRSSeM0TLnntDeN3KhVOBuHkIHN7c8',
             type: 'text',
             label: 'Ali token',
-            name: 'token',
+            name: 'x-auth-token',
             placeholder: 'token',
           },
           {
@@ -252,8 +252,8 @@
           if (opts.name === 'min_stock_quantity') {
             this.dataCreateMarket.min_stock_quantity = opts.value;
           }
-          if (opts.name === 'token' && this.dataCreateMarket.credentials[0].hasOwnProperty('token')) {
-            this.dataCreateMarket.credentials[0].token = opts.value;
+          if (opts.name === 'x-auth-token' && this.dataCreateMarket.credentials[0].hasOwnProperty('x-auth-token')) {
+            this.dataCreateMarket.credentials[0]['x-auth-token'] = opts.value;
           }
           if (opts.name === 'Client-Id' && this.dataCreateMarket.credentials[0].hasOwnProperty('Client-Id')) {
             this.dataCreateMarket.credentials[0]['Client-Id'] = opts.value;
@@ -316,7 +316,7 @@
         if (marketplaceRadioItem.name === 'Aliexpress') {
           this.dataCreateMarket.credentials = [
             {
-              token: '',
+              'x-auth-token': '',
             },
           ];
         }

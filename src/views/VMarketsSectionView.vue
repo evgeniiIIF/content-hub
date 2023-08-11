@@ -30,32 +30,16 @@
               </div>
             </div>
           </div>
-          <div class="top__show-hide show-hide-categories">
+          <div class="top__show-hide show-hide-markets">
             <button
+              v-for="tab in tabButtons"
+              :key="tab.name"
               type="button"
-              class="show-hide-categories__button show-hide-categories__button--all"
+              class="show-hide-markets__button"
+              :class="tab.name === this.selectedTabButton ? 'show-hide-markets__button--active' : ''"
+              @click="filterMarketplace(tab)"
             >
-              все
-            </button>
-            <button
-              type="button"
-              class="show-hide-categories__button show-hide-categories__button--active"
-            >
-              Ozon
-            </button>
-            <button
-              type="button"
-              class="show-hide-categories__button show-hide-categories__button--inactive"
-              @click="filterMarketplace(1)"
-            >
-              Aliexpress
-            </button>
-            <button
-              type="button"
-              class="show-hide-categories__button show-hide-categories__button--inactive"
-              @click="filterMarketplace(2)"
-            >
-              Wildberries
+              {{ tab.name }}
             </button>
           </div>
         </div>
@@ -77,7 +61,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
 
   import VSlidingBlockSlotUIFC from '@/components/UI-FC/VSlidingBlockSlotUIFC.vue';
   import VButton from '@/components/UI/VButton.vue';
@@ -90,6 +74,9 @@
     components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VMarketsTable },
     data() {
       return {
+        selectedTabButton: 'все',
+        tabButtons: [],
+
         isOpenSlidingBlock: false,
         inputOpts: {
           icon: true,
@@ -99,6 +86,19 @@
         },
       };
     },
+    computed: {
+      ...mapGetters('marketsItems', {
+        marketplacesItems: 'getMarketplacesItems',
+        // warehousesItems: 'getPortalWarehousesItems',
+      }),
+      aliexpressId() {
+        return this.marketplacesItems.find((marketplace) => marketplace.name === 'Aliexpress').id;
+      },
+      ozonId() {
+        return this.marketplacesItems.find((marketplace) => marketplace.name === 'Ozon').id;
+      },
+    },
+
     methods: {
       ...mapActions('marketsItems', ['GET_ITEMS_MARKETS']),
 
@@ -106,9 +106,24 @@
         this.isOpenSlidingBlock = false;
         this.$refs.cardAddMarket.resetData();
       },
-      filterMarketplace(marketplaceId) {
-        this.GET_ITEMS_MARKETS(marketplaceId);
+
+      async filterMarketplace(tabItem) {
+        this.selectedTabButton = tabItem.name;
+        await this.GET_ITEMS_MARKETS(tabItem.marketplaceId);
       },
+    },
+
+    async created() {
+      await this.GET_ITEMS_MARKETS();
+
+      // console.log(this.marketplacesItems.find((marketplace) => marketplace.name === 'Aliexpress').id);
+      this.tabButtons = [
+        { name: 'все', marketplaceId: null },
+        { name: 'Ozon', marketplaceId: this.ozonId },
+        { name: 'Aliexpress', marketplaceId: this.aliexpressId },
+        { name: 'Wildberries', marketplaceId: null },
+      ];
+      console.log(this.tabButtons);
     },
   };
 </script>
@@ -150,17 +165,35 @@
     &__text {
     }
   }
-  .show-hide-categories {
-    &__button {
-    }
+  .show-hide-markets {
+    display: inline-block;
+    padding: 2px;
+    background: #ffffff;
+    border-radius: 8px;
+    @include mr(1px);
 
-    &__button--all {
+    &__button {
+      border-radius: 4px;
+      padding: 4px 16px;
+      border: none;
+
+      @extend %font-inter--400_167;
+
+      color: $dark-color;
+      background: transparent;
+
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px; /* 171.429% */
     }
 
     &__button--active {
-    }
-
-    &__button--inactive {
+      background: var(--blue, #07f);
+      border-radius: 4px;
+      color: var(--white, #fff);
+      /* Body_L */
     }
   }
 </style>

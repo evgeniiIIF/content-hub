@@ -216,9 +216,10 @@
         this.$refs.cardEditMarket.resetData();
       },
 
-      removeMarket(itemMarketL1) {
+      async removeMarket(itemMarketL1) {
         // console.log(itemMarketL1);
-        this.DELETE_MARKET(itemMarketL1);
+        await this.DELETE_MARKET(itemMarketL1);
+        await this.GET_ITEMS_MARKETS();
       },
 
       closeOwnDropdown(e, indexL1, indexL2 = null, indexL3 = null) {
@@ -244,7 +245,7 @@
       await this.GET_ITEMS_MARKETS();
       this.mixDropdownMenuFn();
       // await this.GET_ITEMS_SELECT_OZON();
-      console.log(this.marketsItems);
+      // console.log(this.marketsItems);
     },
   };
 </script>
