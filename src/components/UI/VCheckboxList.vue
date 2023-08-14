@@ -119,7 +119,6 @@ import VCheckbox from './VCheckbox.vue';
 
     &__item {
       // width: 237px;
-      padding: 12px 8px;
 
       &:hover {
         border-radius: 4px;
@@ -147,6 +146,7 @@ import VCheckbox from './VCheckbox.vue';
       align-items: center;
       // justify-content: space-between;
       cursor: pointer;
+      padding: 12px 8px;
     }
 
     & input {

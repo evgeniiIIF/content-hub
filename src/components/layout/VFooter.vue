@@ -3,23 +3,26 @@
     <div class="container">
       <div class="footer__body">
         <div class="footer__pagination">
-          <VPagination />
+          <VPagination
+            @onSetCurrentPage="onSetCurrentPage($event)"
+            ref="VPagination"
+          />
           <div class="footer__pagination-limit limit-pagination">
             <span class="limit-pagination__text">Записей на страницу</span>
             <div class="limit-pagination__select">
               <VSelect
                 :opts="selectPaginationLimitOpts"
-                ref="selectPaginationLimin"
+                ref="selectPaginationLimit"
               >
                 <template #menu>
                   <ul class="list">
                     <li
                       class="list__item"
-                      v-for="item in limitItems"
-                      @click="setSelectPaginationLimitValue($event, item)"
-                      :style="{ background: selectPaginationLimitOpts.value === item ? 'blue' : '', color: selectPaginationLimitOpts.value === item ? '#fff' : '' }"
+                      v-for="limitItem in limitItems"
+                      @click="setSelectPaginationLimitValue($event, limitItem)"
+                      :style="{ background: paginationMeta.per_page === +limitItem ? 'blue' : '', color: paginationMeta.per_page === +limitItem ? '#fff' : '' }"
                     >
-                      {{ item }}
+                      {{ limitItem }}
                     </li>
                   </ul>
                 </template>
@@ -54,22 +57,54 @@
           type: 'text',
           name: 'limit',
           placeholder: '25',
-          value: '25',
+          value: '',
           icon: true,
           readonly: true,
         },
       };
     },
-    computed: {},
+    computed: {
+      ...mapGetters('nomenclatureItems', {
+        paginationMeta: 'getPaginationMeta',
+      }),
+    },
     methods: {
-      setSelectPaginationLimitValue(e, item) {
-        this.selectPaginationLimitOpts.value = item;
-        this.$refs.selectPaginationLimin.menuIsOpen = false;
-        this.$emit('onSetPaginationNomenclatureItemsValue', item);
+      ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
+
+      // onSetCurrentPage(pageNumber) {
+      //   // console.log(pageNumber);
+      //   const meta = {
+      //     paginationNomenclatureItemsValue: this.paginationNomenclatureItemsValue,
+      //     pageNumber,
+      //   };
+
+      //   this.GET_ITEMS_NOMENCLATURE(meta);
+
+      //   // this.$emit('onSetCurrentPage', pageNumber);
+      // },
+      setPaginationItems() {
+        this.$refs.VPagination.setPaginationItems();
+      },
+      async setSelectPaginationLimitValue(e, limitItem) {
+        const meta = {
+          paginationLimit: limitItem,
+          pageNumber: 1,
+        };
+
+        await this.GET_ITEMS_NOMENCLATURE(meta);
+
+        this.selectPaginationLimitOpts.value = this.paginationMeta.per_page;
+        this.$refs.selectPaginationLimit.closeMenuFromOuter();
+        this.setPaginationItems();
+        this.$refs.VPagination.currentPage = 1;
       },
     },
-    mounted() {
-      this.$emit('onSetPaginationNomenclatureItemsValue', this.selectPaginationLimitOpts.value);
+    async mounted() {
+      // this.$emit('onSetPaginationNomenclatureItemsValue', this.selectPaginationLimitOpts.value);
+      await this.GET_ITEMS_NOMENCLATURE();
+      this.selectPaginationLimitOpts.value = this.paginationMeta.per_page;
+
+      // console.log(this.paginationMeta);
     },
   };
 </script>

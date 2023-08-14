@@ -245,7 +245,7 @@
       await this.GET_ITEMS_MARKETS();
       this.mixDropdownMenuFn();
       // await this.GET_ITEMS_SELECT_OZON();
-      // console.log(this.marketsItems);
+      console.log(this.marketsItems);
     },
   };
 </script>

@@ -63,7 +63,7 @@
 
     &__item {
       // width: 237px;
-      padding: 12px 8px;
+      // padding: 12px 8px;
 
       &:hover {
         border-radius: 4px;

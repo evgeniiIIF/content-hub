@@ -6,14 +6,14 @@
 
   <VMain>
     <RouterView
-      :paginationNomenclatureItemsValue="paginationNomenclatureItemsValue"
       ref="nomenclatureComponent"
+      @updatePagination="updatePagination"
     />
   </VMain>
 
   <VFooter
     v-if="isVisibleVFooter"
-    @onSetPaginationNomenclatureItemsValue="onSetPaginationNomenclatureItemsValue($event)"
+    ref="VFooter"
   />
   <!-- <Transition name="fade">
       <VModalWindowUIFC
@@ -61,16 +61,28 @@
     },
     data() {
       return {
-        paginationNomenclatureItemsValue: '',
+        // paginationNomenclatureItemsValue: '',
       };
     },
     methods: {
-      ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
-
-      onSetPaginationNomenclatureItemsValue(paginationValue) {
-        this.paginationNomenclatureItemsValue = paginationValue;
-        this.GET_ITEMS_NOMENCLATURE(this.paginationNomenclatureItemsValue);
+      updatePagination() {
+        this.$refs.VFooter.setPaginationItems();
       },
+      // ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
+      // onSetCurrentPage(pageNumber) {
+      //   const meta = {
+      //     paginationNomenclatureItemsValue: this.paginationNomenclatureItemsValue,
+      //     pageNumber,
+      //   };
+      //   this.GET_ITEMS_NOMENCLATURE(meta);
+      // },
+      // onSetPaginationNomenclatureItemsValue(paginationValue) {
+      //   this.paginationNomenclatureItemsValue = paginationValue;
+      //   const meta = {
+      //     paginationNomenclatureItemsValue: this.paginationNomenclatureItemsValue,
+      //   };
+      //   this.GET_ITEMS_NOMENCLATURE(meta);
+      // },
     },
     computed: {
       ...mapGetters('login', {

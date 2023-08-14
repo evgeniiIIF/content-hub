@@ -261,10 +261,14 @@
     },
 
     async mounted() {
-      await this.GET_ITEMS_NOMENCLATURE(this.paginationNomenclatureItemsValue);
+      const meta = {
+        paginationNomenclatureItemsValue: this.paginationNomenclatureItemsValue,
+      };
+      await this.GET_ITEMS_NOMENCLATURE(meta);
       this.mixDropdownMenuFn();
       // await this.GET_ITEMS_SELECT_OZON();
-      console.log(this.paginationNomenclatureItemsValue);
+      // console.log(this.paginationNomenclatureItemsValue);
+      // console.log(this.nomenclatureItems);
     },
   };
 </script>

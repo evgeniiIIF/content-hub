@@ -101,6 +101,7 @@
                       placeholder: 'Поиск по наименованию, артикулу',
                       icon: true,
                     }"
+                    @onInput="onInputSearch($event)"
                   >
                     <svg
                       width="20"
@@ -119,7 +120,7 @@
                   </VInput>
                 </div>
                 <div class="filters__brand">
-                  <VSelect
+                  <!-- <VSelect
                     :opts="{
                       type: 'text',
                       name: 'filter-search',
@@ -127,8 +128,35 @@
                       icon: true,
                     }"
                   >
-                    <template #menu> menu </template>
-                  </VSelect>
+                    <template #menu>
+                      <ul class="list">
+                        <li
+                          class="list__item"
+                          v-for="brand in currentBrandsItems"
+                        >
+                          {{ brand }}
+                        </li>
+                      </ul>
+                    </template>
+                  </VSelect> -->
+                  <VMultiSelect
+                    :opts="{
+                      type: 'text',
+                      name: 'filter-search',
+                      placeholder: 'Бренд',
+                      icon: true,
+                    }"
+                    :selectedItems="false"
+                    @onRemoveSelectedItem="removeBrandSelectedItems($event)"
+                  >
+                    <template #menu>
+                      <VCheckboxListObj
+                        :items="currentBrandsItemsArray"
+                        :currentIsCheckedItems="selectedBrandItems"
+                        @onChange="setBrandSelectedItems($event)"
+                      />
+                    </template>
+                  </VMultiSelect>
                 </div>
                 <div class="filters__warehouse">
                   <VSelect
@@ -173,10 +201,10 @@
                 <div class="found-selected-filters__count">23 847</div>
               </div>
               <div class="selected-filters__tag-list">
-                <VTagList
-                  :items="tagListItems"
+                <!-- <VTagList
+                  :items="false"
                   prefix="Бренд :"
-                />
+                /> -->
                 <button
                   class="selected-filters__tag-list-clear-all"
                   type="button"
@@ -248,6 +276,8 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   import VSlidingBlockSlotUIFC from '@/components/UI-FC/VSlidingBlockSlotUIFC.vue';
   import VButton from '@/components/UI/VButton.vue';
   import VInput from '@/components/UI/VInput.vue';
@@ -257,10 +287,12 @@
   import VCheckbox from '@/components/UI/VCheckbox.vue';
   import VTagList from '@/components/UI/VTagList.vue';
   import VCheckboxObj from '@/components/UI/VCheckboxObj.vue';
+  import VMultiSelect from '@/components/UI/VMultiSelect.vue';
+  import VCheckboxListObj from '@/components/UI/VCheckboxListObj.vue';
 
   export default {
     name: 'VMarketsSectionView',
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj, VMultiSelect, VCheckboxListObj },
 
     props: {
       paginationNomenclatureItemsValue: {
@@ -270,6 +302,10 @@
 
     data() {
       return {
+        // currentBrandsItem: '',
+        currentBrandsItemsArray: [],
+        selectedBrandItems: {},
+
         selectedNomenclatureItems: {},
         selectedNomenclatureItemsLength: 0,
 
@@ -283,7 +319,35 @@
         tagListItems: ['ABSEL', 'BOSCH', 'VARTA', 'ABS 123', 'ABS RND 92938', 'BOSCH'],
       };
     },
+    computed: {
+      ...mapGetters('nomenclatureItems', {
+        paginationMeta: 'getPaginationMeta',
+        currentBrandsItems: 'getCurrentBrandsItems',
+      }),
+    },
     methods: {
+      ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
+
+      removeBrandSelectedItems(e) {
+        delete this.selectedBrandItems[e.name];
+        console.log(this.selectedBrandItems);
+      },
+
+      setBrandSelectedItems(e) {
+        this.selectedBrandItems[e.item.name] = e.item;
+        console.log(this.selectedBrandItems);
+        // console.log(e);
+      },
+
+      async onInputSearch($event) {
+        const meta = {
+          search: $event.target.value,
+          pageNumber: 1,
+        };
+        await this.GET_ITEMS_NOMENCLATURE(meta);
+        this.$emit('updatePagination');
+      },
+
       onSetSelectedNomenclatureItems(emitData) {
         if (emitData.isChecked === true) {
           this.selectedNomenclatureItems[emitData.itemNomenclatureL1.id] = emitData.itemNomenclatureL1;
@@ -302,19 +366,13 @@
         console.log('nomenclatureComponent');
       },
     },
-    // computed: {
-    //   selectedNomenclatureItemsLength() {
-    //     return Object.keys(this.selectedNomenclatureItems).length;
-    //   },
-    // },
-    // watch: {
-    //   selectedNomenclatureItems: {
-    //     handler(newValue) {
-    //       this.onSetSelectedNomenclatureItems(newValue);
-    //     },
-    //     deep: true,
-    //   },
-    // },
+    async mounted() {
+      await this.GET_ITEMS_NOMENCLATURE();
+      this.currentBrandsItemsArray = Object.values(this.currentBrandsItems).map((brand) => {
+        return { name: brand, id: brand };
+      });
+      console.log(this.currentBrandsItems);
+    },
   };
 </script>
 
@@ -431,6 +489,10 @@
 
     &__brand {
       width: 138px;
+      // .checkbox__label {
+      //   border-radius: 4px;
+      //   padding: 12px 8px;
+      // }
     }
 
     &__warehouse {
