@@ -83,7 +83,7 @@ export default {
         store.commit('setPaginationMeta', meta);
         store.commit('setCurrentBrandsItems', currentBrandsItems);
 
-        console.log(store.getters.getCurrentBrandsItems);
+        // console.log(store.getters.getCurrentBrandsItems);
       });
     },
   },

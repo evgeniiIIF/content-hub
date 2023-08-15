@@ -68,6 +68,14 @@ prefix="Бренд :"
         // console.log(eventItem);
       },
     },
+    watch: {
+      items: {
+        handler(newValue) {
+          this.currentItems = newValue;
+        },
+        deep: true,
+      },
+    },
     mounted() {
       this.currentItems = this.items;
     },

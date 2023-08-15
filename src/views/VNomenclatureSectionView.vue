@@ -146,7 +146,7 @@
                       placeholder: 'Бренд',
                       icon: true,
                     }"
-                    :selectedItems="false"
+                    :selectedItems="{}"
                     @onRemoveSelectedItem="removeBrandSelectedItems($event)"
                   >
                     <template #menu>
@@ -201,10 +201,10 @@
                 <div class="found-selected-filters__count">23 847</div>
               </div>
               <div class="selected-filters__tag-list">
-                <!-- <VTagList
-                  :items="false"
+                <VTagList
+                  :items="selectedBrandsArray"
                   prefix="Бренд :"
-                /> -->
+                />
                 <button
                   class="selected-filters__tag-list-clear-all"
                   type="button"
@@ -305,6 +305,7 @@
         // currentBrandsItem: '',
         currentBrandsItemsArray: [],
         selectedBrandItems: {},
+        selectedBrandsArray: [],
 
         selectedNomenclatureItems: {},
         selectedNomenclatureItemsLength: 0,
@@ -324,18 +325,21 @@
         paginationMeta: 'getPaginationMeta',
         currentBrandsItems: 'getCurrentBrandsItems',
       }),
+      // selectedBrandsArray() {
+      //   return Object.keys(this.selectedBrandItems);
+      // },
     },
     methods: {
       ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
 
       removeBrandSelectedItems(e) {
         delete this.selectedBrandItems[e.name];
-        console.log(this.selectedBrandItems);
+        // console.log(this.selectedBrandItems, this.selectedBrandsArray);
       },
 
       setBrandSelectedItems(e) {
         this.selectedBrandItems[e.item.name] = e.item;
-        console.log(this.selectedBrandItems);
+        // console.log(this.selectedBrandItems, this.selectedBrandsArray);
         // console.log(e);
       },
 
@@ -364,6 +368,15 @@
 
       nomenclatureComponentMethod() {
         console.log('nomenclatureComponent');
+      },
+    },
+    watch: {
+      selectedBrandItems: {
+        handler(newValue) {
+          this.selectedBrandsArray = Object.keys(newValue);
+          console.log(this.selectedBrandsArray);
+        },
+        deep: true,
       },
     },
     async mounted() {
