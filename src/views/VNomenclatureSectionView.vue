@@ -14,6 +14,17 @@
             />
           </div>
           <div class="associate-nomenclature__select">
+            <!-- <VSelect
+              :opts="{
+                select: true,
+                icon: true,
+                value: '',
+                type: 'text',
+                name: 'categories',
+                placeholder: 'Выберите категорию из списка',
+                items: {},
+              }"
+            /> -->
             <VSelect
               :opts="{
                 select: true,
@@ -24,7 +35,60 @@
                 placeholder: 'Выберите категорию из списка',
                 items: {},
               }"
-            />
+            >
+              <template #menu>
+                <div class="select-list__filter">
+                  <div class="select-list__filter-wrapper">
+                    <input
+                      type="text"
+                      class="select-list__filter-input"
+                    />
+                    <div class="select-list__filter-icon">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M11.9456 13.1237C11.0498 13.7793 9.94506 14.1663 8.74992 14.1663C5.75838 14.1663 3.33325 11.7412 3.33325 8.74967C3.33325 5.75813 5.75838 3.33301 8.74992 3.33301C11.7415 3.33301 14.1666 5.75813 14.1666 8.74967C14.1666 9.94471 13.7796 11.0494 13.1241 11.9451L16.4151 15.2361C16.7456 15.5666 16.7496 16.0983 16.4242 16.4238C16.0988 16.7492 15.567 16.7451 15.2366 16.4146L11.9456 13.1237ZM12.4999 8.74967C12.4999 10.8207 10.821 12.4997 8.74992 12.4997C6.67885 12.4997 4.99992 10.8207 4.99992 8.74967C4.99992 6.67861 6.67885 4.99967 8.74992 4.99967C10.821 4.99967 12.4999 6.67861 12.4999 8.74967Z"
+                          fill="#0077FF"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <VRecursiveList :items="categoriesItems">
+                  <template #slot1="{ itemL1, categoriesItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
+                    <div
+                      class="select-list__name"
+                      title="Нельзя выбрать родительскую категорию"
+                    >
+                      {{ categoriesItemL1.name }}
+                    </div>
+                  </template>
+                  <template #slot2="{ itemL2, categoriesItemL2 = itemL2, indexL1, indexL2 }">
+                    <div
+                      class="select-list__name"
+                      @click.stop="onSelectMarketplaceCategory('aliCategory', categoriesItemL2, itemCategoryItemL3)"
+                    >
+                      {{ categoriesItemL2.name }}
+                    </div>
+                  </template>
+                  <template #slot3="{ itemL3, categoriesItemL3 = itemL3, indexL1, indexL2 }">
+                    <div
+                      class="select-list__name"
+                      @click.stop="onSelectMarketplaceCategory('aliCategory', categoriesItemL3, itemCategoryItemL3)"
+                    >
+                      {{ categoriesItemL3.name }}
+                    </div>
+                  </template>
+                </VRecursiveList>
+              </template>
+            </VSelect>
           </div>
           <div class="associate-nomenclature__button">
             <VButton>
@@ -56,7 +120,7 @@
           <div class="top__row">
             <h2 class="top__title">
               <div class="top__title-text">Номенклатура</div>
-              <div class="top__title-number-of-found">32 348</div>
+              <div class="top__title-number-of-found">{{ paginationMeta.total }}</div>
             </h2>
             <div class="top__actions">
               <!-- <div class="top__input">
@@ -90,7 +154,11 @@
               </div>
             </div>
           </div>
-          <div class="top__filters filters">
+          <form
+            class="top__filters filters"
+            @reset="resetFilters()"
+            @submit.prevent="submitFilters()"
+          >
             <div class="filters__control">
               <div class="filters__fields">
                 <div class="filters__search">
@@ -120,25 +188,6 @@
                   </VInput>
                 </div>
                 <div class="filters__brand">
-                  <!-- <VSelect
-                    :opts="{
-                      type: 'text',
-                      name: 'filter-search',
-                      placeholder: 'Бренд',
-                      icon: true,
-                    }"
-                  >
-                    <template #menu>
-                      <ul class="list">
-                        <li
-                          class="list__item"
-                          v-for="brand in currentBrandsItems"
-                        >
-                          {{ brand }}
-                        </li>
-                      </ul>
-                    </template>
-                  </VSelect> -->
                   <VMultiSelect
                     :opts="{
                       type: 'text',
@@ -147,7 +196,6 @@
                       icon: true,
                     }"
                     :selectedItems="{}"
-                    @onRemoveSelectedItem="removeBrandSelectedItems($event)"
                   >
                     <template #menu>
                       <VCheckboxListObj
@@ -159,24 +207,31 @@
                   </VMultiSelect>
                 </div>
                 <div class="filters__warehouse">
-                  <VSelect
+                  <VMultiSelect
                     :opts="{
                       type: 'text',
                       name: 'filter-search',
                       placeholder: 'Склад',
                       icon: true,
                     }"
+                    :selectedItems="{}"
                   >
-                    <template #menu> Склад </template>
-                  </VSelect>
+                    <template #menu>
+                      <VCheckboxListObj
+                        :items="portalWarehousesItems"
+                        :currentIsCheckedItems="selectedWarehouseItems"
+                        @onChange="setWarehouseSelectedItems($event)"
+                      />
+                    </template>
+                  </VMultiSelect>
                 </div>
-                <div class="filters__checkbox">
+                <!-- <div class="filters__checkbox">
                   <VCheckbox text="Товары с низкой ценой" />
-                </div>
+                </div> -->
               </div>
               <div class="filters__buttons">
-                <div class="filters__button--update"><VButton>Обновить</VButton></div>
-                <div class="filters__button--apply"><VButton>Применить</VButton></div>
+                <div class="filters__button--reset"><VButton type="reset">Сбросить</VButton></div>
+                <div class="filters__button--apply"><VButton type="submit">Применить</VButton></div>
               </div>
             </div>
             <div class="filters__selected selected-filters">
@@ -198,16 +253,17 @@
                   </svg>
                 </span>
                 <p class="found-selected-filters__text">Найдено:</p>
-                <div class="found-selected-filters__count">23 847</div>
+                <div class="found-selected-filters__count">{{ paginationMeta.total }}</div>
               </div>
               <div class="selected-filters__tag-list">
                 <VTagList
-                  :items="selectedBrandsArray"
-                  prefix="Бренд :"
+                  :items="selectedFilterForBrandWarehouseItems"
+                  @removeItem="removeSelectedFilterForBrandWarehouseItems($event)"
                 />
                 <button
                   class="selected-filters__tag-list-clear-all"
                   type="button"
+                  @click="resetSelectedBrandsWarehouses"
                 >
                   <span class="selected-filters__tag-list-clear-all-text"> Очистить всё </span>
                   <span class="selected-filters__tag-list-clear-all-icon"
@@ -229,7 +285,7 @@
                 </button>
               </div>
             </div>
-          </div>
+          </form>
           <!-- <div class="top__show-hide show-hide-categories">
             <button
               type="button"
@@ -289,10 +345,11 @@
   import VCheckboxObj from '@/components/UI/VCheckboxObj.vue';
   import VMultiSelect from '@/components/UI/VMultiSelect.vue';
   import VCheckboxListObj from '@/components/UI/VCheckboxListObj.vue';
+  import VRecursiveList from '@/components/UI-FC/VRecursiveList.vue';
 
   export default {
     name: 'VMarketsSectionView',
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj, VMultiSelect, VCheckboxListObj },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj, VMultiSelect, VCheckboxListObj, VRecursiveList },
 
     props: {
       paginationNomenclatureItemsValue: {
@@ -303,9 +360,16 @@
     data() {
       return {
         // currentBrandsItem: '',
+        filterValue: '',
         currentBrandsItemsArray: [],
+
         selectedBrandItems: {},
+        selectedWarehouseItems: {},
+
         selectedBrandsArray: [],
+        selectedWarehouseArray: [],
+
+        selectedFilterForBrandWarehouseItems: {},
 
         selectedNomenclatureItems: {},
         selectedNomenclatureItemsLength: 0,
@@ -317,35 +381,77 @@
           name: 'search',
           placeholder: 'Поиск',
         },
-        tagListItems: ['ABSEL', 'BOSCH', 'VARTA', 'ABS 123', 'ABS RND 92938', 'BOSCH'],
       };
     },
     computed: {
       ...mapGetters('nomenclatureItems', {
         paginationMeta: 'getPaginationMeta',
         currentBrandsItems: 'getCurrentBrandsItems',
+        portalWarehousesItems: 'getPortalWarehousesItems',
+        categoriesItems: 'getCategoriesItems',
       }),
-      // selectedBrandsArray() {
-      //   return Object.keys(this.selectedBrandItems);
-      // },
     },
     methods: {
       ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
 
-      removeBrandSelectedItems(e) {
-        delete this.selectedBrandItems[e.name];
-        // console.log(this.selectedBrandItems, this.selectedBrandsArray);
+      resetSelectedBrandsWarehouses() {
+        this.selectedBrandItems = {};
+        this.selectedWarehouseItems = {};
+      },
+
+      async resetFilters() {
+        const meta = {
+          pageNumber: 1,
+          paginationLimit: this.paginationMeta.per_page,
+          search: '',
+          brand_name: [],
+          portalWarehouses: [],
+        };
+        // this.$nextTick(() => {});
+        // meta.brand_name = Object.keys(this.selectedBrandItems);
+        // meta.portalWarehouses = Object.keys(this.selectedWarehouseItems);
+
+        console.log(meta);
+        this.selectedBrandItems = {};
+        this.selectedWarehouseItems = {};
+        await this.GET_ITEMS_NOMENCLATURE(meta);
+        this.$emit('updatePagination');
+      },
+
+      async submitFilters() {
+        const meta = {
+          search: this.filterValue,
+          pageNumber: 1,
+          paginationLimit: this.paginationMeta.per_page,
+          brand_name: Object.keys(this.selectedBrandItems),
+          portalWarehouses: Object.keys(this.selectedWarehouseItems),
+        };
+
+        // if (Object.keys(this.selectedBrandItems).length) meta.brand_name = Object.keys(this.selectedBrandItems);
+        // if (Object.keys(this.selectedWarehouseItems).length) meta.portalWarehouses = Object.keys(this.selectedWarehouseItems);
+
+        await this.GET_ITEMS_NOMENCLATURE(meta);
+        this.$emit('updatePagination');
+      },
+
+      removeSelectedFilterForBrandWarehouseItems(item) {
+        if (this.selectedBrandItems.hasOwnProperty(item.id)) delete this.selectedBrandItems[item.id];
+        if (this.selectedWarehouseItems.hasOwnProperty(item.id)) delete this.selectedWarehouseItems[item.id];
       },
 
       setBrandSelectedItems(e) {
-        this.selectedBrandItems[e.item.name] = e.item;
-        // console.log(this.selectedBrandItems, this.selectedBrandsArray);
-        // console.log(e);
+        if (e.isCheckedBoolean) this.selectedBrandItems[e.item.name] = e.item;
+        else delete this.selectedBrandItems[e.item.name];
+      },
+      setWarehouseSelectedItems(e) {
+        if (e.isCheckedBoolean) this.selectedWarehouseItems[e.item.id] = e.item;
+        else delete this.selectedWarehouseItems[e.item.id];
       },
 
       async onInputSearch($event) {
+        this.filterValue = $event.target.value;
         const meta = {
-          search: $event.target.value,
+          search: this.filterValue,
           pageNumber: 1,
         };
         await this.GET_ITEMS_NOMENCLATURE(meta);
@@ -365,16 +471,20 @@
         this.selectedNomenclatureItems = {};
         this.selectedNomenclatureItemsLength = Object.keys(this.selectedNomenclatureItems).length;
       },
-
-      nomenclatureComponentMethod() {
-        console.log('nomenclatureComponent');
-      },
     },
     watch: {
       selectedBrandItems: {
         handler(newValue) {
           this.selectedBrandsArray = Object.keys(newValue);
-          console.log(this.selectedBrandsArray);
+          this.selectedFilterForBrandWarehouseItems = { ...this.selectedWarehouseItems, ...newValue };
+          console.log(this.selectedBrandsArray, this.selectedFilterForBrandWarehouseItems);
+        },
+        deep: true,
+      },
+      selectedWarehouseItems: {
+        handler(newValue) {
+          // this.selectedWarehouseArray = Object.values(newValue).map((item) => item.name);
+          this.selectedFilterForBrandWarehouseItems = { ...this.selectedBrandItems, ...newValue };
         },
         deep: true,
       },
@@ -384,7 +494,6 @@
       this.currentBrandsItemsArray = Object.values(this.currentBrandsItems).map((brand) => {
         return { name: brand, id: brand };
       });
-      console.log(this.currentBrandsItems);
     },
   };
 </script>
@@ -526,7 +635,7 @@
       display: flex;
     }
 
-    &__button--update {
+    &__button--reset {
       margin-right: 16px;
       .button {
         background: transparent;

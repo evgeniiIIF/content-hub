@@ -9,7 +9,7 @@ prefix="Бренд :"
     <li
       class="tag-list__item"
       v-for="item in currentItems"
-      :key="item"
+      :key="item.id"
     >
       <div class="tag-list__content">
         <span
@@ -18,7 +18,7 @@ prefix="Бренд :"
         >
           {{ prefix }}
         </span>
-        <p class="tag-list__text">{{ item }}</p>
+        <p class="tag-list__text">{{ item.name }}</p>
       </div>
       <div
         class="tag-list__close"
@@ -50,7 +50,7 @@ prefix="Бренд :"
     name: 'VTagList',
     props: {
       items: {
-        type: Array,
+        type: Object,
         required: true,
       },
       prefix: {
@@ -64,7 +64,8 @@ prefix="Бренд :"
     },
     methods: {
       removeItem(eventItem) {
-        this.currentItems = this.currentItems.filter((item) => item !== eventItem);
+        // this.currentItems = this.currentItems.filter((item) => item !== eventItem);
+        this.$emit('removeItem', eventItem);
         // console.log(eventItem);
       },
     },

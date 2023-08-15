@@ -5,11 +5,12 @@ export default {
 
   state: {
     items: [],
+    currentBrandsItems: [],
+    portalWarehousesItems: [],
+    categoriesItems: [],
+
     paginationMeta: {},
     paramsForSend: {},
-
-    currentBrandsItems: {},
-    portalWarehousesItems: [],
   },
   getters: {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
@@ -19,6 +20,10 @@ export default {
     items(state) {
       return state.items;
     },
+    getCategoriesItems(state) {
+      return state.categoriesItems;
+    },
+
     getPaginationMeta(state) {
       return state.paginationMeta;
     },
@@ -28,10 +33,16 @@ export default {
     getCurrentBrandsItems(state) {
       return state.currentBrandsItems;
     },
+    getPortalWarehousesItems(state) {
+      return state.portalWarehousesItems;
+    },
   },
   mutations: {
     setItems(state, payload) {
       state.items = payload;
+    },
+    setCategoriesItems(state, payload) {
+      state.categoriesItems = payload;
     },
     setPaginationMeta(state, payload) {
       state.paginationMeta = payload;
@@ -41,6 +52,9 @@ export default {
     },
     setCurrentBrandsItems(state, payload) {
       state.currentBrandsItems = payload;
+    },
+    setPortalWarehousesItems(state, payload) {
+      state.portalWarehousesItems = payload;
     },
   },
   actions: {
@@ -61,29 +75,31 @@ export default {
         if (meta.paginationLimit) store.commit('setParamsForSend', { name: 'paginate', value: meta.paginationLimit });
         if (meta.pageNumber) store.commit('setParamsForSend', { name: 'page', value: meta.pageNumber });
         if (meta.search || meta.search === '') store.commit('setParamsForSend', { name: 'search', value: meta.search });
-        // if (meta.brand_name) config.params.brand_name = meta.brand_name;
-        // if (meta.portalWarehouses) config.params.portalWarehouses = meta.portalWarehouses;
+        if (meta.brand_name) store.commit('setParamsForSend', { name: 'brand_name', value: meta.brand_name });
+        if (meta.portalWarehouses) store.commit('setParamsForSend', { name: 'portalWarehouses', value: meta.portalWarehouses });
 
         config.params = paramsForSend;
-        // brand_name: ['ABS', 'ABSEL'],
-        // portalWarehouses: [1, 2, 3],
       }
 
-      // console.log(config.params);
+      console.log(config.params);
 
       await axios.get(url, config).then((response) => {
         const data = response.data;
         const items = data.response.nomenclature.data;
         const meta = data.response.nomenclature.meta;
         const currentBrandsItems = data.response.currentBrands;
+        const portalWarehouses = data.response.portalWarehouses;
+        const categories = data.response.categories;
 
         // const portalWarehouses = data
         // const links = data;
         store.commit('setItems', items);
+        store.commit('setCategoriesItems', categories);
         store.commit('setPaginationMeta', meta);
         store.commit('setCurrentBrandsItems', currentBrandsItems);
+        store.commit('setPortalWarehousesItems', portalWarehouses);
 
-        // console.log(store.getters.getCurrentBrandsItems);
+        console.log(data);
       });
     },
   },

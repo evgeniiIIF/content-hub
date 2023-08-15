@@ -53,6 +53,14 @@
         this.$emit('onChange', { isCheckedBoolean: isCheckedBoolean, item: item });
       },
     },
+    watch: {
+      currentIsCheckedItems: {
+        handler(newValue) {
+          console.log(newValue);
+        },
+        deep: true,
+      },
+    },
   };
 </script>
 
