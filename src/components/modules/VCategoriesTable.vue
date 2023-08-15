@@ -299,7 +299,7 @@
                   @onFocus="loadAliSelectItems('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2)"
                   :opts="optsTemplateItemCategorySelect"
                   :value="itemCategoryItemL2.aliCategory ? itemCategoryItemL2.aliCategory.main_name : '-'"
-                  :title="itemCategoryItemL2.ozonCategory ? itemCategoryItemL2.ozonCategory.name : ''"
+                  :title="itemCategoryItemL2.aliCategory ? itemCategoryItemL2.aliCategory.main_name : ''"
                 >
                   <template #menu>
                     <div class="select-list__filter">
@@ -528,7 +528,7 @@
                 @onFocus="loadAliSelectItems('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3)"
                 :opts="optsTemplateItemCategorySelect"
                 :value="itemCategoryItemL3.aliCategory ? itemCategoryItemL3.aliCategory.main_name : '-'"
-                :title="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.ozonCategory.name : ''"
+                :title="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.aliCategory.main_name : ''"
               >
                 <template #menu>
                   <div class="select-list__filter">
@@ -1463,6 +1463,7 @@
       position: sticky;
       top: 0;
       left: 0;
+      z-index: 1;
       background: #fff;
       padding: 16px;
     }

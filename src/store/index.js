@@ -24,6 +24,8 @@ import editMarket from './markets/editMarket.js';
 
 // <nomenclature>
 import nomenclatureItems from './nomenclature/nomenclatureItems.js';
+import createNewCardProductByNomenclature from './nomenclature/createNewCardProductByNomenclature.js';
+
 // </nomenclature>
 
 // <product-cards>
@@ -53,8 +55,8 @@ export default createStore({
     // </markets>
 
     // <nomenclature>
-
     nomenclatureItems,
+    createNewCardProductByNomenclature,
     // </nomenclature>
 
     // <product-cards>

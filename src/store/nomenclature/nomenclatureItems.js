@@ -68,7 +68,7 @@ export default {
           Accept: 'application/json',
         },
       };
-
+      console.log(store.getters.getTokenFromLogin);
       const paramsForSend = store.getters.getParamsForSend;
 
       if (Boolean(meta && Object.keys(meta).length)) {

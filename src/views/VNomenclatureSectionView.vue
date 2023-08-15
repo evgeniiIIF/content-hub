@@ -26,15 +26,8 @@
               }"
             /> -->
             <VSelect
-              :opts="{
-                select: true,
-                icon: true,
-                value: '',
-                type: 'text',
-                name: 'categories',
-                placeholder: 'Выберите категорию из списка',
-                items: {},
-              }"
+              :opts="selectActiveCategoriesOpts"
+              ref="VSelectActiveCategories"
             >
               <template #menu>
                 <div class="select-list__filter">
@@ -65,7 +58,8 @@
                   <template #slot1="{ itemL1, categoriesItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                     <div
                       class="select-list__name"
-                      title="Нельзя выбрать родительскую категорию"
+                      :title="!categoriesItemL1.is_active ? 'Нельзя выбрать родительскую категорию' : ''"
+                      :style="{ opacity: !categoriesItemL1.is_active ? '0.5' : '', cursor: !categoriesItemL1.is_active ? 'not-allowed' : '' }"
                     >
                       {{ categoriesItemL1.name }}
                     </div>
@@ -73,7 +67,15 @@
                   <template #slot2="{ itemL2, categoriesItemL2 = itemL2, indexL1, indexL2 }">
                     <div
                       class="select-list__name"
-                      @click.stop="onSelectMarketplaceCategory('aliCategory', categoriesItemL2, itemCategoryItemL3)"
+                      @click.stop="setActiveCategory(categoriesItemL2)"
+                      :title="!categoriesItemL2.is_active ? 'Нельзя выбрать родительскую категорию' : ''"
+                      :style="{
+                        opacity: !categoriesItemL2.is_active ? '0.5' : '',
+                        cursor: !categoriesItemL2.is_active ? 'not-allowed' : '',
+                        background: categoriesItemL2.id === activeCategoryId ? 'blue' : '',
+                        color: categoriesItemL2.id === activeCategoryId ? '#fff' : '',
+                        fontWeight: categoriesItemL2.id === activeCategoryId ? 'bold' : '',
+                      }"
                     >
                       {{ categoriesItemL2.name }}
                     </div>
@@ -81,7 +83,12 @@
                   <template #slot3="{ itemL3, categoriesItemL3 = itemL3, indexL1, indexL2 }">
                     <div
                       class="select-list__name"
-                      @click.stop="onSelectMarketplaceCategory('aliCategory', categoriesItemL3, itemCategoryItemL3)"
+                      :style="{
+                        background: categoriesItemL3.id === activeCategoryId ? 'blue' : '',
+                        color: categoriesItemL3.id === activeCategoryId ? '#fff' : '',
+                        fontWeight: categoriesItemL3.id === activeCategoryId ? 'bold' : '',
+                      }"
+                      @click.stop="setActiveCategory(categoriesItemL3)"
                     >
                       {{ categoriesItemL3.name }}
                     </div>
@@ -91,7 +98,7 @@
             </VSelect>
           </div>
           <div class="associate-nomenclature__button">
-            <VButton>
+            <VButton @click="connectToCategory">
               <span class="button__image">
                 <svg
                   width="20"
@@ -360,6 +367,10 @@
     data() {
       return {
         // currentBrandsItem: '',
+
+        activeCategoryId: null,
+        activeCategoryName: '',
+
         filterValue: '',
         currentBrandsItemsArray: [],
 
@@ -373,6 +384,17 @@
 
         selectedNomenclatureItems: {},
         selectedNomenclatureItemsLength: 0,
+
+        selectActiveCategoriesOpts: {
+          select: true,
+          icon: true,
+          readonly: true,
+          value: '',
+          type: 'text',
+          name: 'categories',
+          placeholder: 'Выберите категорию из списка',
+          items: {},
+        },
 
         isOpenSlidingBlock: false,
         inputOpts: {
@@ -393,6 +415,25 @@
     },
     methods: {
       ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
+      ...mapActions('createNewCardProductByNomenclature', ['SEND_NOMENCLATURE_DATA']),
+
+      setActiveCategory(categoriesItem) {
+        if (categoriesItem.is_active) {
+          this.activeCategoryId = categoriesItem.id;
+          this.selectActiveCategoriesOpts.value = categoriesItem.name;
+          this.$refs.VSelectActiveCategories.closeMenuFromOuter();
+          console.log(categoriesItem);
+        }
+      },
+
+      connectToCategory() {
+        const data = {
+          portal_nomenclature: Object.values(this.selectedNomenclatureItems).map((item) => item.id),
+          category_id: this.activeCategoryId,
+        };
+        this.SEND_NOMENCLATURE_DATA(data);
+        // console.log(data);
+      },
 
       resetSelectedBrandsWarehouses() {
         this.selectedBrandItems = {};
@@ -416,6 +457,7 @@
         this.selectedWarehouseItems = {};
         await this.GET_ITEMS_NOMENCLATURE(meta);
         this.$emit('updatePagination');
+        this.resetSelectedNomenclatureItems();
       },
 
       async submitFilters() {
