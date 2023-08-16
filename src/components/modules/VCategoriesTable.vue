@@ -912,17 +912,13 @@
         // }
       },
 
-      async onSelectMarketplaceCategory(mapketplaceCategoryName, itemMarketplace, itemCategory) {
+      async onSelectMarketplaceCategory(marketplaceCategoryName, itemMarketplace, itemCategory) {
         console.log(this.currentSelect);
-
-        const input = this.currentSelect.$el.querySelector('input');
-        input.value = itemMarketplace.name;
-        input.title = itemMarketplace.name;
-        this.currentSelect.menuIsOpen = false;
 
         // reset filter
         this.currentSelect.$el.querySelector('.select-list__filter-input').value = '';
         this.filterValueSelect = '';
+
         if (this.selectNameAll) {
           this.highlightMatching(this.selectNameAll, this.filterValueSelect);
         }
@@ -931,15 +927,26 @@
         const data = {
           localCategory_id: itemCategory.id,
           marketplace_id: itemMarketplace.id,
-          mapketplaceCategoryName,
+          marketplaceCategoryName,
         };
         await this.SELECT_MARKETPLACE_CATEGORY(data);
-        this.SET_SUCCESS();
-        setTimeout(() => {
-          this.RESET_SUCCESS();
-          this.RESET_MESSAGE();
-        }, 3000);
-        console.log('select market categories');
+        const input = this.currentSelect.$el.querySelector('input');
+        input.value = itemMarketplace.name;
+        input.title = itemMarketplace.name;
+        this.currentSelect.menuIsOpen = false;
+
+        // this.SET_SUCCESS();
+        // setTimeout(() => {
+        //   this.RESET_SUCCESS();
+        //   this.RESET_MESSAGE();
+        // }, 3000);
+        // console.log('select market categories');
+        if (marketplaceCategoryName === 'ozonCategory') {
+          await this.GET_ITEMS_SELECT_OZON();
+        }
+        if (marketplaceCategoryName === 'aliCategory') {
+          await this.GET_ITEMS_SELECT_ALI();
+        }
 
         await this.GET_ITEMS_CATEGORIES();
 

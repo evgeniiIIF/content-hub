@@ -48,7 +48,7 @@ export default {
       // console.log(updateData);
 
       const data = {
-        [updateData.mapketplaceCategoryName]: updateData.marketplace_id,
+        [updateData.marketplaceCategoryName]: updateData.marketplace_id,
       };
 
       const config = {
@@ -67,19 +67,18 @@ export default {
         .then((response) => {
           console.log(response.data);
 
-          if (response.data.success === true) {
-            // store.commit('setSuccess');
-            store.commit('setMessage', response.data.message);
+          store.commit('setMessage', response.data.message);
 
-            // setTimeout(() => {
-            //   store.commit('resetSuccess');
-            //   store.commit('resetMessage');
-            // }, 3000);
-
-            // store.commit('resetPending');
-
-            // console.log(store.getters.pending);
-          }
+          // if (response.data.success === true) {
+          store.commit('setSuccess');
+          1;
+          setTimeout(() => {
+            store.commit('resetSuccess');
+            store.commit('resetMessage');
+          }, 3000);
+          store.commit('resetPending');
+          // console.log(store.getters.pending);
+          // }
         })
         .catch((error) => {
           console.log(error);

@@ -1,3 +1,5 @@
+<!-- v-if="isAddCategorySuccess || isAddNestedCategorySuccess || isSelectMarketplaceCategirySuccess || isCategoryDeleteSuccess" -->
+
 <template>
   <header
     class="header js-header"
@@ -47,7 +49,7 @@
       </div>
     </div>
     <VSuccess
-      v-if="isAddCategorySuccess || isAddNestedCategorySuccess || isSelectMarketplaceCategirySuccess || isCategoryDeleteSuccess"
+      v-if="currentMessage"
       :message="currentMessage"
     />
   </header>

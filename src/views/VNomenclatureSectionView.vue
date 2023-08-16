@@ -126,6 +126,9 @@
         </div>
       </div>
     </div>
+    <div class="nomenclature__success">
+      <VSuccess message="message" />
+    </div>
     <div class="nomenclature__top">
       <div class="container">
         <div class="nomenclature__top-body top">
@@ -359,11 +362,12 @@
   import VMultiSelect from '@/components/UI/VMultiSelect.vue';
   import VCheckboxListObj from '@/components/UI/VCheckboxListObj.vue';
   import VRecursiveList from '@/components/UI-FC/VRecursiveList.vue';
+  import VSuccess from '@/components/UI/VSuccess.vue';
 
   export default {
     name: 'VMarketsSectionView',
     mixins: [mixRecursiveFilter],
-    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj, VMultiSelect, VCheckboxListObj, VRecursiveList },
+    components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj, VMultiSelect, VCheckboxListObj, VRecursiveList, VSuccess },
 
     props: {
       paginationNomenclatureItemsValue: {
@@ -608,6 +612,12 @@
       padding: 24px 0 16px 0;
     }
     &__associate {
+    }
+    &__success {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      z-index: 1;
     }
   }
 
