@@ -68,7 +68,7 @@ export default {
           Accept: 'application/json',
         },
       };
-      console.log(store.getters.getTokenFromLogin);
+      // console.log(store.getters.getTokenFromLogin);
       const paramsForSend = store.getters.getParamsForSend;
 
       if (Boolean(meta && Object.keys(meta).length)) {
@@ -77,9 +77,8 @@ export default {
         if (meta.search || meta.search === '') store.commit('setParamsForSend', { name: 'search', value: meta.search });
         if (meta.brand_name) store.commit('setParamsForSend', { name: 'brand_name', value: meta.brand_name });
         if (meta.portalWarehouses) store.commit('setParamsForSend', { name: 'portalWarehouses', value: meta.portalWarehouses });
-
-        config.params = paramsForSend;
       }
+      config.params = paramsForSend;
 
       console.log(config.params);
 

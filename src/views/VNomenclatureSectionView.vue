@@ -35,6 +35,8 @@
                     <input
                       type="text"
                       class="select-list__filter-input"
+                      v-model="selectCategoriesFilterValue"
+                      @input="onInputFilterActiveCategories($event)"
                     />
                     <div class="select-list__filter-icon">
                       <svg
@@ -54,7 +56,7 @@
                     </div>
                   </div>
                 </div>
-                <VRecursiveList :items="categoriesItems">
+                <VRecursiveList :items="filteredCategoriesItems">
                   <template #slot1="{ itemL1, categoriesItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                     <div
                       class="select-list__name"
@@ -98,7 +100,10 @@
             </VSelect>
           </div>
           <div class="associate-nomenclature__button">
-            <VButton @click="connectToCategory">
+            <VButton
+              @click="connectToCategory"
+              :pending="createNewCardProductByNomenclature_PENDING"
+            >
               <span class="button__image">
                 <svg
                   width="20"
@@ -340,6 +345,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
+  import mixRecursiveFilter from '@/mixins/mixRecursiveFilter.js';
 
   import VSlidingBlockSlotUIFC from '@/components/UI-FC/VSlidingBlockSlotUIFC.vue';
   import VButton from '@/components/UI/VButton.vue';
@@ -356,6 +362,7 @@
 
   export default {
     name: 'VMarketsSectionView',
+    mixins: [mixRecursiveFilter],
     components: { VInput, VButton, VSlidingBlockSlotUIFC, VCardAddMarket, VNomenclatureTable, VSelect, VCheckbox, VTagList, VCheckboxObj, VMultiSelect, VCheckboxListObj, VRecursiveList },
 
     props: {
@@ -366,7 +373,7 @@
 
     data() {
       return {
-        // currentBrandsItem: '',
+        selectCategoriesFilterValue: '',
 
         activeCategoryId: null,
         activeCategoryName: '',
@@ -412,10 +419,22 @@
         portalWarehousesItems: 'getPortalWarehousesItems',
         categoriesItems: 'getCategoriesItems',
       }),
+      ...mapGetters('createNewCardProductByNomenclature', {
+        createNewCardProductByNomenclature_PENDING: 'getPending',
+      }),
+
+      filteredCategoriesItems() {
+        return this.mixRecursiveFilterFn(this.categoriesItems, this.selectCategoriesFilterValue);
+      },
     },
     methods: {
       ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
       ...mapActions('createNewCardProductByNomenclature', ['SEND_NOMENCLATURE_DATA']),
+
+      onInputFilterActiveCategories(e) {
+        console.log(e);
+        this.mixHighlightMatchingFn(e, '.select__menu', '.select-list__name', this.selectCategoriesFilterValue);
+      },
 
       setActiveCategory(categoriesItem) {
         if (categoriesItem.is_active) {
@@ -426,13 +445,14 @@
         }
       },
 
-      connectToCategory() {
+      async connectToCategory() {
         const data = {
           portal_nomenclature: Object.values(this.selectedNomenclatureItems).map((item) => item.id),
           category_id: this.activeCategoryId,
         };
-        this.SEND_NOMENCLATURE_DATA(data);
+        await this.SEND_NOMENCLATURE_DATA(data);
         // console.log(data);
+        await this.GET_ITEMS_NOMENCLATURE();
       },
 
       resetSelectedBrandsWarehouses() {
@@ -491,6 +511,7 @@
       },
 
       async onInputSearch($event) {
+        this.resetSelectedNomenclatureItems();
         this.filterValue = $event.target.value;
         const meta = {
           search: this.filterValue,
@@ -793,6 +814,7 @@
 
     &__button {
       .button {
+        width: 129.75px;
         &__image {
         }
 

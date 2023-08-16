@@ -12,10 +12,10 @@ export default {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
       return rootGetters['login/getToken'];
     },
-    success(state) {
+    getSuccess(state) {
       return state.success;
     },
-    pending(state) {
+    getPending(state) {
       return state.pending;
     },
     getMessage(state) {

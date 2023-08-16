@@ -528,7 +528,7 @@
                 @onFocus="loadAliSelectItems('aliCategory', itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3)"
                 :opts="optsTemplateItemCategorySelect"
                 :value="itemCategoryItemL3.aliCategory ? itemCategoryItemL3.aliCategory.main_name : '-'"
-                :title="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.aliCategory.main_name : ''"
+                :title="itemCategoryItemL3.ozonCategory ? itemCategoryItemL3.ozonCategory.name : ''"
               >
                 <template #menu>
                   <div class="select-list__filter">
@@ -1428,6 +1428,11 @@
       .list {
         .select-list__name {
           padding-left: 28px;
+        }
+        .list {
+          .select-list__name {
+            padding-left: 36px;
+          }
         }
       }
     }
