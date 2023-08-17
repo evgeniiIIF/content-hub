@@ -45,11 +45,14 @@ export default {
   actions: {
     async SELECT_MARKETPLACE_CATEGORY(store, updateData) {
       const url = `http://api.hub.absit.ru/api/v1/categories/${updateData.localCategory_id}/update`;
-      // console.log(updateData);
+      console.log(updateData);
 
       const data = {
-        [updateData.marketplaceCategoryName]: updateData.marketplace_id,
+        [updateData.marketplaceName]: updateData.marketplace_category_id,
+        //marketplace_category_id === id-ozonCategory || id-aliCategory
       };
+
+      console.log(data);
 
       const config = {
         headers: {
@@ -75,7 +78,7 @@ export default {
           setTimeout(() => {
             store.commit('resetSuccess');
             store.commit('resetMessage');
-          }, 3000);
+          }, 6000);
           store.commit('resetPending');
           // console.log(store.getters.pending);
           // }

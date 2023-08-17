@@ -20,7 +20,7 @@
       <p class="success__text">{{ message }}</p>
     </div>
     <button
-      @click="closeSuccessWindow"
+      @click="$emit('closeSuccessWindow')"
       class="success__close"
       type="button"
     >

@@ -1,6 +1,15 @@
 <template>
   <section class="nomenclature">
     <div
+      class="nomenclature__success"
+      v-if="createNewCardProductByNomenclature_MESSAGE"
+    >
+      <VSuccess
+        :message="createNewCardProductByNomenclature_MESSAGE"
+        @closeSuccessWindow="RESET_MESSAGE()"
+      />
+    </div>
+    <div
       class="nomenclature__associate associate-nomenclature"
       v-if="selectedNomenclatureItemsLength"
     >
@@ -126,9 +135,7 @@
         </div>
       </div>
     </div>
-    <div class="nomenclature__success">
-      <VSuccess message="message" />
-    </div>
+
     <div class="nomenclature__top">
       <div class="container">
         <div class="nomenclature__top-body top">
@@ -425,6 +432,7 @@
       }),
       ...mapGetters('createNewCardProductByNomenclature', {
         createNewCardProductByNomenclature_PENDING: 'getPending',
+        createNewCardProductByNomenclature_MESSAGE: 'getMessage',
       }),
 
       filteredCategoriesItems() {
@@ -433,7 +441,7 @@
     },
     methods: {
       ...mapActions('nomenclatureItems', ['GET_ITEMS_NOMENCLATURE']),
-      ...mapActions('createNewCardProductByNomenclature', ['SEND_NOMENCLATURE_DATA']),
+      ...mapActions('createNewCardProductByNomenclature', ['SEND_NOMENCLATURE_DATA', 'RESET_MESSAGE']),
 
       onInputFilterActiveCategories(e) {
         console.log(e);
@@ -455,7 +463,8 @@
           category_id: this.activeCategoryId,
         };
         await this.SEND_NOMENCLATURE_DATA(data);
-        // console.log(data);
+        this.resetSelectedNomenclatureItems();
+
         await this.GET_ITEMS_NOMENCLATURE();
       },
 

@@ -75,7 +75,7 @@ export default {
           setTimeout(() => {
             store.commit('resetSuccess');
             store.commit('resetMessage');
-          }, 3000);
+          }, 6000);
 
           store.commit('resetPending');
           if (response.data.success === true) {

@@ -1,5 +1,14 @@
 <template>
   <div class="table">
+    <div
+      v-if="itemCategoryName_MESSAGE"
+      class="table__success"
+    >
+      <VSuccess
+        :message="itemCategoryName_MESSAGE"
+        @closeSuccessWindow="closeSuccessWindow"
+      />
+    </div>
     <div class="table__head head-table">
       <ul class="head-table__list row-table">
         <li class="head-table__item"></li>
@@ -272,6 +281,33 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="reset-marketplace-category"
+                      v-if="itemCategoryItemL2.ozonCategory"
+                    >
+                      <VButton
+                        @click="resetMarketplaceCategory('ozonCategory', itemCategoryItemL2)"
+                        :pending="selectMarketplaceCategiry_PENDING"
+                      >
+                        <div class="button__text">Сбросить категорию</div>
+                        <div class="button__image">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M5.83333 3.33366C5.83333 2.41318 6.57953 1.66699 7.5 1.66699H12.5C13.4205 1.66699 14.1667 2.41318 14.1667 3.33366V4.16699H16.6667C17.1269 4.16699 17.5 4.54009 17.5 5.00033C17.5 5.46056 17.1269 5.83366 16.6667 5.83366H15.8333V16.667C15.8333 17.5875 15.0871 18.3337 14.1667 18.3337H5.83333C4.91286 18.3337 4.16667 17.5875 4.16667 16.667V5.83366H3.33333C2.8731 5.83366 2.5 5.46056 2.5 5.00033C2.5 4.54009 2.8731 4.16699 3.33333 4.16699H5.83333V3.33366ZM7.5 4.16699H12.5V3.33366H7.5V4.16699ZM5.83333 5.83366V16.667H14.1667V5.83366H5.83333ZM8.33333 7.50033C8.79357 7.50033 9.16667 7.87342 9.16667 8.33366V14.167C9.16667 14.6272 8.79357 15.0003 8.33333 15.0003C7.8731 15.0003 7.5 14.6272 7.5 14.167V8.33366C7.5 7.87342 7.8731 7.50033 8.33333 7.50033ZM11.6667 7.50033C12.1269 7.50033 12.5 7.87342 12.5 8.33366V14.167C12.5 14.6272 12.1269 15.0003 11.6667 15.0003C11.2064 15.0003 10.8333 14.6272 10.8333 14.167V8.33366C10.8333 7.87342 11.2064 7.50033 11.6667 7.50033Z"
+                              fill="#F2480D"
+                            />
+                          </svg>
+                        </div>
+                      </VButton>
+                    </div>
                     <VRecursiveList :items="filteredSelectItemsOzon">
                       <template #slot1="{ itemL1, selectOzonItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                         <div
@@ -327,6 +363,33 @@
                           </svg>
                         </div>
                       </div>
+                    </div>
+                    <div
+                      v-if="itemCategoryItemL2.aliCategory"
+                      class="reset-marketplace-category"
+                    >
+                      <VButton
+                        @click="resetMarketplaceCategory('aliCategory', itemCategoryItemL2)"
+                        :pending="selectMarketplaceCategiry_PENDING"
+                      >
+                        <div class="button__text">Сбросить категорию</div>
+                        <div class="button__image">
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M5.83333 3.33366C5.83333 2.41318 6.57953 1.66699 7.5 1.66699H12.5C13.4205 1.66699 14.1667 2.41318 14.1667 3.33366V4.16699H16.6667C17.1269 4.16699 17.5 4.54009 17.5 5.00033C17.5 5.46056 17.1269 5.83366 16.6667 5.83366H15.8333V16.667C15.8333 17.5875 15.0871 18.3337 14.1667 18.3337H5.83333C4.91286 18.3337 4.16667 17.5875 4.16667 16.667V5.83366H3.33333C2.8731 5.83366 2.5 5.46056 2.5 5.00033C2.5 4.54009 2.8731 4.16699 3.33333 4.16699H5.83333V3.33366ZM7.5 4.16699H12.5V3.33366H7.5V4.16699ZM5.83333 5.83366V16.667H14.1667V5.83366H5.83333ZM8.33333 7.50033C8.79357 7.50033 9.16667 7.87342 9.16667 8.33366V14.167C9.16667 14.6272 8.79357 15.0003 8.33333 15.0003C7.8731 15.0003 7.5 14.6272 7.5 14.167V8.33366C7.5 7.87342 7.8731 7.50033 8.33333 7.50033ZM11.6667 7.50033C12.1269 7.50033 12.5 7.87342 12.5 8.33366V14.167C12.5 14.6272 12.1269 15.0003 11.6667 15.0003C11.2064 15.0003 10.8333 14.6272 10.8333 14.167V8.33366C10.8333 7.87342 11.2064 7.50033 11.6667 7.50033Z"
+                              fill="#F2480D"
+                            />
+                          </svg>
+                        </div>
+                      </VButton>
                     </div>
                     <VRecursiveList :items="filteredSelectItemsAli">
                       <template #slot1="{ itemL1, selectAliItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
@@ -501,6 +564,33 @@
                       </div>
                     </div>
                   </div>
+                  <div
+                    v-if="itemCategoryItemL3.ozonCategory"
+                    class="reset-marketplace-category"
+                  >
+                    <VButton
+                      @click="resetMarketplaceCategory('ozonCategory', itemCategoryItemL3)"
+                      :pending="selectMarketplaceCategiry_PENDING"
+                    >
+                      <div class="button__text">Сбросить категорию</div>
+                      <div class="button__image">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M5.83333 3.33366C5.83333 2.41318 6.57953 1.66699 7.5 1.66699H12.5C13.4205 1.66699 14.1667 2.41318 14.1667 3.33366V4.16699H16.6667C17.1269 4.16699 17.5 4.54009 17.5 5.00033C17.5 5.46056 17.1269 5.83366 16.6667 5.83366H15.8333V16.667C15.8333 17.5875 15.0871 18.3337 14.1667 18.3337H5.83333C4.91286 18.3337 4.16667 17.5875 4.16667 16.667V5.83366H3.33333C2.8731 5.83366 2.5 5.46056 2.5 5.00033C2.5 4.54009 2.8731 4.16699 3.33333 4.16699H5.83333V3.33366ZM7.5 4.16699H12.5V3.33366H7.5V4.16699ZM5.83333 5.83366V16.667H14.1667V5.83366H5.83333ZM8.33333 7.50033C8.79357 7.50033 9.16667 7.87342 9.16667 8.33366V14.167C9.16667 14.6272 8.79357 15.0003 8.33333 15.0003C7.8731 15.0003 7.5 14.6272 7.5 14.167V8.33366C7.5 7.87342 7.8731 7.50033 8.33333 7.50033ZM11.6667 7.50033C12.1269 7.50033 12.5 7.87342 12.5 8.33366V14.167C12.5 14.6272 12.1269 15.0003 11.6667 15.0003C11.2064 15.0003 10.8333 14.6272 10.8333 14.167V8.33366C10.8333 7.87342 11.2064 7.50033 11.6667 7.50033Z"
+                            fill="#F2480D"
+                          />
+                        </svg>
+                      </div>
+                    </VButton>
+                  </div>
                   <VRecursiveList :items="filteredSelectItemsOzon">
                     <template #slot1="{ itemL1, selectOzonItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
                       <div
@@ -556,6 +646,33 @@
                         </svg>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    v-if="itemCategoryItemL3.aliCategory"
+                    class="reset-marketplace-category"
+                  >
+                    <VButton
+                      @click="resetMarketplaceCategory('aliCategory', itemCategoryItemL3)"
+                      :pending="selectMarketplaceCategiry_PENDING"
+                    >
+                      <div class="button__text">Сбросить категорию</div>
+                      <div class="button__image">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M5.83333 3.33366C5.83333 2.41318 6.57953 1.66699 7.5 1.66699H12.5C13.4205 1.66699 14.1667 2.41318 14.1667 3.33366V4.16699H16.6667C17.1269 4.16699 17.5 4.54009 17.5 5.00033C17.5 5.46056 17.1269 5.83366 16.6667 5.83366H15.8333V16.667C15.8333 17.5875 15.0871 18.3337 14.1667 18.3337H5.83333C4.91286 18.3337 4.16667 17.5875 4.16667 16.667V5.83366H3.33333C2.8731 5.83366 2.5 5.46056 2.5 5.00033C2.5 4.54009 2.8731 4.16699 3.33333 4.16699H5.83333V3.33366ZM7.5 4.16699H12.5V3.33366H7.5V4.16699ZM5.83333 5.83366V16.667H14.1667V5.83366H5.83333ZM8.33333 7.50033C8.79357 7.50033 9.16667 7.87342 9.16667 8.33366V14.167C9.16667 14.6272 8.79357 15.0003 8.33333 15.0003C7.8731 15.0003 7.5 14.6272 7.5 14.167V8.33366C7.5 7.87342 7.8731 7.50033 8.33333 7.50033ZM11.6667 7.50033C12.1269 7.50033 12.5 7.87342 12.5 8.33366V14.167C12.5 14.6272 12.1269 15.0003 11.6667 15.0003C11.2064 15.0003 10.8333 14.6272 10.8333 14.167V8.33366C10.8333 7.87342 11.2064 7.50033 11.6667 7.50033Z"
+                            fill="#F2480D"
+                          />
+                        </svg>
+                      </div>
+                    </VButton>
                   </div>
                   <VRecursiveList :items="filteredSelectItemsAli">
                     <template #slot1="{ itemL1, selectAliItemL1 = itemL1, indexL1, selectMarketplaceCategoryIndexL1 = indexL1 }">
@@ -665,6 +782,7 @@
   import { mapGetters, mapActions } from 'vuex';
 
   import mixDropdownMenuFn from '@/mixins/mixDropdownMenuFn';
+  import mixRecursiveFilter from '@/mixins/mixRecursiveFilter';
 
   import VDropdovnSlots from '@/components/UI/VDropdownSlots.vue';
   import VSlidingBlockSlotUIFC from '../UI-FC/VSlidingBlockSlotUIFC.vue';
@@ -672,15 +790,29 @@
   import VCheckboxList from '../UI/VCheckboxList.vue';
   import VSelect from '../UI/VSelect.vue';
   import VInput from '../UI/VInput.vue';
+  import VButton from '../UI/VButton.vue';
 
   import VCardAddNestedCategory from '../cards/VCardAddNestedCategory.vue';
   import VCardInfoCategory from '../cards/VCardInfoCategory.vue';
   import VItemCategotyDropdownList from './VItemCategotyDropdownList.vue';
+  import VSuccess from '../UI/VSuccess.vue';
 
   export default {
     name: 'VCategoriesTable',
-    mixins: [mixDropdownMenuFn],
-    components: { VDropdovnSlots, VSlidingBlockSlotUIFC, VRecursiveList, VCardAddNestedCategory, VCardInfoCategory, VItemCategotyDropdownList, VCheckboxList, VSelect, VInput },
+    mixins: [mixDropdownMenuFn, mixRecursiveFilter],
+    components: {
+      VDropdovnSlots,
+      VSlidingBlockSlotUIFC,
+      VRecursiveList,
+      VCardAddNestedCategory,
+      VCardInfoCategory,
+      VItemCategotyDropdownList,
+      VCheckboxList,
+      VSelect,
+      VInput,
+      VSuccess,
+      VButton,
+    },
 
     props: {
       filterValueLocalCategories: {
@@ -753,6 +885,11 @@
       }),
       ...mapGetters('updateCategoryName', {
         itemCategoryName_PENDING: 'pending',
+        itemCategoryName_MESSAGE: 'getMessage',
+      }),
+      ...mapGetters('selectMarketplaceCategiry', {
+        selectMarketplaceCategiry_PENDING: 'pending',
+        // itemCategoryName_MESSAGE: 'getMessage',
       }),
 
       // categoriesItems() {
@@ -766,18 +903,21 @@
       // },
 
       filteredSelectItemsOzon() {
-        if (this.filterValueSelect) {
-          return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
-        } else {
-          return this.ozonSelectItems;
-        }
+        return this.mixRecursiveFilterFn(this.ozonSelectItems, this.filterValueSelect);
+        // if (this.filterValueSelect) {
+        //   return this.filterRecursively(this.ozonSelectItems, this.filterValueSelect);
+        // } else {
+        //   return this.ozonSelectItems;
+        // }
       },
       filteredSelectItemsAli() {
-        if (this.filterValueSelect) {
-          return this.filterRecursively(this.aliSelectItems, this.filterValueSelect);
-        } else {
-          return this.aliSelectItems;
-        }
+        return this.mixRecursiveFilterFn(this.aliSelectItems, this.filterValueSelect);
+
+        // if (this.filterValueSelect) {
+        //   return this.filterRecursively(this.aliSelectItems, this.filterValueSelect);
+        // } else {
+        //   return this.aliSelectItems;
+        // }
       },
     },
 
@@ -785,9 +925,17 @@
       ...mapActions('localCategoriesItems', ['GET_ITEMS_CATEGORIES']),
       ...mapActions('categoriesOzon', ['GET_ITEMS_SELECT_OZON']),
       ...mapActions('categoriesAli', ['GET_ITEMS_SELECT_ALI']),
-      ...mapActions('updateCategoryName', ['UPDATE_CATEGORY_NAME', 'RESET_PENDING']),
+      ...mapActions('updateCategoryName', {
+        UPDATE_CATEGORY_NAME: 'UPDATE_CATEGORY_NAME',
+        RESET_CATEGORY_NAME_MESSAGE: 'RESET_MESSAGE',
+        RESET_PENDING: 'RESET_PENDING',
+      }),
       ...mapActions('selectMarketplaceCategiry', ['SELECT_MARKETPLACE_CATEGORY', 'RESET_SUCCESS', 'SET_SUCCESS', 'RESET_MESSAGE']),
       ...mapActions('deleteCategory', ['DELETE_CATEGORY']),
+
+      closeSuccessWindow() {
+        this.RESET_CATEGORY_NAME_MESSAGE();
+      },
 
       closeAllOpenedItemCategories() {
         const currentAcriveDropdownItemsForFilterCategories = document.querySelectorAll('.js-dropdown-menu__item--active');
@@ -832,61 +980,63 @@
         this.RESET_PENDING();
       },
 
-      filterRecursively(obj, filterValue) {
-        const copyObj = JSON.parse(JSON.stringify(obj));
+      // filterRecursively(obj, filterValue) {
+      //   const copyObj = JSON.parse(JSON.stringify(obj));
 
-        const filterFunc = (copyObj, filterValue) => {
-          if (filterValue) {
-            return copyObj.filter((item) => {
-              const corect =
-                item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
-                (item.children &&
-                  item.children.some((childItem) => {
-                    return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
-                  }));
+      //   const filterFunc = (copyObj, filterValue) => {
+      //     if (filterValue) {
+      //       return copyObj.filter((item) => {
+      //         const corect =
+      //           item.name.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+      //           (item.children &&
+      //             item.children.some((childItem) => {
+      //               return childItem.name.toLowerCase().startsWith(filterValue.toLowerCase());
+      //             }));
 
-              if (item.children_count > 0) {
-                item.children = filterFunc(item.children, filterValue);
-              }
+      //         if (item.children) {
+      //           item.children = filterFunc(item.children, filterValue);
+      //         }
 
-              if (corect) {
-                return true;
-              }
-            });
-          } else {
-            return obj;
-          }
-        };
+      //         if (corect) {
+      //           return true;
+      //         }
+      //       });
+      //     } else {
+      //       return obj;
+      //     }
+      //   };
 
-        return filterFunc(copyObj, filterValue);
-      },
+      //   return filterFunc(copyObj, filterValue);
+      // },
 
       onInputFilter(e) {
         this.filterValueSelect = e.target.value;
 
-        this.selectNameAll = e.target.closest('.select__menu').querySelectorAll('.select-list__name');
-        this.selectNameAll = Array.from(this.selectNameAll).filter((item) => item.innerText.toLowerCase().startsWith(this.filterValueSelect.toLowerCase()));
+        // this.selectNameAll = e.target.closest('.select__menu').querySelectorAll('.select-list__name');
+        // this.selectNameAll = Array.from(this.selectNameAll).filter((item) => item.innerText.toLowerCase().startsWith(this.filterValueSelect.toLowerCase()));
+        this.mixHighlightMatchingFn(e, '.select__menu', '.select-list__name', this.filterValueSelect);
 
-        this.highlightMatching(this.selectNameAll, this.filterValueSelect);
+        // this.highlightMatching(this.selectNameAll, this.filterValueSelect);
       },
 
       onBackspakeFilterSelect(e, selectNameAll, filterValueSelect) {
         if (e.keyCode === 8) {
           this.filterValueSelect = e.target.value.slice(0, -1);
-          this.highlightMatching(selectNameAll, filterValueSelect);
+          // this.highlightMatching(selectNameAll, filterValueSelect);
+          this.mixHighlightMatchingFn(e, '.select__menu', '.select-list__name', this.filterValueSelect);
         }
       },
 
-      highlightMatching(arr, filterValue) {
-        arr.forEach((item) => {
-          if (filterValue) {
-            item.style.background = 'transparent';
-            item.style.background = 'yellow';
-          } else {
-            item.style.background = 'transparent';
-          }
-        });
-      },
+      // highlightMatching(arr, filterValue) {
+      //   arr.forEach((item) => {
+      //     if (filterValue) {
+      //       item.style.background = 'transparent';
+      //       item.style.background = 'yellow';
+      //     } else {
+      //       item.style.background = 'transparent';
+      //     }
+      //   });
+      // },
 
       async loadOzonSelectItems(mapketplaceCategoryName, itemCategoryIndexL1, itemCategoryIndexL2, itemCategoryIndexL3 = '') {
         if (itemCategoryIndexL3 !== '') {
@@ -912,22 +1062,42 @@
         // }
       },
 
-      async onSelectMarketplaceCategory(marketplaceCategoryName, itemMarketplace, itemCategory) {
-        console.log(this.currentSelect);
+      async resetMarketplaceCategory(marketplaceName, itemCategory) {
+        const data = {
+          localCategory_id: itemCategory.id,
+          marketplace_category_id: 0,
+          marketplaceName,
+        };
+
+        await this.SELECT_MARKETPLACE_CATEGORY(data);
+
+        if (marketplaceName === 'ozonCategory') {
+          await this.GET_ITEMS_SELECT_OZON();
+        }
+        if (marketplaceName === 'aliCategory') {
+          await this.GET_ITEMS_SELECT_ALI();
+        }
+
+        await this.GET_ITEMS_CATEGORIES();
+      },
+
+      async onSelectMarketplaceCategory(marketplaceName, itemMarketplace, itemCategory) {
+        // console.log(this.currentSelect);
 
         // reset filter
         this.currentSelect.$el.querySelector('.select-list__filter-input').value = '';
         this.filterValueSelect = '';
 
         if (this.selectNameAll) {
-          this.highlightMatching(this.selectNameAll, this.filterValueSelect);
+          // this.highlightMatching(this.selectNameAll, this.filterValueSelect);
+          this.mixHighlightMatchingFn(e, '.select__menu', '.select-list__name', this.filterValueSelect);
         }
 
         // send data
         const data = {
           localCategory_id: itemCategory.id,
-          marketplace_id: itemMarketplace.id,
-          marketplaceCategoryName,
+          marketplace_category_id: itemMarketplace.id,
+          marketplaceName,
         };
         await this.SELECT_MARKETPLACE_CATEGORY(data);
         const input = this.currentSelect.$el.querySelector('input');
@@ -941,10 +1111,10 @@
         //   this.RESET_MESSAGE();
         // }, 3000);
         // console.log('select market categories');
-        if (marketplaceCategoryName === 'ozonCategory') {
+        if (marketplaceName === 'ozonCategory') {
           await this.GET_ITEMS_SELECT_OZON();
         }
-        if (marketplaceCategoryName === 'aliCategory') {
+        if (marketplaceName === 'aliCategory') {
           await this.GET_ITEMS_SELECT_ALI();
         }
 
@@ -1118,6 +1288,13 @@
     }
 
     &__item {
+    }
+
+    &__success {
+      position: fixed;
+      left: 0;
+      top: 68.016px;
+      width: 100%;
     }
   }
 
@@ -1523,6 +1700,25 @@
 
       .list {
         display: block;
+      }
+    }
+  }
+
+  .reset-marketplace-category {
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    top: 66px;
+    background: #fff;
+
+    .button {
+      width: 220px;
+      &__text {
+        margin-right: 8px;
+      }
+
+      &__icon {
       }
     }
   }

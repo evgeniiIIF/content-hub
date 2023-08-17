@@ -5,8 +5,9 @@ export default {
 
   state: {
     success: false,
-    successConsult: false,
+    // successConsult: false,
     pending: false,
+    message: '',
   },
   getters: {
     getTokenFromLogin(state, getters, rootState, rootGetters) {
@@ -15,20 +16,23 @@ export default {
     success(state) {
       return state.success;
     },
-    successConsult(state) {
-      return state.successConsult;
-    },
+    // successConsult(state) {
+    //   return state.successConsult;
+    // },
     pending(state) {
       return state.pending;
+    },
+    getMessage(state) {
+      return state.message;
     },
   },
   mutations: {
     setSuccess(state) {
       state.success = true;
     },
-    setSuccessConsult(state) {
-      state.successConsult = true;
-    },
+    // setSuccessConsult(state) {
+    //   state.successConsult = true;
+    // },
     resetSuccess(state) {
       state.success = false;
     },
@@ -37,6 +41,12 @@ export default {
     },
     resetPending(state) {
       state.pending = false;
+    },
+    setMessage(state, payload) {
+      state.message = payload;
+    },
+    resetMessage(state) {
+      state.message = '';
     },
   },
   actions: {
@@ -61,11 +71,14 @@ export default {
         .patch(url, data, config)
         .then((response) => {
           // console.log(response.data);
-
-          if (response.data.success === true) {
-            // store.commit('resetPending');
-            // console.log(store.getters.pending);
-          }
+          store.commit('setMessage', response.data.message);
+          setTimeout(() => {
+            store.commit('resetMessage');
+          }, 6000);
+          // if (response.data.success === true) {
+          // store.commit('resetPending');
+          // console.log(store.getters.pending);
+          // }
         })
         .catch((error) => {
           console.log(error);
@@ -77,11 +90,14 @@ export default {
     RESET_SUCCESS(store) {
       store.commit('resetSuccess');
     },
-    SET_SUCCESS_CONSULT(store) {
-      store.commit('setSuccessConsult');
-    },
+    // SET_SUCCESS_CONSULT(store) {
+    //   store.commit('setSuccessConsult');
+    // },
     RESET_PENDING(store) {
       store.commit('resetPending');
+    },
+    RESET_MESSAGE(store) {
+      store.commit('resetMessage');
     },
   },
 };
